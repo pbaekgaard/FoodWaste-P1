@@ -2,5 +2,7 @@
 #include <stdlib.h>
 
 int main(void) {
-  printf("KVICKLY");
+  printf("FAKTA");
+
+  return 0;
 }
