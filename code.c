@@ -3,4 +3,5 @@
 
 int main(void) {
   printf("FØTEX");
+  return 0;
 }
