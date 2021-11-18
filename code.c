@@ -2,6 +2,6 @@
 #include <stdlib.h>
 
 int main(void) {
-  printf("FAKTA");
+  printf("KVICKLY? Question Mark?");
   return 0;
 }
