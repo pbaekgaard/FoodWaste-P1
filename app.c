@@ -18,6 +18,7 @@ typedef struct ingredients {
     double weight;
 } ingredients;
 
+void mainMenu(void);
 void clearScreen(void);
 
 int main(void) {
@@ -25,8 +26,9 @@ int main(void) {
     mainMenu();
 
     return EXIT_SUCCESS;
-}   
-void mainMenu() {
+}
+
+void mainMenu(void) {
     char* choice;
     int run = 1;
     while(run) {
@@ -37,12 +39,22 @@ void mainMenu() {
         printf("Q - Quit\n");
         printf("---------------------\n");
 
-        scanf("%s", choice);
-
+        scanf(" %s", &choice);
+        printf("Test");
         if ((choice[0] == '1' || choice[0] == '2' || choice[0] == 'Q' || choice[0] == 'q') &&  choice[1] == '\0') {
             run = 0;
         }
-        
+    }
+    switch(choice[0]) {
+        /*case '1':
+            contents();
+            break;
+        case '2':
+            recipes();
+            break;*/
+        case 'Q': case 'q':
+            exit(0);
+            break;
     }
 }
 
