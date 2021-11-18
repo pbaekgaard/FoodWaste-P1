@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
-#define FRIDGESIZE 120
+#define FRIDGESIZE 2
+#define NUMBEROFRECIPES 10
 
 typedef struct date {
     int year, month, day;
@@ -18,19 +20,39 @@ typedef struct ingredients {
     double weight;
 } ingredients;
 
-void mainMenu(void);
+/* Prototypes */
+void mainMenu(ingredients *);
+void contents(ingredients *);
+void printFridgeContents(ingredients *);
+void recipes(void);
+void printRecipeList(void);
+void printDate(ingredients *, int);
 void clearScreen(void);
+void flushInput(void);
 
 int main(void) {
     ingredients fridgeContent[FRIDGESIZE];
-    mainMenu();
+    fridgeContent[0].name = "Tomato";
+    fridgeContent[0].expirationDate.year = 2021;
+    fridgeContent[0].expirationDate.month = 11;
+    fridgeContent[0].expirationDate.day = 23;
+    fridgeContent[0].weight = 1000;
+
+    fridgeContent[1].name = "Milk";
+    fridgeContent[1].expirationDate.year = 2021;
+    fridgeContent[1].expirationDate.month = 11;
+    fridgeContent[1].expirationDate.day = 25;
+    fridgeContent[1].weight = 1000;
+
+    mainMenu(fridgeContent);
 
     return EXIT_SUCCESS;
 }
 
-void mainMenu(void) {
-    char* choice;
+void mainMenu(ingredients *fridgeContent) {
+    char choice;
     int run = 1;
+
     while(run) {
         clearScreen();
         printf("Welcome to SmartFrAPP\n---------------------\n");
@@ -39,17 +61,19 @@ void mainMenu(void) {
         printf("Q - Quit\n");
         printf("---------------------\n");
 
-        scanf(" %s", &choice);
-        printf("Test");
-        if ((choice[0] == '1' || choice[0] == '2' || choice[0] == 'Q' || choice[0] == 'q') &&  choice[1] == '\0') {
+        scanf(" %c", &choice);
+        flushInput();
+        
+        if (choice == '1' || choice == '2' || choice == 'Q' || choice == 'q') {
             run = 0;
         }
+
     }
-    switch(choice[0]) {
-        /*case '1':
-            contents();
+    switch(choice) {
+        case '1':
+            contents(fridgeContent);
             break;
-        case '2':
+        /*case '2':
             recipes();
             break;*/
         case 'Q': case 'q':
@@ -58,6 +82,62 @@ void mainMenu(void) {
     }
 }
 
+void contents(ingredients *fridgeContent) {
+    char choice;
+
+    clearScreen();
+    printf("Your fridge contains\n");
+    printFridgeContents(fridgeContent);
+    printf("R - Return to Main Menu            Q - Quit\n");
+    do {
+        scanf(" %c", &choice);
+        flushInput();
+        if(choice == 'R' || choice == 'r'){
+            mainMenu(fridgeContent);
+        }
+        else if(choice == 'Q' || choice == 'q') {
+            exit(0);
+        }
+    } while(!(choice == 'R' || choice == 'r' || choice == 'Q' || choice == 'q'));
+}
+
+void printFridgeContents(ingredients *fridgeContent) {
+    int itemNumber, i;
+
+    for(itemNumber = 0; itemNumber < FRIDGESIZE; itemNumber++) {
+        printf("%s", fridgeContent[itemNumber].name);
+        for(i = 0; i < 20 - strlen(fridgeContent[itemNumber].name); i++) {
+            printf(" ");
+        }
+        printf("Expiration date: ");
+        printDate(fridgeContent, itemNumber);
+
+        printf("   %.2lf g\n", fridgeContent[itemNumber].weight);
+    }
+}
+
+void recipes(void) {
+    printf("This is a list of the recipes in your cookbook");
+    printRecipeList();
+}
+
+void printRecipeList(void) {
+    int recipeNumber;
+
+    for(recipeNumber = 1; recipeNumber <= NUMBEROFRECIPES; recipeNumber++){
+        printf("%d. %s", recipeNumber, );
+    }
+}
+
+void printDate(ingredients *fridgeContent, int itemNumber) {
+    printf("%d/%d/%d", fridgeContent[itemNumber].expirationDate.year, fridgeContent[itemNumber].expirationDate.month, fridgeContent[itemNumber].expirationDate.day);
+}
+
 void clearScreen(void) {
     system("@cls||clear");
+}
+
+void flushInput(void) {
+    char flush;
+    while((flush = getchar()) != '\n');
 }
