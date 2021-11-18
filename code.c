@@ -2,6 +2,6 @@
 #include <stdlib.h>
 
 int main(void) {
-  printf("FØTEX");
+  printf("FAKTA");
   return 0;
 }
