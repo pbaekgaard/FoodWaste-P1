@@ -21,20 +21,29 @@ typedef struct ingredients {
 void clearScreen(void);
 
 int main(void) {
-    int run = 1;
-    char *choice;
     ingredients fridgeContent[FRIDGESIZE];
-    mainMenu(choice);
+    mainMenu();
 
     return EXIT_SUCCESS;
 }   
-void mainMenu(void) {
-    clearScreen();
-    printf("Welcome to SmartFrAPP\n---------------------\n");
-    printf("1 - My Fridge Contents\n");
-    printf("2 - Recipes\n");
-    printf("Q - Quit\n");
-    printf("---------------------\n");
+void mainMenu() {
+    char* choice;
+    int run = 1;
+    while(run) {
+        clearScreen();
+        printf("Welcome to SmartFrAPP\n---------------------\n");
+        printf("1 - My Fridge Contents\n");
+        printf("2 - Recipes\n");
+        printf("Q - Quit\n");
+        printf("---------------------\n");
+
+        scanf("%s", choice);
+
+        if ((choice[0] == '1' || choice[0] == '2' || choice[0] == 'Q' || choice[0] == 'q') &&  choice[1] == '\0') {
+            run = 0;
+        }
+        
+    }
 }
 
 void clearScreen(void) {
