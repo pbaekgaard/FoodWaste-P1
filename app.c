@@ -29,12 +29,14 @@ typedef struct Recipes {
 void mainMenu(ingredients *);
 void contents(ingredients *);
 void printFridgeContents(ingredients *);
-void recipes(void);
-void printRecipeList(void);
+void recipes(ingredients *fridgeContent);
+void printRecipeList(ingredients *);
 void printDate(ingredients *, int);
-void returnMenu(char *);
+void returnMenu(char *, ingredients *);
 void clearScreen(void);
 void flushInput(void);
+void openRecipe(char, Recipes, ingredients *);
+
 
 int main(void) {
     ingredients fridgeContent[FRIDGESIZE];
@@ -80,7 +82,7 @@ void mainMenu(ingredients *fridgeContent) {
             contents(fridgeContent);
             break;
         case '2':
-            recipes();
+            recipes(fridgeContent);
             break;
         case 'Q': case 'q':
             exit(0);
@@ -89,22 +91,12 @@ void mainMenu(ingredients *fridgeContent) {
 }
 
 void contents(ingredients *fridgeContent) {
-    char choice;
 
     clearScreen();
     printf("Your fridge contains\n");
     printFridgeContents(fridgeContent);
-    returnMenu("Main Menu");
-    do {
-        scanf(" %c", &choice);
-        flushInput();
-        if(choice == 'R' || choice == 'r'){
-            mainMenu(fridgeContent);
-        }
-        else if(choice == 'Q' || choice == 'q') {
-            exit(0);
-        }
-    } while(!(choice == 'R' || choice == 'r' || choice == 'Q' || choice == 'q'));
+    returnMenu("Main Menu", fridgeContent);
+    
 }
 
 void printFridgeContents(ingredients *fridgeContent) {
@@ -122,19 +114,88 @@ void printFridgeContents(ingredients *fridgeContent) {
     }
 }
 
-void recipes(void) {
+void recipes(ingredients *fridgeContent) {
     printf("This is a list of the recipes in your cookbook\n");
-    printRecipeList();
-    returnMenu("Main Menu");
+    printRecipeList(fridgeContent);
 }
 
 void printDate(ingredients *fridgeContent, int itemNumber) {
     printf("%d/%d/%d", fridgeContent[itemNumber].expirationDate.year, fridgeContent[itemNumber].expirationDate.month, fridgeContent[itemNumber].expirationDate.day);
 }
 
-void returnMenu(char *choice) {
-    printf("\nR - Return to %s            Q - Quit\n", choice);
+void returnMenu(char *menu, ingredients *fridgeContent) {
+    char choice;
+  
+    printf("\nR - Return to %s            Q - Quit\n", menu);
+    do {
+        scanf(" %c", &choice);
+        flushInput();
+        if(choice == 'R' || choice == 'r'){
+           if (strcmp(menu, "Main menu") == 0){
+                mainMenu(fridgeContent);
+            }
+            else if (strcmp(menu, "Recipes") == 0){
+                recipes(fridgeContent);
+            }
+        }
+        else if(choice == 'Q' || choice == 'q') {
+            exit(0);
+        }
+    } while(!(choice == 'R' || choice == 'r' || choice == 'Q' || choice == 'q'));
 }
+
+
+void printRecipeList(ingredients *fridgeContent) {
+    int recipeNumber;
+
+    Recipes pizzaDough =  {"Pizza", {{"Yeast", 25}, {"Water", 250}, {"Olive oil", 60}, {"Wheat flour", 500}}, "Make pizza"};
+    Recipes lasagne = {"Lasagne", {{"Onion", 200}, {"Garlic", 24}, {"Ground beef", 400}, {"Oregano", 2}, {"Carrots", 260}, {"Celery", 300}, {"Squash", 280}, {"Tomato pure", 55}, {"Chopped tomatoes", 800}, {"Vegetable broth", 100}, {"Olive oil", 30}}, "Make lasagne"};
+
+    Recipes recipeList[2]; 
+
+    recipeList[0] = pizzaDough;
+    recipeList[1] = lasagne;
+
+    for(recipeNumber = 1; recipeNumber <= 2; recipeNumber++){
+        printf("%d. %s\n", recipeNumber, recipeList[recipeNumber - 1]);
+    }
+    printf("\nWhich recipe do you want to see? (press R for main menu)");
+    scanf("%d", &recipeNumber);
+    if (recipeNumber == 82 || recipeNumber == 114){
+          mainMenu(fridgeContent);
+    }
+    openRecipe(recipeNumber, recipeList[recipeNumber  - 1], fridgeContent);
+}
+
+void openRecipe(char recipeNumber, Recipes recipe, ingredients *fridgeContent){
+    int i;
+       
+    switch (recipeNumber - 1)
+    {
+    case 0:
+        printf("\n%s\n", recipe.name);
+        for(i = 0 ; i < sizeof(recipe.ingredients) / sizeof(recipe.ingredients[0]) ; i++){
+            if (recipe.ingredients[i].name != NULL){
+                printf("%s\n%f\n\n", recipe.ingredients[i].name, recipe.ingredients[i].weight);
+            }
+        }
+        break;
+    
+    case 1:
+        printf("\n%s\n", recipe.name);
+        for(i = 0 ; i < sizeof(recipe.ingredients) / sizeof(recipe.ingredients[0]) ; i++){
+            if (recipe.ingredients[i].name != NULL){
+                printf("%s\n%f\n\n", recipe.ingredients[i].name, recipe.ingredients[i].weight);
+            }
+        }
+        break;
+    default:
+        break;
+    }
+    returnMenu("Recipes", fridgeContent);
+}
+
+
 
 void clearScreen(void) {
     system("@cls||clear");
@@ -144,27 +205,3 @@ void flushInput(void) {
     char flush;
     while((flush = getchar()) != '\n');
 }
-
-
-
-void printRecipeList(void) {
-    int recipeNumber, i;
-    char *recipeList[] = {"Pizza", "Lasagne", "Burger", "Spagetti carbonara", "Taco", "Beef Wellington", "Braendende kaerlighed"};
-
-    Recipes pizza, burger, spaghettiCarbonara, taco, beefWellington, braendendeKaerlighed;
-
-    Recipes lasagne = {"Lasagne", {{"Onion", 200}, {"Garlic", 24}, {"Ground beef", 400}, {"Oregano", 2}, {"Carrots", 260}, {"Celery", 300}, {"Squash", 280}, {"Tomato pure", 55}, {"Chopped tomatoes", 800}, {"Vegetable broth", 100}, {"Olive oil", 30}}, "Make lasagne"};
-
-    printf("%ld", sizeof(lasagne.ingredients[0]));
-    printf("\n%s\n", lasagne.name);
-
-    for(i = 0 ; i < sizeof(lasagne.ingredients) / sizeof(lasagne.ingredients[0]) ; i++){
-        printf("%s\n%f\n\n", lasagne.ingredients[i].name, lasagne.ingredients[i].weight);
-    }
-
-
-    for(recipeNumber = 1; recipeNumber <= NUMBEROFRECIPES; recipeNumber++){
-        printf("%d. %s\n", recipeNumber, recipeList[recipeNumber - 1]);
-    }
-}
-
