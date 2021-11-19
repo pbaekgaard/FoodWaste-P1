@@ -30,7 +30,8 @@ void mainMenu(ingredients *);
 void contents(ingredients *);
 void printFridgeContents(ingredients *);
 void recipes(ingredients *fridgeContent);
-void printRecipeList(ingredients *);
+void recipeMenu(ingredients*);
+void printRecipeList(Recipes*);
 void printDate(ingredients *, int);
 void returnMenu(char *, ingredients *);
 void clearScreen(void);
@@ -116,7 +117,7 @@ void printFridgeContents(ingredients *fridgeContent) {
 }
 
 void recipes(ingredients *fridgeContent) {
-    printRecipeList(fridgeContent);
+    recipeMenu(fridgeContent);
 }
 
 void printDate(ingredients *fridgeContent, int itemNumber) {
@@ -145,10 +146,9 @@ void returnMenu(char *menu, ingredients *fridgeContent) {
 }
 
 
-void printRecipeList(ingredients *fridgeContent) {
-    int i, recipeNumber;
-    char *choice;
-
+void recipeMenu(ingredients *fridgeContent) {
+    int recipeNumber = 1;
+    char *choice = (char*) malloc(100*sizeof(char*));
     Recipes pizzaDough =  {"Pizza", {{"Yeast", 25}, {"Water", 250}, {"Olive oil", 60}, {"Wheat flour", 500}}, "Make pizza"};
     Recipes lasagne = {"Lasagne", {{"Onion", 200}, {"Garlic", 24}, {"Ground beef", 400}, {"Oregano", 2}, {"Carrots", 260}, {"Celery", 300}, {"Squash", 280}, {"Tomato pure", 55}, {"Chopped tomatoes", 800}, {"Vegetable broth", 100}, {"Olive oil", 30}}, "Make lasagne"};
 
@@ -158,20 +158,32 @@ void printRecipeList(ingredients *fridgeContent) {
     recipeList[1] = lasagne;
 
     clearScreen();
-    printf("This is a list of the recipes in your cookbook\n");
-    for(i = 1; i <= 2; i++){
-        printf("%d. %s\n", i, recipeList[i - 1]);
-    }
-    printf("\nWhich recipe do you want to see? (press R to return to the main menu)");
+    printRecipeList(recipeList);
+    printf("\nWhich recipe do you want to see? (press R to return to the main menu):\n");
+
     do{
-    scanf("%s", choice);
-    if (strcmp(choice, "r") == 0 || strcmp(choice, "R") == 0){
-          mainMenu(fridgeContent);
-    }
-    recipeNumber = atoi(choice);
-    } while (recipeNumber == 0);
+        if (recipeNumber == 0 || recipeNumber > (sizeof(recipeList)/(sizeof(recipeList[0])))) {
+            printRecipeList(recipeList);
+            printf("\nPlease enter a valid Recipe Number. Or type 'R' to Return:\n");
+        }
+        scanf("%s", choice);
+        recipeNumber = atoi(choice);
+        if (strcmp(choice, "r") == 0 || strcmp(choice, "R") == 0){
+            mainMenu(fridgeContent);
+        }
+
+    } while (recipeNumber == 0 || recipeNumber > (sizeof(recipeList)/(sizeof(recipeList[0]))));
     
     openRecipe(recipeNumber, recipeList[recipeNumber  - 1], fridgeContent);
+}
+
+void printRecipeList(Recipes* recipeList) {
+    int i;
+    clearScreen();
+    printf("This is a list of the recipes in your cookbook\n");
+    for(i = 1; i <= 2; i++){
+        printf("%d. %s\n", i, recipeList[i - 1].name);
+    }
 }
 
 void openRecipe(int recipeNumber, Recipes recipe, ingredients *fridgeContent){
