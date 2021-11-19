@@ -4,7 +4,7 @@
 #include <string.h>
 
 #define FRIDGESIZE 2
-#define NUMBEROFRECIPES 10
+#define NUMBEROFRECIPES 7
 
 typedef struct date {
     int year, month, day;
@@ -13,12 +13,17 @@ typedef struct date {
 
 typedef struct ingredients {
     char* name;    
+    double weight;
     date expirationDate;
     date openedDate;
     int daysToExpire;
-
-    double weight;
 } ingredients;
+
+typedef struct Recipes {
+    char* name;
+    ingredients ingredients[11];
+    char* instructions;
+} Recipes;
 
 /* Prototypes */
 void mainMenu(ingredients *);
@@ -27,6 +32,7 @@ void printFridgeContents(ingredients *);
 void recipes(void);
 void printRecipeList(void);
 void printDate(ingredients *, int);
+void returnMenu(char *);
 void clearScreen(void);
 void flushInput(void);
 
@@ -73,9 +79,9 @@ void mainMenu(ingredients *fridgeContent) {
         case '1':
             contents(fridgeContent);
             break;
-        /*case '2':
+        case '2':
             recipes();
-            break;*/
+            break;
         case 'Q': case 'q':
             exit(0);
             break;
@@ -88,7 +94,7 @@ void contents(ingredients *fridgeContent) {
     clearScreen();
     printf("Your fridge contains\n");
     printFridgeContents(fridgeContent);
-    printf("R - Return to Main Menu            Q - Quit\n");
+    returnMenu("Main Menu");
     do {
         scanf(" %c", &choice);
         flushInput();
@@ -112,25 +118,22 @@ void printFridgeContents(ingredients *fridgeContent) {
         printf("Expiration date: ");
         printDate(fridgeContent, itemNumber);
 
-        printf("   %.2lf g\n", fridgeContent[itemNumber].weight);
+        printf("   %.2f g\n", fridgeContent[itemNumber].weight);
     }
 }
 
 void recipes(void) {
-    printf("This is a list of the recipes in your cookbook");
+    printf("This is a list of the recipes in your cookbook\n");
     printRecipeList();
-}
-
-void printRecipeList(void) {
-    int recipeNumber;
-
-    for(recipeNumber = 1; recipeNumber <= NUMBEROFRECIPES; recipeNumber++){
-        printf("%d. %s", recipeNumber, );
-    }
+    returnMenu("Main Menu");
 }
 
 void printDate(ingredients *fridgeContent, int itemNumber) {
     printf("%d/%d/%d", fridgeContent[itemNumber].expirationDate.year, fridgeContent[itemNumber].expirationDate.month, fridgeContent[itemNumber].expirationDate.day);
+}
+
+void returnMenu(char *choice) {
+    printf("\nR - Return to %s            Q - Quit\n", choice);
 }
 
 void clearScreen(void) {
@@ -141,3 +144,27 @@ void flushInput(void) {
     char flush;
     while((flush = getchar()) != '\n');
 }
+
+
+
+void printRecipeList(void) {
+    int recipeNumber, i;
+    char *recipeList[] = {"Pizza", "Lasagne", "Burger", "Spagetti carbonara", "Taco", "Beef Wellington", "Braendende kaerlighed"};
+
+    Recipes pizza, burger, spaghettiCarbonara, taco, beefWellington, braendendeKaerlighed;
+
+    Recipes lasagne = {"Lasagne", {{"Onion", 200}, {"Garlic", 24}, {"Ground beef", 400}, {"Oregano", 2}, {"Carrots", 260}, {"Celery", 300}, {"Squash", 280}, {"Tomato pure", 55}, {"Chopped tomatoes", 800}, {"Vegetable broth", 100}, {"Olive oil", 30}}, "Make lasagne"};
+
+    printf("%ld", sizeof(lasagne.ingredients[0]));
+    printf("\n%s\n", lasagne.name);
+
+    for(i = 0 ; i < sizeof(lasagne.ingredients) / sizeof(lasagne.ingredients[0]) ; i++){
+        printf("%s\n%f\n\n", lasagne.ingredients[i].name, lasagne.ingredients[i].weight);
+    }
+
+
+    for(recipeNumber = 1; recipeNumber <= NUMBEROFRECIPES; recipeNumber++){
+        printf("%d. %s\n", recipeNumber, recipeList[recipeNumber - 1]);
+    }
+}
+
