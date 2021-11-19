@@ -4,7 +4,7 @@
 #include <string.h>
 
 #define FRIDGESIZE 2
-#define NUMBEROFRECIPES 10
+#define NUMBEROFRECIPES 7
 
 typedef struct date {
     int year, month, day;
@@ -27,6 +27,7 @@ void printFridgeContents(ingredients *);
 void recipes(void);
 void printRecipeList(void);
 void printDate(ingredients *, int);
+void returnMenu(char *);
 void clearScreen(void);
 void flushInput(void);
 
@@ -73,9 +74,9 @@ void mainMenu(ingredients *fridgeContent) {
         case '1':
             contents(fridgeContent);
             break;
-        /*case '2':
+        case '2':
             recipes();
-            break;*/
+            break;
         case 'Q': case 'q':
             exit(0);
             break;
@@ -88,7 +89,7 @@ void contents(ingredients *fridgeContent) {
     clearScreen();
     printf("Your fridge contains\n");
     printFridgeContents(fridgeContent);
-    printf("R - Return to Main Menu            Q - Quit\n");
+    returnMenu("Main Menu");
     do {
         scanf(" %c", &choice);
         flushInput();
@@ -117,20 +118,26 @@ void printFridgeContents(ingredients *fridgeContent) {
 }
 
 void recipes(void) {
-    printf("This is a list of the recipes in your cookbook");
+    printf("This is a list of the recipes in your cookbook\n");
     printRecipeList();
+    returnMenu("Main Menu");
 }
 
 void printRecipeList(void) {
     int recipeNumber;
+    char *recipeList[] = {"Pizza", "Lasagne", "Burger", "Spagetti carbonara", "Taco", "Beef Wellington", "Braendende kaerlighed"};
 
     for(recipeNumber = 1; recipeNumber <= NUMBEROFRECIPES; recipeNumber++){
-        printf("%d. %s", recipeNumber, );
+        printf("%d. %s\n", recipeNumber, recipeList[recipeNumber - 1]);
     }
 }
 
 void printDate(ingredients *fridgeContent, int itemNumber) {
     printf("%d/%d/%d", fridgeContent[itemNumber].expirationDate.year, fridgeContent[itemNumber].expirationDate.month, fridgeContent[itemNumber].expirationDate.day);
+}
+
+void returnMenu(char *choice) {
+    printf("\nR - Return to %s            Q - Quit\n", choice);
 }
 
 void clearScreen(void) {
