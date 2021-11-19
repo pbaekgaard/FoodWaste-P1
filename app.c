@@ -110,9 +110,9 @@ void contents(ingredients *fridgeContent) {
 void printFridgeContents(ingredients *fridgeContent) {
     int itemNumber, i;
 
-    for(itemNumber = 0; itemNumber < FRIDGESIZE; itemNumber++) {
+    for(itemNumber = 0 ; itemNumber < FRIDGESIZE ; itemNumber++) {
         printf("%s", fridgeContent[itemNumber].name);
-        for(i = 0; i < 20 - strlen(fridgeContent[itemNumber].name); i++) {
+        for(i = 0 ; i < 20 - strlen(fridgeContent[itemNumber].name) ; i++) {
             printf(" ");
         }
         printf("Expiration date: ");
@@ -163,7 +163,7 @@ void printRecipeList(void) {
     }
 
 
-    for(recipeNumber = 1; recipeNumber <= NUMBEROFRECIPES; recipeNumber++){
+    for(recipeNumber = 1 ; recipeNumber <= NUMBEROFRECIPES ; recipeNumber++){
         printf("%d. %s\n", recipeNumber, recipeList[recipeNumber - 1]);
     }
 }
