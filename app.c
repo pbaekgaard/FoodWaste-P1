@@ -3,7 +3,7 @@
 #include <time.h>
 #include <string.h>
 
-#define FRIDGESIZE 2
+#define FRIDGESIZE 25
 #define NUMBEROFRECIPES 7
 
 typedef struct date {
@@ -33,21 +33,38 @@ void flushInput(void);
 
 int main(void) {
     ingredients fridgeContent[FRIDGESIZE];
-    fridgeContent[0].name = "Tomato";
-    fridgeContent[0].expirationDate.year = 2021;
-    fridgeContent[0].expirationDate.month = 11;
-    fridgeContent[0].expirationDate.day = 23;
-    fridgeContent[0].weight = 1000;
 
-    fridgeContent[1].name = "Milk";
-    fridgeContent[1].expirationDate.year = 2021;
-    fridgeContent[1].expirationDate.month = 11;
-    fridgeContent[1].expirationDate.day = 25;
-    fridgeContent[1].weight = 1000;
-
+    getFridgeContents(fridgeContent);
+    
     mainMenu(fridgeContent);
 
     return EXIT_SUCCESS;
+}
+
+void getFridgeContents(ingredients *fridgeContent) {
+    int i = 0;
+    /* Pointer to a File */
+    FILE *readFile;
+
+    /* Name of file */
+    char *filename = "ingredients.txt";
+
+    /* Open and read file */
+    readFile = fopen(filename, "r");
+
+    /* If file doesn't open it gives Error message */
+    if(readFile == NULL) {
+        printf("Error");
+    }
+    
+    /* Scans string into the structs name and integer into the structs weight until end of file */
+    while(!feof(readFile)){
+        fscanf(readFile, " %s %lf %d %d %d %d %d %d", &fridgeContent[i].name, &fridgeContent[i].weight, &fridgeContent[i].expirationDate.year, &fridgeContent[i].expirationDate.month, &fridgeContents[i].expirationDate.day,
+                                            &fridgeContent[i].openedDate.year, &fridgeContent[i].openedDate.month, &fridgeContent[i].openedDate.day);
+        i++;
+    }
+    /* Closes file */
+    fclose(readFile);
 }
 
 void mainMenu(ingredients *fridgeContent) {
