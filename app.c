@@ -3,13 +3,13 @@
 #include <time.h>
 #include <string.h>
 
-#define FRIDGESIZE 2
 #define NUMBEROFRECIPES 5
 #define INSTRUCTIONLINELENGTH 256
+#define FRIDGESIZE 25
+
 typedef struct date {
     int year, month, day;
 } date;
-
 
 typedef struct ingredients {
     char* name;    
@@ -25,8 +25,14 @@ typedef struct Recipes {
     char *filename;
 } Recipes;
 
+/*Global variable - Sorry. Just for testing changing days*/
+date todayDate;
+
 /* Prototypes */
 void mainMenu(ingredients *);
+date makeDayToday();
+void tomorrow(date *);
+int leapYear(int);
 void contents(ingredients *);
 void printFridgeContents(ingredients *);
 void recipeMenu(ingredients*);
@@ -39,24 +45,40 @@ void openRecipe(Recipes , ingredients *);
 void printInstructions(Recipes);
 
 
-
 int main(void) {
     ingredients fridgeContent[FRIDGESIZE];
-    fridgeContent[0].name = "Tomato";
-    fridgeContent[0].expirationDate.year = 2021;
-    fridgeContent[0].expirationDate.month = 11;
-    fridgeContent[0].expirationDate.day = 23;
-    fridgeContent[0].weight = 1000;
 
-    fridgeContent[1].name = "Milk";
-    fridgeContent[1].expirationDate.year = 2021;
-    fridgeContent[1].expirationDate.month = 11;
-    fridgeContent[1].expirationDate.day = 25;
-    fridgeContent[1].weight = 1000;
-
+    todayDate = makeDayToday(); /*Global variable*/
+    getFridgeContents(fridgeContent);
     mainMenu(fridgeContent);
 
     return EXIT_SUCCESS;
+}
+
+void getFridgeContents(ingredients *fridgeContent) {
+    int i = 0;
+    /* Pointer to a File */
+    FILE *readFile;
+
+    /* Name of file */
+    char *filename = "ingredients.txt";
+
+    /* Open and read file */
+    readFile = fopen(filename, "r");
+
+    /* If file doesn't open it gives Error message */
+    if(readFile == NULL) {
+        printf("Error");
+    }
+    
+    /* Scans string into the structs name and integer into the structs weight until end of file */
+    while(!feof(readFile)){
+        fscanf(readFile, " %s %lf %d %d %d %d %d %d", &fridgeContent[i].name, &fridgeContent[i].weight, &fridgeContent[i].expirationDate.year, &fridgeContent[i].expirationDate.month, &fridgeContents[i].expirationDate.day,
+                                            &fridgeContent[i].openedDate.year, &fridgeContent[i].openedDate.month, &fridgeContent[i].openedDate.day);
+        i++;
+    }
+    /* Closes file */
+    fclose(readFile);
 }
 
 void mainMenu(ingredients *fridgeContent) {
@@ -66,15 +88,17 @@ void mainMenu(ingredients *fridgeContent) {
     while(run) {
         clearScreen();
         printf("Welcome to SmartFrAPP\n---------------------\n");
-        printf("1 - My Fridge Contents\n");
+        printf("     %d/%d/%d\n\n", todayDate.year, todayDate.month, todayDate.day);
+        printf("1 - Fridge Contents\n");
         printf("2 - Recipes\n");
-        printf("Q - Quit\n");
         printf("---------------------\n");
+        printf("Q - Quit\n");
+        printf("F - ENTER FUTURE\n");
 
         scanf(" %c", &choice);
         flushInput();
         
-        if (choice == '1' || choice == '2' || choice == 'Q' || choice == 'q') {
+        if (choice == '1' || choice == '2' || choice == 'Q' || choice == 'q' || choice == 'F' || choice == 'f') {
             run = 0;
         }
 
@@ -89,7 +113,80 @@ void mainMenu(ingredients *fridgeContent) {
         case 'Q': case 'q':
             exit(0);
             break;
+        case 'F': case 'f':
+            tomorrow(&todayDate);
+            mainMenu(fridgeContent);
+            break;
     }
+}
+
+
+date makeDayToday(){
+    date tempDate;
+
+    time_t today = time(NULL);
+    struct tm tm = *localtime(&today);
+
+    tempDate.year = (tm.tm_year + 1900);
+    tempDate.month = (tm.tm_mon + 1);
+    tempDate.day = (tm.tm_mday);
+
+    return tempDate;
+}
+
+void tomorrow(date *d){
+    switch(d->month){
+        case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+            if(d->day < 31){
+                (d->day)++;
+            } else if(d->day == 31 && d->month == 12){
+                d->day = 1;
+                d->month = 1;
+                (d->year)++;
+            } else{
+                d->day = 1;
+                (d->month)++;
+            }
+            break;
+
+        case 4: case 6: case 9: case 11:
+            if(d->day < 30){
+                (d->day)++;
+            } else{
+                d->day = 1;
+                (d->month)++;
+            }
+            break;
+        case 2:
+            if(leapYear(d->year)){
+                if(d->day < 29){
+                    (d->day)++;
+                } else{
+                    d->day = 1;
+                    (d->month)++;
+                }
+            }
+            else{
+                if(d->day < 28){
+                    (d->day)++;
+                } else{
+                    d->day = 1;
+                    (d->month)++;
+                }
+            }
+            break;
+    }
+}
+
+int leapYear(int year){
+  int result;
+
+  if (year % 400 == 0) result = 1;
+  else if (year % 100 == 0) result = 0;
+  else if (year % 4 == 0) result = 1;
+  else result = 0;
+
+  return result;
 }
 
 void contents(ingredients *fridgeContent) {
@@ -139,7 +236,6 @@ void returnMenu(char *menu, ingredients *fridgeContent) {
         }
     } while(!(choice == 'R' || choice == 'r' || choice == 'Q' || choice == 'q'));
 }
-
 
 void recipeMenu(ingredients *fridgeContent) {
     int recipeNumber = 1;
@@ -278,5 +374,3 @@ void flushInput(void) {
     char flush;
     while((flush = getchar()) != '\n');
 }
-
-
