@@ -21,7 +21,7 @@ typedef struct ingredients {
 
 typedef struct Recipes {
     char* name;
-    ingredients ingredients[50];
+    ingredients ingredients[100];
     char *filename;
 } Recipes;
 
@@ -242,7 +242,7 @@ void openRecipe(Recipes recipe, ingredients *fridgeContent){
     for(i = 0 ; i < sizeof(recipe.ingredients) / sizeof(recipe.ingredients[0]) ; i++){
         if (recipe.ingredients[i].name != NULL){
             printf("    %s:", recipe.ingredients[i].name);
-            for (j = 0; j < 15 - strlen(recipe.ingredients[i].name); j++) {
+            for (j = 0; j < 20 - strlen(recipe.ingredients[i].name); j++) {
                 printf(" ");
             }
             printf("%.2fg\n\n", recipe.ingredients[i].weight);
@@ -256,19 +256,16 @@ void openRecipe(Recipes recipe, ingredients *fridgeContent){
 }
 
 void printInstructions(Recipes recipe) {
-    /*Assigns the opened instruction file to point variable fp*/
     FILE *fp = fopen(recipe.filename, "r");
     char buffer[INSTRUCTIONLINELENGTH];
 
-    /*If instructions file doesnt exist. give error message.*/
     if (fp == NULL) {
         printf("ERROR: Couldn't find instructions");
     }
-    /*For each line in the instructions file, print the line*/
+
     while (fgets(buffer, INSTRUCTIONLINELENGTH, fp)){
         printf("%s", buffer);
     }
-    /*Closes the instruction file*/
     fclose(fp);
 
 }
