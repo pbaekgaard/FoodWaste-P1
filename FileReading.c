@@ -2,9 +2,15 @@
 #include <stdlib.h>
 #include <string.h>
 
+struct date {
+    int year, month, day;
+};
+
 struct ing {
     char name[20];
-    int weight;
+    double weight;
+    struct date expirationDate;
+    struct date openedDate;
 };
 
 int main(void) {
@@ -27,13 +33,13 @@ int main(void) {
     
     /* Scans string into the structs name and integer into the structs weight until end of file */
     while(!feof(readFile)){
-        fscanf(readFile, "%s %d", &test[i].name, &test[i].weight);
+        fscanf(readFile, "%s %lf %d %d %d", &test[i].name, &test[i].weight,  &test[i].expirationDate.year, &test[i].expirationDate.month, &test[i].expirationDate.day);
         i++;
     }
 
     /* Prints the elements of each struct in the array of structs */
     for(j = 0; j < i; j++){
-        printf("%s %d\n", &test[j].name, test[j].weight);
+        printf("%s %.2lf %d %d %d\n", &test[j].name, test[j].weight, test[j].expirationDate.year, test[j].expirationDate.month, test[j].expirationDate.day);
     }
     
     /* Closes file */
