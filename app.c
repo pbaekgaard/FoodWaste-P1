@@ -160,7 +160,7 @@ void recipeMenu(ingredients *fridgeContent) {
                       {"Ground beef", 400}, {"Oregano", 2}, {"Thyme", 1},
                       {"Carrots", 260}, {"Celery", 300}, {"Squash", 280},
                       {"Tomato pure", 55}, {"Chopped tomatoes", 800},
-                      {"Red wine or Vegetable broth", 100}, {"Olive oil", 30},
+                      {"Vegetable broth", 100}, {"Olive oil", 30},
                       {"Butter", 28.35}, {"Wheat flour", 15}, {"Milk", 300},
                       {"Nutmeg", 1}, {"Mozzarella", 250}, {"Lasagne Plates", 200}},
 
