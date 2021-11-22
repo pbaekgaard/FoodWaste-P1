@@ -14,7 +14,7 @@ struct ing {
 };
 
 int main(void) {
-    int i = 0, j = 0;
+    int i = 0, j;
     struct ing test[100];
 
     /* Pointer to a File */
@@ -37,17 +37,16 @@ int main(void) {
                                             &test[i].openedDate.year, &test[i].openedDate.month, &test[i].openedDate.day);
         i++;
     }
+    /* Prints the elements of each struct in the array of structs */
 
-    if(test->openedDate.year == 0 && test->openedDate.month == 0 && test->openedDate.day == 0) {
-        for(; j < i; j++){
-            printf("%s %.2lf %d %d %d\n", &test[j].name, test[j].weight, test[j].expirationDate.year, test[j].expirationDate.month, test[j].expirationDate.day);
+    for(j = 0; j < i; j++){
+        if(test[j].openedDate.year == 0 && test[j].openedDate.month == 0 && test[j].openedDate.day == 0){
+            printf("\n#%d %s %.2lfg >>> Expires on: %d %d %d / Not opened.\n", j+1, &test[j].name, test[j].weight, test[j].expirationDate.year, test[j].expirationDate.month, test[j].expirationDate.day);
         }
-    }
-    else {
-        /* Prints the elements of each struct in the array of structs */
-        for(; j < i; j++){
-            printf("%s %.2lf %d %d %d %d %d %d\n", &test[j].name, test[j].weight, test[j].expirationDate.year, test[j].expirationDate.month, test[j].expirationDate.day,
+        else {
+            printf("\n#%d %s %.2lfg >>> Expires on: %d %d %d  >>> Opened on: %d %d %d\n", j+1, &test[j].name, test[j].weight, test[j].expirationDate.year, test[j].expirationDate.month, test[j].expirationDate.day,
                                                    test[j].openedDate.year, test[j].openedDate.month, test[j].openedDate.day);
+        
         }
     }
     
