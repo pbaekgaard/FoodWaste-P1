@@ -203,13 +203,13 @@ void printFridgeContents(ingredients *fridgeContent) {
 
     for(itemNumber = 0; itemNumber < FRIDGESIZE; itemNumber++) {
         if(dateComparatorenator(fridgeContent[itemNumber].expirationDate, fridgeContent[itemNumber].openedDate) < 0) {
-            printf("\033[0;31m");
+            printf("\033[31;1m");
         }
         else if(dateComparatorenator(fridgeContent[itemNumber].expirationDate, fridgeContent[itemNumber].openedDate) > 0) {
-            printf("\x1B[32m");
+            printf("\033[0;32m");
         }
         else {
-            printf("\033[31;1m");
+            printf("\033[0;33m");
         }
         printf(" %s", fridgeContent[itemNumber].name);
         if(fridgeContent[itemNumber].weight < 10) {
