@@ -209,7 +209,7 @@ void printFridgeContents(ingredients *fridgeContent) {
             printf("\033[0;32m");
         }
         else {
-            printf("\033[0;33m");
+            printf("\033[33;1m");
         }
         printf(" %s", fridgeContent[itemNumber].name);
         if(fridgeContent[itemNumber].weight < 10) {
