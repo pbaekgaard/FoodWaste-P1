@@ -4,6 +4,7 @@
 #include <string.h>
 
 #define FRIDGESIZE 2
+#define NUMBEROFRECIPES 5
 #define INSTRUCTIONLINELENGTH 256
 typedef struct date {
     int year, month, day;
@@ -188,9 +189,7 @@ void recipeMenu(ingredients *fridgeContent) {
                       {"Milk", 2000}, {"Salt", 3}, {"Cinnamon", 10},
                       {"Sugar", 16}, {"Butter", 20}}, "recipes/ricepudding/instructions.txt"};
 
-    Recipes recipeList[5]; 
-    int numberOfRecipes;
-    numberOfRecipes = sizeof(recipeList)/sizeof(recipeList[0]);
+    Recipes recipeList[NUMBEROFRECIPES]; 
     recipeList[0] = pizza;
     recipeList[1] = lasagne;
     recipeList[2] = burningLove;
