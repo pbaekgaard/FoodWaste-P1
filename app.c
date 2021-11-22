@@ -12,11 +12,10 @@ typedef struct date {
 } date;
 
 typedef struct ingredients {
-    char* name;    
+    char name[20];    
     double weight;
     date expirationDate;
     date openedDate;
-    int daysToExpire;
 } ingredients;
 
 typedef struct Recipes {
@@ -38,6 +37,7 @@ void contents(ingredients *);
 void printFridgeContents(ingredients *);
 void recipeMenu(ingredients*);
 void printRecipeList(Recipes*);
+int dateComparatorenator(date, date);
 void printDate(ingredients *, int);
 void returnMenu(char *, ingredients *);
 void clearScreen(void);
@@ -72,7 +72,7 @@ void getFridgeContents(ingredients *fridgeContent) {
         printf("Error");
     }
     
-    /* Scans string into the structs name and integer into the structs weight until end of file */
+    /* Scans file into the structs name and integer into the structs weight until end of file */
     while(!feof(readFile)){
         fscanf(readFile, " %s %lf %d %d %d %d %d %d", fridgeContent[i].name, &fridgeContent[i].weight, &fridgeContent[i].expirationDate.year, &fridgeContent[i].expirationDate.month, &fridgeContent[i].expirationDate.day,
                                             &fridgeContent[i].openedDate.year, &fridgeContent[i].openedDate.month, &fridgeContent[i].openedDate.day);
@@ -201,16 +201,72 @@ void contents(ingredients *fridgeContent) {
 void printFridgeContents(ingredients *fridgeContent) {
     int itemNumber, i;
 
-    for(itemNumber = 0 ; itemNumber < FRIDGESIZE ; itemNumber++) {
-        printf("%s", fridgeContent[itemNumber].name);
-        for(i = 0 ; i < 20 - strlen(fridgeContent[itemNumber].name) ; i++) {
+    for(itemNumber = 0; itemNumber < FRIDGESIZE; itemNumber++) {
+        if(dateComparatorenator(fridgeContent[itemNumber].expirationDate, fridgeContent[itemNumber].openedDate) < 0) {
+            printf("\033[0;31m");
+        }
+        else if(dateComparatorenator(fridgeContent[itemNumber].expirationDate, fridgeContent[itemNumber].openedDate) > 0) {
+            printf("\x1B[32m");
+        }
+        else {
+            printf("\x1B[37m");
+        }
+        printf(" %s", fridgeContent[itemNumber].name);
+        if(fridgeContent[itemNumber].weight < 10) {
+            for(i = 0; i < 25 - strlen(fridgeContent[itemNumber].name); i++) {
+                printf(" ");
+            } 
+        } 
+        else if(fridgeContent[itemNumber].weight < 100 && fridgeContent[itemNumber].weight >= 10) {
+            for(i = 0; i < 24 - strlen(fridgeContent[itemNumber].name); i++) {
+                printf(" ");
+            }           
+        }
+
+        else if(fridgeContent[itemNumber].weight < 1000 && fridgeContent[itemNumber].weight >= 100) {
+            for(i = 0; i < 23 - strlen(fridgeContent[itemNumber].name); i++) {
+                printf(" ");
+            }           
+        }
+        
+        else if(fridgeContent[itemNumber].weight < 10000 && fridgeContent[itemNumber].weight >= 1000) {
+            for(i = 0; i < 22 - strlen(fridgeContent[itemNumber].name); i++) {
+                printf(" ");
+            }           
+        }
+
+        printf("%.2f g", fridgeContent[itemNumber].weight);
+        printf("   Expiration date: ");
+        printDate(fridgeContent, itemNumber); 
+
+        if(fridgeContent[itemNumber].expirationDate.month < 10) {
+            printf(" ");
+        } 
+        if(fridgeContent[itemNumber].expirationDate.day < 10) {
             printf(" ");
         }
-        printf("Expiration date: ");
-        printDate(fridgeContent, itemNumber);
 
-        printf("   %.2f g\n", fridgeContent[itemNumber].weight);
+        if(fridgeContent[itemNumber].openedDate.day == 0) {
+            printf("   UNOPENED\n");
+        }
+        else {
+            printf("   Opened on: %d/%d/%d\n", fridgeContent[itemNumber].openedDate.year, fridgeContent[itemNumber].openedDate.month, fridgeContent[itemNumber].openedDate.day);
+        }
+        printf("\x1B[0m");
     }
+}
+
+int dateComparatorenator(date expirationDate, date openedDate) {
+    if((expirationDate.year > todayDate.year) ||
+       (expirationDate.year == todayDate.year && expirationDate.month > todayDate.month) ||
+       (expirationDate.year == todayDate.year && expirationDate.month == todayDate.month && expirationDate.day > todayDate.day)) {
+        return 1;
+    }
+    else if(expirationDate.year == todayDate.year && expirationDate.month == todayDate.month && expirationDate.day == todayDate.day) {
+        return 0;
+    }   
+    else
+        return -1;
 }
 
 void printDate(ingredients *fridgeContent, int itemNumber) {
@@ -337,7 +393,7 @@ void openRecipe(Recipes recipe, ingredients *fridgeContent){
     printf("  -------------------------------------\n");
     /*Prints each ingredient for the chosen recipe*/
     for(i = 0 ; i < sizeof(recipe.ingredients) / sizeof(recipe.ingredients[0]) ; i++){
-        if (recipe.ingredients[i].name != NULL){
+        if (strcmp(recipe.ingredients[i].name, "\0")){
             printf("    %s:", recipe.ingredients[i].name);
             for (j = 0; j < 20 - strlen(recipe.ingredients[i].name); j++) {
                 printf(" ");
