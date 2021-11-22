@@ -24,7 +24,7 @@ typedef struct Recipes {
     char* instructions;
 } Recipes;
 
-/*Globale variable - Sorry. Just for testing changing days*/
+/*Global variable - Sorry. Just for testing changing days*/
 date todayDate;
 
 /* Prototypes */
@@ -58,6 +58,7 @@ int main(void) {
     fridgeContent[1].expirationDate.day = 25;
     fridgeContent[1].weight = 1000;
 
+    /*Global variable*/
     todayDate = makeDayToday();
 
     mainMenu(fridgeContent);
