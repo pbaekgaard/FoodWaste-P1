@@ -30,7 +30,7 @@ void mainMenu(ingredients *);
 void contents(ingredients *);
 void printFridgeContents(ingredients *);
 void recipeMenu(ingredients*);
-void printRecipeList(Recipes*, int);
+void printRecipeList(Recipes*);
 void printDate(ingredients *, int);
 void returnMenu(char *, ingredients *);
 void clearScreen(void);
@@ -198,13 +198,13 @@ void recipeMenu(ingredients *fridgeContent) {
 
 
     clearScreen();
-    printRecipeList(recipeList, numberOfRecipes);
+    printRecipeList(recipeList);
     printf("\nWhich recipe do you want to see? (press R to return to the main menu):\n");
 
     do{
         /*Makes sure the user inputs a valid number*/
         if (recipeNumber == 0 || recipeNumber > (sizeof(recipeList)/(sizeof(recipeList[0])))) {
-            printRecipeList(recipeList, numberOfRecipes);
+            printRecipeList(recipeList);
             printf("\nPlease enter a valid Recipe Number. Or type 'R' to Return:\n");
         }
         scanf("%s", choice);
@@ -219,12 +219,12 @@ void recipeMenu(ingredients *fridgeContent) {
     openRecipe(recipeList[recipeNumber  - 1], fridgeContent);
 }
 
-void printRecipeList(Recipes* recipeList, int numberOfRecipes) {
+void printRecipeList(Recipes* recipeList) {
     int i;
     clearScreen();
     printf("This is a list of the recipes in your cookbook\n");
     /*Print the list of recipes*/
-    for(i = 1; i <= numberOfRecipes; i++){
+    for(i = 1; i <= NUMBEROFRECIPES; i++){
         printf("%d. %s\n", i, recipeList[i - 1].name);
     }
 }
