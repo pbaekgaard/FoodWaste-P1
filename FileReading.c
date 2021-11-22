@@ -14,7 +14,7 @@ struct ing {
 };
 
 int main(void) {
-    int i = 0, j;
+    int i = 0, j = 0;
     struct ing test[100];
 
     /* Pointer to a File */
@@ -33,13 +33,22 @@ int main(void) {
     
     /* Scans string into the structs name and integer into the structs weight until end of file */
     while(!feof(readFile)){
-        fscanf(readFile, "%s %lf %d %d %d", &test[i].name, &test[i].weight,  &test[i].expirationDate.year, &test[i].expirationDate.month, &test[i].expirationDate.day);
+        fscanf(readFile, " %s %lf %d %d %d %d %d %d", &test[i].name, &test[i].weight, &test[i].expirationDate.year, &test[i].expirationDate.month, &test[i].expirationDate.day,
+                                            &test[i].openedDate.year, &test[i].openedDate.month, &test[i].openedDate.day);
         i++;
     }
 
-    /* Prints the elements of each struct in the array of structs */
-    for(j = 0; j < i; j++){
-        printf("%s %.2lf %d %d %d\n", &test[j].name, test[j].weight, test[j].expirationDate.year, test[j].expirationDate.month, test[j].expirationDate.day);
+    if(test->openedDate.year == 0 && test->openedDate.month == 0 && test->openedDate.day == 0) {
+        for(; j < i; j++){
+            printf("%s %.2lf %d %d %d\n", &test[j].name, test[j].weight, test[j].expirationDate.year, test[j].expirationDate.month, test[j].expirationDate.day);
+        }
+    }
+    else {
+        /* Prints the elements of each struct in the array of structs */
+        for(; j < i; j++){
+            printf("%s %.2lf %d %d %d %d %d %d\n", &test[j].name, test[j].weight, test[j].expirationDate.year, test[j].expirationDate.month, test[j].expirationDate.day,
+                                                   test[j].openedDate.year, test[j].openedDate.month, test[j].openedDate.day);
+        }
     }
     
     /* Closes file */
