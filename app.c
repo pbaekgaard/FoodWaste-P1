@@ -29,6 +29,7 @@ typedef struct Recipes {
 date todayDate;
 
 /* Prototypes */
+void getFridgeContents(ingredients *);
 void mainMenu(ingredients *);
 date makeDayToday();
 void tomorrow(date *);
@@ -73,7 +74,7 @@ void getFridgeContents(ingredients *fridgeContent) {
     
     /* Scans string into the structs name and integer into the structs weight until end of file */
     while(!feof(readFile)){
-        fscanf(readFile, " %s %lf %d %d %d %d %d %d", &fridgeContent[i].name, &fridgeContent[i].weight, &fridgeContent[i].expirationDate.year, &fridgeContent[i].expirationDate.month, &fridgeContents[i].expirationDate.day,
+        fscanf(readFile, " %s %lf %d %d %d %d %d %d", fridgeContent[i].name, &fridgeContent[i].weight, &fridgeContent[i].expirationDate.year, &fridgeContent[i].expirationDate.month, &fridgeContent[i].expirationDate.day,
                                             &fridgeContent[i].openedDate.year, &fridgeContent[i].openedDate.month, &fridgeContent[i].openedDate.day);
         i++;
     }
