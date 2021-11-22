@@ -98,7 +98,6 @@ void contents(ingredients *fridgeContent) {
     printf("Your fridge contains\n");
     printFridgeContents(fridgeContent);
     returnMenu("Main menu", fridgeContent);
-    
 }
 
 void printFridgeContents(ingredients *fridgeContent) {
@@ -213,8 +212,6 @@ void openRecipe(int recipeNumber, Recipes recipe, ingredients *fridgeContent){
     }
     returnMenu("Recipes", fridgeContent);
 }
-
-
 
 void clearScreen(void) {
     system("@cls||clear");
