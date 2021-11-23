@@ -528,13 +528,13 @@ void openRecipe(Recipes recipe, ingredients *fridgeContent){
 }
 
 int colourization(ingredients *fridgeContent, char *ingredientName, double neededWeight){
-    int i, j = 0;
+    int i;
     for(i = 0; i < FRIDGESIZE; i++){
         if(strcmp(ingredientName, fridgeContent[i].name) == 0) {
             if(fridgeContent[i].weight < neededWeight){
                 return(0);
             }
-            if(dateComparatorenator(fridgeContent[i].expirationDate, fridgeContent[i].openedDate) == -1) {
+            if(dateComparatorenator(fridgeContent[i].expirationDate, fridgeContent[i].open.isopen.openDate) == -1) {
                 return(0);
             }
             return(1);
