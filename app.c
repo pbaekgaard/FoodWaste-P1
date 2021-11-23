@@ -30,6 +30,8 @@ date todayDate;
 /* Prototypes */
 void getFridgeContents(ingredients *);
 void mainMenu(ingredients *);
+void sortContent(ingredients *);
+int contentCompare(const void *, const void *);
 date makeDayToday();
 void tomorrow(date *);
 int leapYear(int);
@@ -86,6 +88,7 @@ void mainMenu(ingredients *fridgeContent) {
     char choice;
     int run = 1;
 
+    sortContent(fridgeContent);
     while(run) {
         clearScreen();
         printf("Welcome to SmartFrAPP\n---------------------\n");
@@ -121,6 +124,25 @@ void mainMenu(ingredients *fridgeContent) {
     }
 }
 
+void sortContent(ingredients *fridgeContent) {
+    qsort(fridgeContent, FRIDGESIZE, sizeof(fridgeContent[0]), contentCompare);
+}
+
+int contentCompare(const void *content1, const void *content2) {
+    date dateContent1 = ((ingredients *)content1)->expirationDate;
+    date dateContent2 = ((ingredients *)content2)->expirationDate;
+
+    if((dateContent1.year > dateContent2.year) ||
+       (dateContent1.year == dateContent2.year && dateContent1.month > dateContent2.month) ||
+       (dateContent1.year == dateContent2.year && dateContent1.month == dateContent2.month && dateContent1.day > dateContent2.day)) {
+        return 1;
+    }
+    else if(dateContent1.year == dateContent2.year && dateContent1.month == dateContent2.month && dateContent1.day == dateContent2.day) {
+        return 0;
+    }   
+    else
+        return -1;
+}
 
 date makeDayToday(){
     date tempDate;
