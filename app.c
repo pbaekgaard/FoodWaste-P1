@@ -36,6 +36,7 @@ int leapYear(int);
 void contents(ingredients *);
 void printFridgeContents(ingredients *);
 void recipeMenu(ingredients*);
+int colourization(ingredients *, char *, double);
 void printRecipeList(Recipes*);
 int dateComparatorenator(date, date);
 void printDate(ingredients *, int);
@@ -300,45 +301,45 @@ void recipeMenu(ingredients *fridgeContent) {
     /*Declaration of different recipes*/
     Recipes pizza =  {"Pizza",
 
-                     {{"Strong bread flour", 300}, {"Instant yeast", 3.1},
-                     {"Salt", 5.69}, {"Olive Oil", 13.69}, {"Passata", 95.1},
-                     {"Dried Basil", 2}, {"Garlic", 4}, {"Mozzarella", 125},
-                     {"Parmesan", 10}, {"Cherry tomatoes", 85}},
+                     {{"Bread_flour", 300}, {"Instant_yeast", 3.1},
+                     {"Salt", 5.69}, {"Olive_oil", 13.69}, {"Passata", 95.1},
+                     {"Dried_basil", 2}, {"Garlic", 4}, {"Mozzarella", 125},
+                     {"Parmesan", 10}, {"Cherry_tomatoes", 85}},
 
                      "db/recipes/pizza/instructions.txt"};
     
     Recipes lasagne = {"Lasagne",
 
                       {{"Onion", 200}, {"Garlic", 24},
-                      {"Ground beef", 400}, {"Oregano", 2}, {"Thyme", 1},
+                      {"Ground_beef", 400}, {"Oregano", 2}, {"Thyme", 1},
                       {"Carrots", 260}, {"Celery", 300}, {"Squash", 280},
-                      {"Tomato pure", 55}, {"Chopped tomatoes", 800},
-                      {"Vegetable broth", 100}, {"Olive oil", 30},
-                      {"Butter", 28.35}, {"Wheat flour", 15}, {"Milk", 300},
-                      {"Nutmeg", 1}, {"Mozzarella", 250}, {"Lasagne Plates", 200}},
+                      {"Tomato_puree", 55}, {"Chopped_tomatoes", 800},
+                      {"Vegetable_broth", 100}, {"Olive_oil", 30},
+                      {"Butter", 28.35}, {"Wheat_flour", 15}, {"Milk", 300},
+                      {"Nutmeg", 1}, {"Mozzarella", 250}, {"Lasagne_Plates", 200}},
 
                       "db/recipes/lasagne/instructions.txt"};
     
     Recipes burningLove = {"Burning Love",
 
                           {{"Potatoes", 600}, {"Milk", 100},
-                          {"Butter", 25}, {"salt", 2}, {"Bacon", 200},
-                          {"Onion", 200}, {"Pickled Beetroots", 100}},
+                          {"Butter", 25}, {"Salt", 2}, {"Bacon", 200},
+                          {"Onion", 200}, {"Pickled_beetroots", 100}},
 
                           "db/recipes/burninglove/instructions.txt"};
     
     Recipes meatLoaf = {"Meat Loaf",
 
-                       {{"Chopped lambmeat", 500}, {"Onion", 200},
+                       {{"Chopped_lambmeat", 500}, {"Onion", 200},
                        {"Garlic", 12}, {"Milk", 100}, {"Cream", 47.5},
                        {"Egg", 100}, {"Oats", 90}, {"Thyme", 18}, {"Rosemary", 6},
-                       {"Dried Tomatoes", 20}, {"Black Olives", 50}, {"Feta", 75},
-                       {"Baby Potatoes", 800}, {"Oliveoil", 15}, {"Butter", 14},
-                       {"Salt & pepper", 1}},
+                       {"Dried_tomatoes", 20}, {"Black_olives", 50}, {"Feta", 75},
+                       {"Baby_potatoes", 800}, {"Oliveoil", 15}, {"Butter", 14},
+                       {"Salt_&_pepper", 1}},
 
                        "db/recipes/meatloaf/instructions.txt"};  
 
-    Recipes ricePudding = {"Rice Pudding", {{"Porridge Rice", 484.38}, {"Water", 100},
+    Recipes ricePudding = {"Rice_pudding", {{"Porridge_rice", 484.38}, {"Water", 100},
                       {"Milk", 2000}, {"Salt", 3}, {"Cinnamon", 10},
                       {"Sugar", 16}, {"Butter", 20}}, "db/recipes/ricepudding/instructions.txt"};
 
@@ -385,6 +386,7 @@ void printRecipeList(Recipes* recipeList) {
 void openRecipe(Recipes recipe, ingredients *fridgeContent){
     int i;
     int j;
+    int k;
     clearScreen();
     printf("  -------------------------------------\n");
     printf("    %s recipe for 4. people\n", recipe.name);
@@ -394,6 +396,13 @@ void openRecipe(Recipes recipe, ingredients *fridgeContent){
     /*Prints each ingredient for the chosen recipe*/
     for(i = 0 ; i < sizeof(recipe.ingredients) / sizeof(recipe.ingredients[0]) ; i++){
         if (strcmp(recipe.ingredients[i].name, "\0")){
+
+            k = colourization(fridgeContent, recipe.ingredients[i].name, recipe.ingredients[i].weight);
+            if(k == 0){
+                printf("\033[31;1m");
+            } else {
+                printf("\033[0;32m");
+            }
             printf("    %s:", recipe.ingredients[i].name);
             for (j = 0; j < 20 - strlen(recipe.ingredients[i].name); j++) {
                 printf(" ");
@@ -401,12 +410,47 @@ void openRecipe(Recipes recipe, ingredients *fridgeContent){
             printf("%.2fg\n\n", recipe.ingredients[i].weight);
         }
     }
+    printf("\x1B[0m");
     printf("  -------------------------------------\n");
     printf("              INSTRUCTIONS\n");
     printf("  -------------------------------------\n");
     printInstructions(recipe);
     returnMenu("Recipes", fridgeContent);
 }
+
+int colourization(ingredients *fridgeContent, char *ing, double gram){
+    int i, j = 0, k = 0;
+    for(i = 0; i < FRIDGESIZE; i++){
+        j = strcmp(ing, fridgeContent[i].name);
+        if(j == 0) {
+            if(fridgeContent[i].weight < gram){
+                return(0);
+            }
+            if(dateComparatorenator(fridgeContent[i].expirationDate, fridgeContent[i].openedDate) < 0) {
+                return(0);
+            }
+            return(1);
+        }
+    }   
+    return(0);
+} 
+    /* |||| TO DO ||||*/
+    /* - Lav en for loop til at sammenligne weight
+       - Lav en for loop til at sammenligne dato 
+       - Lav farverne */
+
+    /* |||| FARVER |||| */ 
+    /*for(itemNumber = 0; itemNumber < FRIDGESIZE; itemNumber++) {
+    if(dateComparatorenator(fridgeContent[itemNumber].expirationDate, fridgeContent[itemNumber].openedDate) < 0) {
+        printf("\033[31;1m");
+    }
+    else if(dateComparatorenator(fridgeContent[itemNumber].expirationDate, fridgeContent[itemNumber].openedDate) > 0) {
+        printf("\033[0;32m");
+    }
+    else {
+        printf("\033[33;1m");
+    }    
+}*/
 
 void printInstructions(Recipes recipe) {
     FILE *fp = fopen(recipe.filename, "r");
