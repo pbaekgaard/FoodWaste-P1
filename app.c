@@ -135,15 +135,12 @@ void printNotifications(ingredients *fridgeContent){
         }
     }
 
-    for (i = 0; i <= FRIDGESIZE; i++) {
+    for (i = 0; i < FRIDGESIZE; i++) {
         if (dateComparatorenator(fridgeContent[i].expirationDate, todayDate) == 0) {
             printf("\033[33;1m%s IS EXPIRING\n\x1B[0m", fridgeContent[i].name);
         } 
-        if (strcmp(fridgeContent[i].name, "\0") == 0) {
-            printf("\n\n");
-        }
     }
-    printf("###########################\n");
+    printf("\n\n###########################\n");
 
     /*EXPIRED*/
 
