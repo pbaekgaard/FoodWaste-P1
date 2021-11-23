@@ -62,7 +62,7 @@ void getFridgeContents(ingredients *fridgeContent) {
     FILE *readFile;
 
     /* Name of file */
-    char *filename = "ingredients.txt";
+    char *filename = "db/fridge/ingredients.txt";
 
     /* Open and read file */
     readFile = fopen(filename, "r");
@@ -305,7 +305,7 @@ void recipeMenu(ingredients *fridgeContent) {
                      {"Dried Basil", 2}, {"Garlic", 4}, {"Mozzarella", 125},
                      {"Parmesan", 10}, {"Cherry tomatoes", 85}},
 
-                     "recipes/pizza/instructions.txt"};
+                     "db/recipes/pizza/instructions.txt"};
     
     Recipes lasagne = {"Lasagne",
 
@@ -317,7 +317,7 @@ void recipeMenu(ingredients *fridgeContent) {
                       {"Butter", 28.35}, {"Wheat flour", 15}, {"Milk", 300},
                       {"Nutmeg", 1}, {"Mozzarella", 250}, {"Lasagne Plates", 200}},
 
-                      "recipes/lasagne/instructions.txt"};
+                      "db/recipes/lasagne/instructions.txt"};
     
     Recipes burningLove = {"Burning Love",
 
@@ -325,7 +325,7 @@ void recipeMenu(ingredients *fridgeContent) {
                           {"Butter", 25}, {"salt", 2}, {"Bacon", 200},
                           {"Onion", 200}, {"Pickled Beetroots", 100}},
 
-                          "recipes/burninglove/instructions.txt"};
+                          "db/recipes/burninglove/instructions.txt"};
     
     Recipes meatLoaf = {"Meat Loaf",
 
@@ -336,11 +336,11 @@ void recipeMenu(ingredients *fridgeContent) {
                        {"Baby Potatoes", 800}, {"Oliveoil", 15}, {"Butter", 14},
                        {"Salt & pepper", 1}},
 
-                       "recipes/meatloaf/instructions.txt"};  
+                       "db/recipes/meatloaf/instructions.txt"};  
 
     Recipes ricePudding = {"Rice Pudding", {{"Porridge Rice", 484.38}, {"Water", 100},
                       {"Milk", 2000}, {"Salt", 3}, {"Cinnamon", 10},
-                      {"Sugar", 16}, {"Butter", 20}}, "recipes/ricepudding/instructions.txt"};
+                      {"Sugar", 16}, {"Butter", 20}}, "db/recipes/ricepudding/instructions.txt"};
 
     Recipes recipeList[NUMBEROFRECIPES]; 
     recipeList[0] = pizza;
