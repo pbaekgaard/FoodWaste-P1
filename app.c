@@ -415,15 +415,14 @@ void openRecipe(Recipes recipe, ingredients *fridgeContent){
     returnMenu("Recipes", fridgeContent);
 }
 
-int colourization(ingredients *fridgeContent, char *ing, double gram){
-    int i, j = 0, k = 0;
+int colourization(ingredients *fridgeContent, char *ingredientName, double neededWeight){
+    int i, j = 0;
     for(i = 0; i < FRIDGESIZE; i++){
-        j = strcmp(ing, fridgeContent[i].name);
-        if(j == 0) {
-            if(fridgeContent[i].weight < gram){
+        if(strcmp(ingredientName, fridgeContent[i].name) == 0) {
+            if(fridgeContent[i].weight < neededWeight){
                 return(0);
             }
-            if(dateComparatorenator(fridgeContent[i].expirationDate, fridgeContent[i].openedDate) < 0) {
+            if(dateComparatorenator(fridgeContent[i].expirationDate, fridgeContent[i].openedDate) == -1) {
                 return(0);
             }
             return(1);
