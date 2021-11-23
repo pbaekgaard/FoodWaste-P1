@@ -72,7 +72,6 @@ int main(void) {
 
 void getFridgeContents(ingredients *fridgeContent) {
     int i = 0;
-    int buffer;
     /* Pointer to a File */
     FILE *readFile;
 
@@ -94,7 +93,7 @@ void getFridgeContents(ingredients *fridgeContent) {
          fscanf(readFile, " %d %d %d %d", &fridgeContent[i].open.isopen.openDate.year, &fridgeContent[i].open.isopen.openDate.month, &fridgeContent[i].open.isopen.openDate.day, &fridgeContent[i].open.isopen.daysAfterOpen);
     }       
     else{
-        fscanf(readFile, " %d %d %d %d", &buffer, &buffer, &buffer, &fridgeContent[i].open.isopen.daysAfterOpen);
+        fscanf(readFile, " %d", &fridgeContent[i].open.isopen.daysAfterOpen);
     }
         i++;
     }
