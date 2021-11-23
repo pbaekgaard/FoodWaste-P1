@@ -30,6 +30,7 @@ date todayDate;
 /* Prototypes */
 void getFridgeContents(ingredients *);
 void mainMenu(ingredients *);
+void notifications(ingredients *);
 date makeDayToday();
 void tomorrow(date *);
 int leapYear(int);
@@ -95,7 +96,8 @@ void mainMenu(ingredients *fridgeContent) {
         printf("---------------------\n");
         printf("Q - Quit\n");
         printf("F - ENTER FUTURE\n");
-
+        printf("---------------------\n\n");
+        notifications(fridgeContent);
         scanf(" %c", &choice);
         flushInput();
         
@@ -121,6 +123,45 @@ void mainMenu(ingredients *fridgeContent) {
     }
 }
 
+void notifications(ingredients *fridgeContent){
+    int i = 0;
+    /*SOON TO EXPIRE*/
+    for(i = 0; i < FRIDGESIZE; i++) {
+        if (dateComparatorenator(fridgeContent[i].expirationDate, todayDate) == 0) {
+            printf("###########################\n");            
+            printf("         EXPIRING         \n");
+            printf("---------------------------\n");
+            break;
+        }
+    }
+    if (dateComparatorenator(fridgeContent[i].expirationDate, todayDate) != 0) {
+        printf("\n");
+    }
+    for (i = 0; i <= FRIDGESIZE; i++) {
+        if (dateComparatorenator(fridgeContent[i].expirationDate, todayDate) == 0) {
+            printf("\033[33;1m%s IS EXPIRING\n\x1B[0m", fridgeContent[i].name);
+        } 
+        if (strcmp(fridgeContent[i].name, "\0") == 0) {
+            printf("\n\n");
+        }
+    }
+    printf("###########################\n");
+
+    /*EXPIRED*/
+
+    for(i = 0; i < FRIDGESIZE; i++) {
+        if (dateComparatorenator(fridgeContent[i].expirationDate, todayDate) == -1) {
+            printf("         EXPIRED\n");
+            printf("---------------------------\n");
+            break;
+        }
+    }
+    for (i = 0; i < FRIDGESIZE; i++) {
+        if (dateComparatorenator(fridgeContent[i].expirationDate, todayDate) == -1) {
+            printf("\033[31;1m%s HAS EXPIRED\n\x1B[0m", fridgeContent[i].name);
+        }
+    }
+}
 
 date makeDayToday(){
     date tempDate;
@@ -202,10 +243,10 @@ void printFridgeContents(ingredients *fridgeContent) {
     int itemNumber, i;
 
     for(itemNumber = 0; itemNumber < FRIDGESIZE; itemNumber++) {
-        if(dateComparatorenator(fridgeContent[itemNumber].expirationDate, fridgeContent[itemNumber].openedDate) < 0) {
+        if(dateComparatorenator(fridgeContent[itemNumber].expirationDate, fridgeContent[itemNumber].openedDate) == -1) {
             printf("\033[31;1m");
         }
-        else if(dateComparatorenator(fridgeContent[itemNumber].expirationDate, fridgeContent[itemNumber].openedDate) > 0) {
+        else if(dateComparatorenator(fridgeContent[itemNumber].expirationDate, fridgeContent[itemNumber].openedDate) == 1) {
             printf("\033[0;32m");
         }
         else {
@@ -257,14 +298,25 @@ void printFridgeContents(ingredients *fridgeContent) {
 }
 
 int dateComparatorenator(date expirationDate, date openedDate) {
-    if((expirationDate.year > todayDate.year) ||
-       (expirationDate.year == todayDate.year && expirationDate.month > todayDate.month) ||
-       (expirationDate.year == todayDate.year && expirationDate.month == todayDate.month && expirationDate.day > todayDate.day)) {
-        return 1;
+    int i;
+    date soonToExpireDate = openedDate;
+
+    for(i = 1; i <= 2; i++) {
+        tomorrow(&soonToExpireDate);
     }
-    else if(expirationDate.year == todayDate.year && expirationDate.month == todayDate.month && expirationDate.day == todayDate.day) {
-        return 0;
-    }   
+
+    if((expirationDate.year > openedDate.year) ||
+       (expirationDate.year == openedDate.year && expirationDate.month > openedDate.month) ||
+       (expirationDate.year == openedDate.year && expirationDate.month == openedDate.month && expirationDate.day >= openedDate.day)) {
+        if((expirationDate.year > soonToExpireDate.year) ||
+           (expirationDate.year == soonToExpireDate.year && expirationDate.month > soonToExpireDate.month) ||
+           (expirationDate.year == soonToExpireDate.year && expirationDate.month == soonToExpireDate.month && expirationDate.day > soonToExpireDate.day)) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
+    }  
     else
         return -1;
 }
