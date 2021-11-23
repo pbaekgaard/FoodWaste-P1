@@ -43,6 +43,7 @@ date todayDate;
 void getFridgeContents(ingredients *);
 void updateExpDates (ingredients *);
 void mainMenu(ingredients *);
+void printNotifications(ingredients *);
 date makeDayToday();
 void tomorrow(date *);
 int leapYear(int);
@@ -137,7 +138,8 @@ void mainMenu(ingredients *fridgeContent) {
         printf("---------------------\n");
         printf("Q - Quit\n");
         printf("F - ENTER FUTURE\n");
-
+        printf("---------------------\n\n");
+        printNotifications(fridgeContent);
         scanf(" %c", &choice);
         flushInput();
         
@@ -163,6 +165,40 @@ void mainMenu(ingredients *fridgeContent) {
     }
 }
 
+void printNotifications(ingredients *fridgeContent){
+    int i = 0;
+    /*SOON TO EXPIRE*/
+    for(i = 0; i < FRIDGESIZE; i++) {
+        if (dateComparatorenator(fridgeContent[i].expirationDate, todayDate) == 0) {
+            printf("###########################\n");            
+            printf("         EXPIRING         \n");
+            printf("---------------------------\n");
+            break;
+        }
+    }
+
+    for (i = 0; i < FRIDGESIZE; i++) {
+        if (dateComparatorenator(fridgeContent[i].expirationDate, todayDate) == 0) {
+            printf("\033[33;1m%s IS EXPIRING\n\x1B[0m", fridgeContent[i].name);
+        } 
+    }
+    printf("\n\n###########################\n");
+
+    /*EXPIRED*/
+
+    for(i = 0; i < FRIDGESIZE; i++) {
+        if (dateComparatorenator(fridgeContent[i].expirationDate, todayDate) == -1) {
+            printf("         EXPIRED\n");
+            printf("---------------------------\n");
+            break;
+        }
+    }
+    for (i = 0; i < FRIDGESIZE; i++) {
+        if (dateComparatorenator(fridgeContent[i].expirationDate, todayDate) == -1) {
+            printf("\033[31;1m%s HAS EXPIRED\n\x1B[0m", fridgeContent[i].name);
+        }
+    }
+}
 
 date makeDayToday(){
     date tempDate;
@@ -244,10 +280,10 @@ void printFridgeContents(ingredients *fridgeContent) {
     int itemNumber, i;
 
     for(itemNumber = 0; itemNumber < FRIDGESIZE; itemNumber++) {
-        if(dateComparatorenator(fridgeContent[itemNumber].expirationDate, todayDate) < 0) {
+        if(dateComparatorenator(fridgeContent[itemNumber].expirationDate, todayDate) == -1) {
             printf("\033[31;1m");
         }
-        else if(dateComparatorenator(fridgeContent[itemNumber].expirationDate, todayDate) > 0) {
+        else if(dateComparatorenator(fridgeContent[itemNumber].expirationDate, todayDate) == 1) {
             printf("\033[0;32m");
         }
         else {
