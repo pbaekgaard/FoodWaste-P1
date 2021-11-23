@@ -6,16 +6,28 @@
 #define NUMBEROFRECIPES 5
 #define INSTRUCTIONLINELENGTH 256
 #define FRIDGESIZE 25
+#define TRUE 1
+#define FALSE 0
 
 typedef struct date {
     int year, month, day;
 } date;
 
+typedef struct isopen {
+    date openDate;
+    int daysAfterOpen;
+} isopen;
+
+typedef struct open {
+    int unopened;
+    isopen isopen;
+} open;
+
 typedef struct ingredients {
     char name[20];    
     double weight;
     date expirationDate;
-    date openedDate;
+    open open;
 } ingredients;
 
 typedef struct Recipes {
@@ -29,6 +41,7 @@ date todayDate;
 
 /* Prototypes */
 void getFridgeContents(ingredients *);
+void updateExpDates (ingredients *);
 void mainMenu(ingredients *);
 date makeDayToday();
 void tomorrow(date *);
@@ -51,6 +64,7 @@ int main(void) {
 
     todayDate = makeDayToday(); /*Global variable*/
     getFridgeContents(fridgeContent);
+    updateExpDates(fridgeContent);
     mainMenu(fridgeContent);
 
     return EXIT_SUCCESS;
@@ -74,12 +88,40 @@ void getFridgeContents(ingredients *fridgeContent) {
     
     /* Scans file into the structs name and integer into the structs weight until end of file */
     while(!feof(readFile)){
-        fscanf(readFile, " %s %lf %d %d %d %d %d %d", fridgeContent[i].name, &fridgeContent[i].weight, &fridgeContent[i].expirationDate.year, &fridgeContent[i].expirationDate.month, &fridgeContent[i].expirationDate.day,
-                                            &fridgeContent[i].openedDate.year, &fridgeContent[i].openedDate.month, &fridgeContent[i].openedDate.day);
+        fscanf(readFile, " %s %lf %d %d %d %d", fridgeContent[i].name, &fridgeContent[i].weight, &fridgeContent[i].expirationDate.year, &fridgeContent[i].expirationDate.month, &fridgeContent[i].expirationDate.day, &fridgeContent[i].open.unopened);
+    if (fridgeContent[i].open.unopened == FALSE){
+         fscanf(readFile, " %d %d %d %d", &fridgeContent[i].open.isopen.openDate.year, &fridgeContent[i].open.isopen.openDate.month, &fridgeContent[i].open.isopen.openDate.day, &fridgeContent[i].open.isopen.daysAfterOpen);
+    }       
+    else{
+        fscanf(readFile, " %d", &fridgeContent[i].open.isopen.daysAfterOpen);
+    }
         i++;
     }
     /* Closes file */
     fclose(readFile);
+}
+
+/* updates all expiration dates, if they have been opened*/
+void updateExpDates (ingredients *fridgeContent){
+    int i, j;
+    date openExp;
+    /*for loop that runs through every element of the fridgeContent*/ 
+    for ( i = 0; i < FRIDGESIZE; i++){    
+        /* checks if product is open*/
+        if (fridgeContent[i].open.unopened == FALSE){
+            openExp = fridgeContent[i].open.isopen.openDate;
+            /* calculates new expirationdate. Adds how long the product is fresh after opening to the date opened*/
+            for ( j = 0; j < fridgeContent[i].open.isopen.daysAfterOpen; j++){
+                tomorrow(&openExp); 
+            }
+            /*If the original exp date is larger than the updated exp date after opening. Updates the exp date.*/
+            if (dateComparatorenator(fridgeContent[i].expirationDate, openExp) == 1 || dateComparatorenator(fridgeContent[i].expirationDate, openExp) == 0){
+                fridgeContent[i].expirationDate.year = openExp.year;
+                fridgeContent[i].expirationDate.month = openExp.month;
+                fridgeContent[i].expirationDate.day = openExp.day;
+            }
+        }
+    } 
 }
 
 void mainMenu(ingredients *fridgeContent) {
@@ -135,44 +177,44 @@ date makeDayToday(){
     return tempDate;
 }
 
-void tomorrow(date *d){
-    switch(d->month){
+void tomorrow(date *date){
+    switch(date->month){
         case 1: case 3: case 5: case 7: case 8: case 10: case 12:
-            if(d->day < 31){
-                (d->day)++;
-            } else if(d->day == 31 && d->month == 12){
-                d->day = 1;
-                d->month = 1;
-                (d->year)++;
+            if(date->day < 31){
+                (date->day)++;
+            } else if(date->day == 31 && date->month == 12){
+                date->day = 1;
+                date->month = 1;
+                (date->year)++;
             } else{
-                d->day = 1;
-                (d->month)++;
+                date->day = 1;
+                (date->month)++;
             }
             break;
 
         case 4: case 6: case 9: case 11:
-            if(d->day < 30){
-                (d->day)++;
+            if(date->day < 30){
+                (date->day)++;
             } else{
-                d->day = 1;
-                (d->month)++;
+                date->day = 1;
+                (date->month)++;
             }
             break;
         case 2:
-            if(leapYear(d->year)){
-                if(d->day < 29){
-                    (d->day)++;
+            if(leapYear(date->year)){
+                if(date->day < 29){
+                    (date->day)++;
                 } else{
-                    d->day = 1;
-                    (d->month)++;
+                    date->day = 1;
+                    (date->month)++;
                 }
             }
             else{
-                if(d->day < 28){
-                    (d->day)++;
+                if(date->day < 28){
+                    (date->day)++;
                 } else{
-                    d->day = 1;
-                    (d->month)++;
+                    date->day = 1;
+                    (date->month)++;
                 }
             }
             break;
@@ -202,10 +244,10 @@ void printFridgeContents(ingredients *fridgeContent) {
     int itemNumber, i;
 
     for(itemNumber = 0; itemNumber < FRIDGESIZE; itemNumber++) {
-        if(dateComparatorenator(fridgeContent[itemNumber].expirationDate, fridgeContent[itemNumber].openedDate) < 0) {
+        if(dateComparatorenator(fridgeContent[itemNumber].expirationDate, todayDate) < 0) {
             printf("\033[31;1m");
         }
-        else if(dateComparatorenator(fridgeContent[itemNumber].expirationDate, fridgeContent[itemNumber].openedDate) > 0) {
+        else if(dateComparatorenator(fridgeContent[itemNumber].expirationDate, todayDate) > 0) {
             printf("\033[0;32m");
         }
         else {
@@ -246,25 +288,36 @@ void printFridgeContents(ingredients *fridgeContent) {
             printf(" ");
         }
 
-        if(fridgeContent[itemNumber].openedDate.day == 0) {
+        if(fridgeContent[itemNumber].open.unopened == TRUE) {
             printf("   UNOPENED\n");
         }
         else {
-            printf("   Opened on: %d/%d/%d\n", fridgeContent[itemNumber].openedDate.year, fridgeContent[itemNumber].openedDate.month, fridgeContent[itemNumber].openedDate.day);
+            printf("   Opened on: %d/%d/%d\n", fridgeContent[itemNumber].open.isopen.openDate.year, fridgeContent[itemNumber].open.isopen.openDate.month, fridgeContent[itemNumber].open.isopen.openDate.day);
         }
         printf("\x1B[0m");
     }
 }
 
 int dateComparatorenator(date expirationDate, date openedDate) {
-    if((expirationDate.year > todayDate.year) ||
-       (expirationDate.year == todayDate.year && expirationDate.month > todayDate.month) ||
-       (expirationDate.year == todayDate.year && expirationDate.month == todayDate.month && expirationDate.day > todayDate.day)) {
-        return 1;
+    int i;
+    date soonToExpireDate = openedDate;
+
+    for(i = 1; i <= 2; i++) {
+        tomorrow(&soonToExpireDate);
     }
-    else if(expirationDate.year == todayDate.year && expirationDate.month == todayDate.month && expirationDate.day == todayDate.day) {
-        return 0;
-    }   
+
+    if((expirationDate.year > openedDate.year) ||
+       (expirationDate.year == openedDate.year && expirationDate.month > openedDate.month) ||
+       (expirationDate.year == openedDate.year && expirationDate.month == openedDate.month && expirationDate.day >= openedDate.day)) {
+        if((expirationDate.year > soonToExpireDate.year) ||
+           (expirationDate.year == soonToExpireDate.year && expirationDate.month > soonToExpireDate.month) ||
+           (expirationDate.year == soonToExpireDate.year && expirationDate.month == soonToExpireDate.month && expirationDate.day > soonToExpireDate.day)) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
+    }  
     else
         return -1;
 }
