@@ -30,7 +30,7 @@ date todayDate;
 /* Prototypes */
 void getFridgeContents(ingredients *);
 void mainMenu(ingredients *);
-void notifications(ingredients *);
+void printNotifications(ingredients *);
 date makeDayToday();
 void tomorrow(date *);
 int leapYear(int);
@@ -97,7 +97,7 @@ void mainMenu(ingredients *fridgeContent) {
         printf("Q - Quit\n");
         printf("F - ENTER FUTURE\n");
         printf("---------------------\n\n");
-        notifications(fridgeContent);
+        printNotifications(fridgeContent);
         scanf(" %c", &choice);
         flushInput();
         
@@ -123,7 +123,7 @@ void mainMenu(ingredients *fridgeContent) {
     }
 }
 
-void notifications(ingredients *fridgeContent){
+void printNotifications(ingredients *fridgeContent){
     int i = 0;
     /*SOON TO EXPIRE*/
     for(i = 0; i < FRIDGESIZE; i++) {
