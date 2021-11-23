@@ -386,19 +386,16 @@ void printRecipeList(Recipes* recipeList) {
 void openRecipe(Recipes recipe, ingredients *fridgeContent){
     int i;
     int j;
-    int k;
     clearScreen();
     printf("  -------------------------------------\n");
-    printf("    %s recipe for 4. people\n", recipe.name);
+    printf("    %s recipe for 4 people\n", recipe.name);
     printf("  -------------------------------------\n");
     printf("              INGREDIENTS\n");
     printf("  -------------------------------------\n");
     /*Prints each ingredient for the chosen recipe*/
     for(i = 0 ; i < sizeof(recipe.ingredients) / sizeof(recipe.ingredients[0]) ; i++){
         if (strcmp(recipe.ingredients[i].name, "\0")){
-
-            k = colourization(fridgeContent, recipe.ingredients[i].name, recipe.ingredients[i].weight);
-            if(k == 0){
+            if(colourization(fridgeContent, recipe.ingredients[i].name, recipe.ingredients[i].weight) == 0){
                 printf("\033[31;1m");
             } else {
                 printf("\033[0;32m");
