@@ -596,13 +596,3 @@ void flushInput(void) {
     char flush;
     while((flush = getchar()) != '\n');
 }
-
-int arrayIngredientCheck(char *ingredient){
-    if(strcmp(ingredient, "Bread_flour") || "Instant_yeast" ||
-                      "Salt" ||  "Olive_oil" || "Passata" ||
-                      "Dried_basil" || "Garlic" || "Mozzarella" ||
-                      "Parmesan" || "Cherry_tomatoes"){
-                         return 1;
-                     }
-    return 1;
-}
