@@ -10,6 +10,11 @@
 #define FALSE 0
 #define UNKNOWN -1
 #define MAXINGREDIENTS 100
+#define RED "\033[31;1m"
+#define GREEN "\033[0;32m"
+#define YELLOW "\033[33;1m"
+#define WHITE "\x1B[0m"
+#define PURPLE "\033[0;34m"
 
 typedef struct date {
     int year, month, day;
@@ -40,8 +45,10 @@ typedef struct Recipes {
 
 /*Global variable - Sorry. Just for testing changing days*/
 date todayDate;
+int numberOfLines = 0;
 
 /* Prototypes */
+int getFridgeSize(ingredients *);
 void getFridgeContents(ingredients *);
 void updateExpDates (ingredients *);
 void mainMenu(ingredients *);
@@ -65,7 +72,8 @@ void openRecipe(Recipes , ingredients *);
 void printInstructions(Recipes);
 
 int main(void) {
-    ingredients fridgeContent[FRIDGESIZE];
+    ingredients *fridgeContent = (ingredients *) malloc(1);
+    fridgeContent = (ingredients *) realloc(fridgeContent, sizeof(ingredients) * getFridgeSize(fridgeContent));
 
     todayDate = makeDayToday(); /*Global variable*/
     getFridgeContents(fridgeContent);
@@ -74,6 +82,26 @@ int main(void) {
     mainMenu(fridgeContent);
 
     return EXIT_FAILURE;
+}
+
+int getFridgeSize(ingredients *fridgeContent) {
+    FILE *fileptr;
+    char *fileName = "db/fridge/ingredients.txt", ch;
+
+    fileptr = fopen(fileName, "r");
+
+    ch = getc(fileptr);
+
+    while(ch != EOF) {
+        if(ch == '\n') {
+            numberOfLines++;
+        }
+        ch = getc(fileptr);
+    }
+    numberOfLines++;
+    fclose(fileptr);
+    
+    return numberOfLines;
 }
 
 void getFridgeContents(ingredients *fridgeContent) {
@@ -113,6 +141,7 @@ void updateExpDates (ingredients *fridgeContent){
     date openExp;
     /*for loop that runs through every element of the fridgeContent*/ 
     for ( i = 0; i < FRIDGESIZE; i++){ 
+        /* Checks if expiration date is known */
         if((fridgeContent[i].expirationDate.day != UNKNOWN && fridgeContent[i].expirationDate.month != UNKNOWN && fridgeContent[i].expirationDate.year != UNKNOWN)) {
             /* checks if product is open*/
             if(fridgeContent[i].open.opened == TRUE){
@@ -163,6 +192,7 @@ void mainMenu(ingredients *fridgeContent) {
             recipeMenu(fridgeContent);
             break;
         case 'Q': case 'q':
+            free(fridgeContent);
             exit(0);
             break;
         case 'F': case 'f':
@@ -206,7 +236,9 @@ void printNotifications(ingredients *fridgeContent){
 
     for (i = 0; i < FRIDGESIZE; i++) {
         if(dateComparatorenator(fridgeContent[i].expirationDate, todayDate) == 0) {
-            printf("\033[33;1m%s IS EXPIRING\n\x1B[0m", fridgeContent[i].name);
+            printf(YELLOW);
+            printf("%s IS EXPIRING\n", fridgeContent[i].name);
+            printf(WHITE);
         } 
     }
     printf("\n\n###########################\n");
@@ -224,7 +256,9 @@ void printNotifications(ingredients *fridgeContent){
     for (i = 0; i < FRIDGESIZE; i++) {
         if(!(fridgeContent[i].expirationDate.day == UNKNOWN || fridgeContent[i].expirationDate.month == UNKNOWN || fridgeContent[i].expirationDate.year == UNKNOWN) 
             && dateComparatorenator(fridgeContent[i].expirationDate, todayDate) == -1) {
-            printf("\033[31;1m%s HAS EXPIRED\n\x1B[0m", fridgeContent[i].name);
+            printf(RED);
+            printf("%s HAS EXPIRED\n", fridgeContent[i].name);
+            printf(WHITE);
         }
     }
 }
@@ -315,16 +349,16 @@ void printFridgeContents(ingredients *fridgeContent) {
             (fridgeContent[itemNumber].open.opened == FALSE && (fridgeContent[itemNumber].open.isopen.openDate.day == UNKNOWN ||
             fridgeContent[itemNumber].open.isopen.openDate.month == UNKNOWN || fridgeContent[itemNumber].open.isopen.openDate.year == UNKNOWN ||
             fridgeContent[itemNumber].open.isopen.daysAfterOpen == UNKNOWN))) {
-            printf("\033[0;34m");
+            printf(PURPLE);
         }
         else if(dateComparatorenator(fridgeContent[itemNumber].expirationDate, todayDate) == -1) {
-            printf("\033[31;1m");
+            printf(RED);
         }
         else if(dateComparatorenator(fridgeContent[itemNumber].expirationDate, todayDate) == 1) {
-            printf("\033[0;32m");
+            printf(GREEN);
         }
         else {
-            printf("\033[33;1m");
+            printf(YELLOW);
         }
         if(strcmp(fridgeContent[itemNumber].name, "-1") == 0) {
             strcpy(fridgeContent[itemNumber].name, "?????????");
@@ -392,7 +426,7 @@ void printFridgeContents(ingredients *fridgeContent) {
         }
         else printf("   N/A\n");
 
-        printf("\x1B[0m");
+        printf(WHITE);
     }
 }
 
@@ -440,6 +474,7 @@ void returnMenu(char *menu, ingredients *fridgeContent) {
             }
         }
         else if(choice == 'Q' || choice == 'q') {
+            free(fridgeContent);
             exit(0);
         }
     } while(!(choice == 'R' || choice == 'r' || choice == 'Q' || choice == 'q'));
@@ -541,22 +576,15 @@ void printRecipeList(Recipes* recipeList, ingredients *fridgeContent) {
         
         for(k = 0 ; k < (counter) ; k++){
             if(colourization(fridgeContent, recipeList[i-1].ingredients[k].name, recipeList[i-1].ingredients[k].weight) == 0){
-                printf("\033[31;1m");
+                printf(RED);
                 break;
             }
-            printf("\033[0;32m");
+            printf(GREEN);
                 
         }
-
-        /*for(k = 0 ; k < counter ; k++){
-            if(colourization(fridgeContent, recipeList[k - 1].ingredients[j].name, recipeList[k - 1].ingredients[j].weight) == 0){
-                bool = 0;
-            }
-        }
-        */
         printf("%d. %s\n", i, recipeList[i - 1].name);
     }
-    printf("\x1B[0m");
+    printf(WHITE);
 }
 
 void openRecipe(Recipes recipe, ingredients *fridgeContent){
@@ -572,9 +600,9 @@ void openRecipe(Recipes recipe, ingredients *fridgeContent){
     for(i = 0 ; i < MAXINGREDIENTS ; i++){
         if(strcmp(recipe.ingredients[i].name, "\0")){
             if(colourization(fridgeContent, recipe.ingredients[i].name, recipe.ingredients[i].weight) == 0){
-                printf("\033[31;1m");
+                printf(RED);
             } else {
-                printf("\033[0;32m");
+                printf(GREEN);
             }
             if(strcmp(recipe.ingredients[i].name, "Last_element")){
                 printf("    %s:", recipe.ingredients[i].name);
@@ -585,7 +613,7 @@ void openRecipe(Recipes recipe, ingredients *fridgeContent){
             }
         }
     }
-    printf("\x1B[0m");
+    printf(WHITE);
     printf("  -------------------------------------\n");
     printf("              INSTRUCTIONS\n");
     printf("  -------------------------------------\n");
