@@ -19,7 +19,7 @@ typedef struct isopen {
 } isopen;
 
 typedef struct open {
-    int unopened;
+    int opened;
     isopen isopen;
 } open;
 
@@ -92,8 +92,8 @@ void getFridgeContents(ingredients *fridgeContent) {
     
     /* Scans file into the structs name and integer into the structs weight until end of file */
     while(!feof(readFile)){
-        fscanf(readFile, " %s %lf %d %d %d %d", fridgeContent[i].name, &fridgeContent[i].weight, &fridgeContent[i].expirationDate.year, &fridgeContent[i].expirationDate.month, &fridgeContent[i].expirationDate.day, &fridgeContent[i].open.unopened);
-    if (fridgeContent[i].open.unopened == FALSE){
+        fscanf(readFile, " %s %lf %d %d %d %d", fridgeContent[i].name, &fridgeContent[i].weight, &fridgeContent[i].expirationDate.year, &fridgeContent[i].expirationDate.month, &fridgeContent[i].expirationDate.day, &fridgeContent[i].open.opened);
+    if (fridgeContent[i].open.opened == TRUE){
          fscanf(readFile, " %d %d %d %d", &fridgeContent[i].open.isopen.openDate.year, &fridgeContent[i].open.isopen.openDate.month, &fridgeContent[i].open.isopen.openDate.day, &fridgeContent[i].open.isopen.daysAfterOpen);
     }       
     else{
@@ -112,7 +112,7 @@ void updateExpDates (ingredients *fridgeContent){
     /*for loop that runs through every element of the fridgeContent*/ 
     for ( i = 0; i < FRIDGESIZE; i++){    
         /* checks if product is open*/
-        if (fridgeContent[i].open.unopened == FALSE){
+        if (fridgeContent[i].open.opened == TRUE){
             openExp = fridgeContent[i].open.isopen.openDate;
             /* calculates new expirationdate. Adds how long the product is fresh after opening to the date opened*/
             for ( j = 0; j < fridgeContent[i].open.isopen.daysAfterOpen; j++){
@@ -348,7 +348,7 @@ void printFridgeContents(ingredients *fridgeContent) {
             printf(" ");
         }
 
-        if(fridgeContent[itemNumber].open.unopened == TRUE) {
+        if(fridgeContent[itemNumber].open.opened == FALSE) {
             printf("   UNOPENED\n");
         }
         else {
@@ -542,23 +542,6 @@ int colourization(ingredients *fridgeContent, char *ingredientName, double neede
     }   
     return(0);
 } 
-    /* |||| TO DO ||||*/
-    /* - Lav en for loop til at sammenligne weight
-       - Lav en for loop til at sammenligne dato 
-       - Lav farverne */
-
-    /* |||| FARVER |||| */ 
-    /*for(itemNumber = 0; itemNumber < FRIDGESIZE; itemNumber++) {
-    if(dateComparatorenator(fridgeContent[itemNumber].expirationDate, fridgeContent[itemNumber].openedDate) < 0) {
-        printf("\033[31;1m");
-    }
-    else if(dateComparatorenator(fridgeContent[itemNumber].expirationDate, fridgeContent[itemNumber].openedDate) > 0) {
-        printf("\033[0;32m");
-    }
-    else {
-        printf("\033[33;1m");
-    }    
-}*/
 
 void printInstructions(Recipes recipe) {
     FILE *fp = fopen(recipe.filename, "r");
