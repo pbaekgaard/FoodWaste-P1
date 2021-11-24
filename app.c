@@ -62,8 +62,6 @@ void clearScreen(void);
 void flushInput(void);
 void openRecipe(Recipes , ingredients *);
 void printInstructions(Recipes);
-int arrayIngredientCheck(char *);
-
 
 int main(void) {
     ingredients fridgeContent[FRIDGESIZE];
