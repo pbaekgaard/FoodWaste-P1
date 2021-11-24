@@ -9,6 +9,7 @@
 #define TRUE 1
 #define FALSE 0
 #define UNKNOWN -1
+#define MAXINGREDIENTS 100
 
 typedef struct date {
     int year, month, day;
@@ -20,7 +21,7 @@ typedef struct isopen {
 } isopen;
 
 typedef struct open {
-    int unopened;
+    int opened;
     isopen isopen;
 } open;
 
@@ -33,7 +34,7 @@ typedef struct ingredients {
 
 typedef struct Recipes {
     char* name;
-    ingredients ingredients[100];
+    ingredients ingredients[MAXINGREDIENTS];
     char *filename;
 } Recipes;
 
@@ -54,7 +55,7 @@ void contents(ingredients *);
 void printFridgeContents(ingredients *);
 void recipeMenu(ingredients*);
 int colourization(ingredients *, char *, double);
-void printRecipeList(Recipes*);
+void printRecipeList(Recipes*, ingredients *fridgeContent);
 int dateComparatorenator(date, date);
 void printDate(ingredients *, int);
 void returnMenu(char *, ingredients *);
@@ -62,7 +63,6 @@ void clearScreen(void);
 void flushInput(void);
 void openRecipe(Recipes , ingredients *);
 void printInstructions(Recipes);
-
 
 int main(void) {
     ingredients fridgeContent[FRIDGESIZE];
@@ -94,8 +94,8 @@ void getFridgeContents(ingredients *fridgeContent) {
     
     /* Scans file into the structs name and integer into the structs weight until end of file */
     while(!feof(readFile)){
-        fscanf(readFile, " %s %lf %d %d %d %d", fridgeContent[i].name, &fridgeContent[i].weight, &fridgeContent[i].expirationDate.year, &fridgeContent[i].expirationDate.month, &fridgeContent[i].expirationDate.day, &fridgeContent[i].open.unopened);
-        if (fridgeContent[i].open.unopened == FALSE){
+        fscanf(readFile, " %s %lf %d %d %d %d", fridgeContent[i].name, &fridgeContent[i].weight, &fridgeContent[i].expirationDate.year, &fridgeContent[i].expirationDate.month, &fridgeContent[i].expirationDate.day, &fridgeContent[i].open.opened);
+        if (fridgeContent[i].open.opened == TRUE){
             fscanf(readFile, " %d %d %d %d", &fridgeContent[i].open.isopen.openDate.year, &fridgeContent[i].open.isopen.openDate.month, &fridgeContent[i].open.isopen.openDate.day, &fridgeContent[i].open.isopen.daysAfterOpen);
         }       
         else{
@@ -115,7 +115,7 @@ void updateExpDates (ingredients *fridgeContent){
     for ( i = 0; i < FRIDGESIZE; i++){ 
         if((fridgeContent[i].expirationDate.day != UNKNOWN && fridgeContent[i].expirationDate.month != UNKNOWN && fridgeContent[i].expirationDate.year != UNKNOWN)) {
             /* checks if product is open*/
-            if (fridgeContent[i].open.unopened == FALSE){
+            if (fridgeContent[i].open.opened == TRUE){
                 openExp = fridgeContent[i].open.isopen.openDate;
                 /* calculates new expirationdate. Adds how long the product is fresh after opening to the date opened*/
                 for ( j = 0; j < fridgeContent[i].open.isopen.daysAfterOpen; j++){
@@ -369,7 +369,7 @@ void printFridgeContents(ingredients *fridgeContent) {
         }
         else printf("???\?/?\?/??");
 
-        if (!(fridgeContent[itemNumber].expirationDate.day == UNKNOWN || fridgeContent[itemNumber].expirationDate.month == UNKNOWN || fridgeContent[itemNumber].expirationDate.year == UNKNOWN)) {
+      if (!(fridgeContent[itemNumber].expirationDate.day == UNKNOWN || fridgeContent[itemNumber].expirationDate.month == UNKNOWN || fridgeContent[itemNumber].expirationDate.year == UNKNOWN)) {
             if(fridgeContent[itemNumber].expirationDate.month < 10) {
                printf(" ");
             } 
@@ -377,10 +377,9 @@ void printFridgeContents(ingredients *fridgeContent) {
                printf(" ");
             }         
         }
-
-
-        if(!(fridgeContent[itemNumber].open.unopened == UNKNOWN)) {
-            if(fridgeContent[itemNumber].open.unopened == TRUE) {
+      
+      if(!(fridgeContent[itemNumber].open.opened == UNKNOWN)) {
+            if(fridgeContent[itemNumber].open.opened == FALSE) {
                 printf("   UNOPENED\n");
             }
             else {
@@ -455,7 +454,7 @@ void recipeMenu(ingredients *fridgeContent) {
                      {{"Bread_flour", 300}, {"Instant_yeast", 3.1},
                      {"Salt", 5.69}, {"Olive_oil", 13.69}, {"Passata", 95.1},
                      {"Dried_basil", 2}, {"Garlic", 4}, {"Mozzarella", 125},
-                     {"Parmesan", 10}, {"Cherry_tomatoes", 85}},
+                     {"Parmesan", 10}, {"Cherry_tomatoes", 85}, {"Last_element"}},
 
                      "db/recipes/pizza/instructions.txt"};
     
@@ -467,7 +466,7 @@ void recipeMenu(ingredients *fridgeContent) {
                       {"Tomato_puree", 55}, {"Chopped_tomatoes", 800},
                       {"Vegetable_broth", 100}, {"Olive_oil", 30},
                       {"Butter", 28.35}, {"Wheat_flour", 15}, {"Milk", 300},
-                      {"Nutmeg", 1}, {"Mozzarella", 250}, {"Lasagne_Plates", 200}},
+                      {"Nutmeg", 1}, {"Mozzarella", 250}, {"Lasagne_Plates", 200}, {"Last_element"}},
 
                       "db/recipes/lasagne/instructions.txt"};
     
@@ -475,7 +474,7 @@ void recipeMenu(ingredients *fridgeContent) {
 
                           {{"Potatoes", 600}, {"Milk", 100},
                           {"Butter", 25}, {"Salt", 2}, {"Bacon", 200},
-                          {"Onion", 200}, {"Pickled_beetroots", 100}},
+                          {"Onion", 200}, {"Pickled_beetroots", 100}, {"Last_element"}},
 
                           "db/recipes/burninglove/instructions.txt"};
     
@@ -486,13 +485,13 @@ void recipeMenu(ingredients *fridgeContent) {
                        {"Egg", 100}, {"Oats", 90}, {"Thyme", 18}, {"Rosemary", 6},
                        {"Dried_tomatoes", 20}, {"Black_olives", 50}, {"Feta", 75},
                        {"Baby_potatoes", 800}, {"Oliveoil", 15}, {"Butter", 14},
-                       {"Salt_&_pepper", 1}},
+                       {"Salt_&_pepper", 1}, {"Last_element"}},
 
                        "db/recipes/meatloaf/instructions.txt"};  
 
     Recipes ricePudding = {"Rice_pudding", {{"Porridge_rice", 484.38}, {"Water", 100},
                       {"Milk", 2000}, {"Salt", 3}, {"Cinnamon", 10},
-                      {"Sugar", 16}, {"Butter", 20}}, "db/recipes/ricepudding/instructions.txt"};
+                      {"Sugar", 16}, {"Butter", 20}, {"Last_element"}}, "db/recipes/ricepudding/instructions.txt"};
 
     Recipes recipeList[NUMBEROFRECIPES]; 
     recipeList[0] = pizza;
@@ -503,13 +502,13 @@ void recipeMenu(ingredients *fridgeContent) {
 
 
     clearScreen();
-    printRecipeList(recipeList);
+    printRecipeList(recipeList, fridgeContent);
     printf("\nWhich recipe do you want to see? (press R to return to the main menu):\n");
 
     do{
         /*Makes sure the user inputs a valid number*/
         if (recipeNumber == 0 || recipeNumber > (sizeof(recipeList)/(sizeof(recipeList[0])))) {
-            printRecipeList(recipeList);
+            printRecipeList(recipeList, fridgeContent);
             printf("\nPlease enter a valid Recipe Number. Or type 'R' to Return:\n");
         }
         scanf("%s", choice);
@@ -524,14 +523,40 @@ void recipeMenu(ingredients *fridgeContent) {
     openRecipe(recipeList[recipeNumber  - 1], fridgeContent);
 }
 
-void printRecipeList(Recipes* recipeList) {
-    int i;
+void printRecipeList(Recipes* recipeList, ingredients *fridgeContent) {
+    int i, j, k, counter;
     clearScreen();
     printf("This is a list of the recipes in your cookbook\n");
     /*Print the list of recipes*/
     for(i = 1; i <= NUMBEROFRECIPES; i++){
+        counter = 0;
+        for (j = 0 ; j < MAXINGREDIENTS ; j++){
+            if(strcmp(recipeList[i - 1].ingredients[j].name, "Last_element") == 0){
+                break;
+            }
+            else{
+                counter++;
+            } 
+        }
+        
+        for(k = 0 ; k < (counter) ; k++){
+            if(colourization(fridgeContent, recipeList[i-1].ingredients[k].name, recipeList[i-1].ingredients[k].weight) == 0){
+                printf("\033[31;1m");
+                break;
+            }
+            printf("\033[0;32m");
+                
+        }
+
+        /*for(k = 0 ; k < counter ; k++){
+            if(colourization(fridgeContent, recipeList[k - 1].ingredients[j].name, recipeList[k - 1].ingredients[j].weight) == 0){
+                bool = 0;
+            }
+        }
+        */
         printf("%d. %s\n", i, recipeList[i - 1].name);
     }
+    printf("\x1B[0m");
 }
 
 void openRecipe(Recipes recipe, ingredients *fridgeContent){
@@ -544,18 +569,20 @@ void openRecipe(Recipes recipe, ingredients *fridgeContent){
     printf("              INGREDIENTS\n");
     printf("  -------------------------------------\n");
     /*Prints each ingredient for the chosen recipe*/
-    for(i = 0 ; i < sizeof(recipe.ingredients) / sizeof(recipe.ingredients[0]) ; i++){
+    for(i = 0 ; i < MAXINGREDIENTS ; i++){
         if (strcmp(recipe.ingredients[i].name, "\0")){
             if(colourization(fridgeContent, recipe.ingredients[i].name, recipe.ingredients[i].weight) == 0){
                 printf("\033[31;1m");
             } else {
                 printf("\033[0;32m");
             }
-            printf("    %s:", recipe.ingredients[i].name);
-            for (j = 0; j < 20 - strlen(recipe.ingredients[i].name); j++) {
-                printf(" ");
+            if (strcmp(recipe.ingredients[i].name, "Last_element")){
+                printf("    %s:", recipe.ingredients[i].name);
+                for (j = 0; j < 20 - strlen(recipe.ingredients[i].name); j++) {
+                    printf(" ");
             }
-            printf("%.2fg\n\n", recipe.ingredients[i].weight);
+                printf("%.2fg\n\n", recipe.ingredients[i].weight);
+            }
         }
     }
     printf("\x1B[0m");
@@ -573,7 +600,7 @@ int colourization(ingredients *fridgeContent, char *ingredientName, double neede
             if(fridgeContent[i].weight < neededWeight){
                 return(0);
             }
-            if(dateComparatorenator(fridgeContent[i].expirationDate, fridgeContent[i].open.isopen.openDate) == -1) {
+            if(dateComparatorenator(fridgeContent[i].expirationDate, todayDate) == -1) {
                 return(0);
             }
             return(1);
@@ -581,23 +608,6 @@ int colourization(ingredients *fridgeContent, char *ingredientName, double neede
     }   
     return(0);
 } 
-    /* |||| TO DO ||||*/
-    /* - Lav en for loop til at sammenligne weight
-       - Lav en for loop til at sammenligne dato 
-       - Lav farverne */
-
-    /* |||| FARVER |||| */ 
-    /*for(itemNumber = 0; itemNumber < FRIDGESIZE; itemNumber++) {
-    if(dateComparatorenator(fridgeContent[itemNumber].expirationDate, fridgeContent[itemNumber].openedDate) < 0) {
-        printf("\033[31;1m");
-    }
-    else if(dateComparatorenator(fridgeContent[itemNumber].expirationDate, fridgeContent[itemNumber].openedDate) > 0) {
-        printf("\033[0;32m");
-    }
-    else {
-        printf("\033[33;1m");
-    }    
-}*/
 
 void printInstructions(Recipes recipe) {
     FILE *fp = fopen(recipe.filename, "r");
