@@ -369,7 +369,7 @@ void printFridgeContents(ingredients *fridgeContent) {
         }
         else printf("???\?/?\?/??");
 
-      if(!(fridgeContent[itemNumber].expirationDate.day == UNKNOWN || fridgeContent[itemNumber].expirationDate.month == UNKNOWN || fridgeContent[itemNumber].expirationDate.year == UNKNOWN)) {
+        if(!(fridgeContent[itemNumber].expirationDate.day == UNKNOWN || fridgeContent[itemNumber].expirationDate.month == UNKNOWN || fridgeContent[itemNumber].expirationDate.year == UNKNOWN)) {
             if(fridgeContent[itemNumber].expirationDate.month < 10) {
                printf(" ");
             } 
@@ -378,20 +378,32 @@ void printFridgeContents(ingredients *fridgeContent) {
             }         
         }
       
-      if(!(fridgeContent[itemNumber].open.opened == UNKNOWN)) {
+        if(!(fridgeContent[itemNumber].open.opened == UNKNOWN)) {
             if(fridgeContent[itemNumber].open.opened == FALSE) {
-                printf("   UNOPENED\n");
+                printf("   UNOPENED                ");
             }
             else {
-                if(!(fridgeContent[itemNumber].open.isopen.openDate.day == UNKNOWN || fridgeContent[itemNumber].open.isopen.openDate.month == UNKNOWN || fridgeContent[itemNumber].open.isopen.openDate.year == UNKNOWN)) {
-                    printf("   Opened on: %d/%d/%d\n", fridgeContent[itemNumber].open.isopen.openDate.year, fridgeContent[itemNumber].open.isopen.openDate.month, fridgeContent[itemNumber].open.isopen.openDate.day);
+                if(!(fridgeContent[itemNumber].open.isopen.openDate.day == UNKNOWN || fridgeContent[itemNumber].open.isopen.openDate.month == UNKNOWN || fridgeContent[itemNumber].open.isopen.openDate.year == UNKNOWN)) {  
+                    printf("   Opened on: %d/%d/%d   ", fridgeContent[itemNumber].open.isopen.openDate.year, fridgeContent[itemNumber].open.isopen.openDate.month, fridgeContent[itemNumber].open.isopen.openDate.day);
+                    if(fridgeContent[itemNumber].open.isopen.openDate.month < 10) {
+                        printf(" ");
+                    } 
+                    if(fridgeContent[itemNumber].open.isopen.openDate.day < 10) {
+                        printf(" ");
+                    }
                 }
                 else
-                    printf("   Opened on: ???\?/?\?/??\n");
+                    printf("   Opened on: ???\?/?\?/??   ");
             }            
         }
-        else printf("   N/A\n");
+        else printf("   N/A                     ");
 
+        if(!(fridgeContent[itemNumber].open.isopen.daysAfterOpen == UNKNOWN)){
+            printf("Shelf time after opening is %d days\n", fridgeContent[itemNumber].open.isopen.daysAfterOpen);
+        }
+        else{
+            printf("Shelf time after opening is UNKNOWN");
+        }
         printf("\x1B[0m");
     }
 }
