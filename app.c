@@ -332,10 +332,30 @@ int leapYear(int year){
 }
 
 void contents(ingredients *fridgeContent) {
-
+    int ingredientNumber = 1;
+    char choice[1];
     clearScreen();
     printf("Your fridge contains\n");
     printFridgeContents(fridgeContent);
+
+    printf("\nWhich ingredient do you want to change? (press R to return to the main menu):\n");
+
+    do{
+        /*Makes sure the user inputs a valid number*/
+        if(ingredientNumber == 0 || ingredientNumber > FRIDGESIZE) {
+            clearScreen();
+            printf("Your fridge contains\n");
+            printFridgeContents(fridgeContent);
+            printf("\nPlease enter a valid ingredient number, or type 'R' to Return:\n");
+        }
+        scanf(" %s", choice);
+        ingredientNumber = atoi(choice);
+        /*Return to main menu if user presses 'R'*/
+        if(strcmp(choice, "r") == 0 || strcmp(choice, "R") == 0){
+            mainMenu(fridgeContent);
+        }
+    } while (ingredientNumber == 0 || ingredientNumber > FRIDGESIZE);
+
     returnMenu("Main menu", fridgeContent);
 }
 
@@ -546,15 +566,14 @@ void recipeMenu(ingredients *fridgeContent) {
             printRecipeList(recipeList, fridgeContent);
             printf("\nPlease enter a valid Recipe Number. Or type 'R' to Return:\n");
         }
-        scanf("%s", choice);
+        scanf(" %s", choice);
         recipeNumber = atoi(choice);
-        /*Return to fridgeContent if user presses 'R'*/
+        /*Return to main menu if user presses 'R'*/
         if(strcmp(choice, "r") == 0 || strcmp(choice, "R") == 0){
             mainMenu(fridgeContent);
         }
 
     } while (recipeNumber == 0 || recipeNumber > (sizeof(recipeList)/(sizeof(recipeList[0]))));
-    
     openRecipe(recipeList[recipeNumber  - 1], fridgeContent);
 }
 
