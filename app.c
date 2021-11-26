@@ -61,6 +61,9 @@ int leapYear(int);
 void contents(ingredients *);
 void printFridgeContents(ingredients *);
 void editIngredient(ingredients*, int);
+void changeName(ingredients*, int);
+void changeWeight(ingredients*, int);
+void changeDate(ingredients*, int);
 void recipeMenu(ingredients*);
 int colourization(ingredients *, char *, double);
 void printRecipeList(Recipes*, ingredients *fridgeContent);
@@ -456,8 +459,7 @@ void printFridgeContents(ingredients *fridgeContent) {
 }
 
 void editIngredient(ingredients *fridgeContent, int ingredientNumber) {
-    int choice;
-    char choice2;
+    char choice;
     char* openStatus;
     clearScreen();
     if(fridgeContent[ingredientNumber].open.opened == 1) {
@@ -472,27 +474,58 @@ void editIngredient(ingredients *fridgeContent, int ingredientNumber) {
     printf("3. Expiration Date : %d/%d/%d\n", fridgeContent[ingredientNumber].expirationDate.year, fridgeContent[ingredientNumber].expirationDate.month, fridgeContent[ingredientNumber].expirationDate.day);
     printf("4. Opened Status   : %s\n", openStatus);
     printf("\n\n");
-    printf("Enter a number to edit ingredient: ");
-    scanf(" %d", &choice); 
-    if (choice == 4) {
-        printf("This will override the date. Are you sure? y/n: ");
-        scanf(" %c", &choice2);
-        if(choice2 == 'y' || choice2 == 'Y') {
-            if (fridgeContent[ingredientNumber].open.opened == 0){
-                fridgeContent[ingredientNumber].open.opened = 1;
-                fridgeContent[ingredientNumber].open.isopen.openDate.day = todayDate.day;
-                fridgeContent[ingredientNumber].open.isopen.openDate.month = todayDate.month;
-                fridgeContent[ingredientNumber].open.isopen.openDate.year = todayDate.year;
-            } else if (fridgeContent[ingredientNumber].open.opened == 1){
-                fridgeContent[ingredientNumber].open.opened = 0;
-
-            } 
-            updateExpDates(fridgeContent);
-            editIngredient(fridgeContent, ingredientNumber);
-        } else if(choice2 == 'n' || choice2 == 'N'){
-            printf("Nice bro, good choice! You're going places in your life.\n");
-        }
+    printf("# - EDIT         R - RETURN\n");
+    scanf(" %c", &choice);
+    switch (choice) {
+        case '1': 
+            changeName(fridgeContent, ingredientNumber);
+            break;
+        case '2': 
+            changeWeight(fridgeContent, ingredientNumber);
+            break;
+        case '3': 
+            changeDate(fridgeContent, ingredientNumber);
+            break;
+        case '4': 
+            printf("This will override the date. Are you sure? y/n: ");
+            scanf(" %c", &choice);
+            if(choice == 'y' || choice == 'Y') {
+                if (fridgeContent[ingredientNumber].open.opened == 0){
+                    fridgeContent[ingredientNumber].open.opened = 1;
+                    fridgeContent[ingredientNumber].open.isopen.openDate.day = todayDate.day;
+                    fridgeContent[ingredientNumber].open.isopen.openDate.month = todayDate.month;
+                    fridgeContent[ingredientNumber].open.isopen.openDate.year = todayDate.year;
+                    updateExpDates(fridgeContent);
+                } else if (fridgeContent[ingredientNumber].open.opened == 1){
+                    fridgeContent[ingredientNumber].open.opened = 0;
+                } 
+            } else if(choice == 'n' || choice == 'N'){
+                printf("Nice bro, good choice! You're going places in your life.\n");
+            }
+            break;
+        case 'r': case 'R':
+            sortContent(fridgeContent);
+            contents(fridgeContent);
+        default:
+            break;
     }
+    editIngredient(fridgeContent, ingredientNumber);
+}
+
+void changeName(ingredients *fridgeContent, int ingredientNumber) {
+    printf("\nPlease type the new name: ");
+    scanf(" %s", fridgeContent[ingredientNumber].name);
+    flushInput();
+}
+
+void changeWeight(ingredients *fridgeContent, int ingredientNumber) {
+    printf("\nPlease type the new weight: ");
+    scanf(" %lf", &fridgeContent[ingredientNumber].weight);
+}
+
+void changeDate(ingredients *fridgeContent, int ingredientNumber) {
+    printf("\nPlease type the new date (yyyy/mm/dd): ");
+    scanf(" %d/%d/%d", &fridgeContent[ingredientNumber].expirationDate.year, &fridgeContent[ingredientNumber].expirationDate.month, &fridgeContent[ingredientNumber].expirationDate.day);
 }
 
 int dateComparatorenator(date expirationDate, date openedDate) {
