@@ -60,7 +60,7 @@ void tomorrow(date *);
 int leapYear(int);
 void contents(ingredients *);
 void printFridgeContents(ingredients *);
-void editIngredient(ingredients, ingredients*, int);
+void editIngredient(ingredients*, int);
 void recipeMenu(ingredients*);
 int colourization(ingredients *, char *, double);
 void printRecipeList(Recipes*, ingredients *fridgeContent);
@@ -78,7 +78,7 @@ int main(void) {
 
     todayDate = makeDayToday(); /*Global variable*/
     getFridgeContents(fridgeContent);
-    /*updateExpDates(fridgeContent);*/
+    updateExpDates(fridgeContent);
     sortContent(fridgeContent);
     mainMenu(fridgeContent);
 
@@ -334,7 +334,7 @@ int leapYear(int year){
 
 void contents(ingredients *fridgeContent) {
     int ingredientNumber = 1;
-    char choice[1];
+    char* choice = (char*) malloc(sizeof(char*));
     clearScreen();
     printf("Your fridge contains\n");
     printFridgeContents(fridgeContent);
@@ -356,7 +356,7 @@ void contents(ingredients *fridgeContent) {
             mainMenu(fridgeContent);
         }
     } while (ingredientNumber <= 0 || ingredientNumber > FRIDGESIZE);
-    editIngredient(fridgeContent[ingredientNumber - 1], fridgeContent, ingredientNumber);
+    editIngredient(fridgeContent, ingredientNumber - 1);
 }
 
 void printFridgeContents(ingredients *fridgeContent) {
@@ -455,7 +455,7 @@ void printFridgeContents(ingredients *fridgeContent) {
     }
 }
 
-void editIngredient(ingredients fridgeIngredient, ingredients *fridgeContent, int ingredientNumber) {
+void editIngredient(ingredients *fridgeContent, int ingredientNumber) {
     int choice;
     char choice2;
     char* openStatus;
@@ -463,22 +463,22 @@ void editIngredient(ingredients fridgeIngredient, ingredients *fridgeContent, in
     if(fridgeContent[ingredientNumber].open.opened == 1) {
         openStatus = "IN THE STATE OF OPENEDNESS";
     }
-    else{
+    else if (fridgeContent[ingredientNumber].open.opened == 0){
         openStatus = "IN THE STATE OF NOT IN THE STATE OF OPENEDNESS";
     }
-    printf("EDITING %s\n\n", fridgeIngredient.name);
-
-    printf("1. Name            : %s\n", fridgeIngredient.name);
-    printf("2. Weight          : %0.2f\n", fridgeIngredient.weight);
-    printf("3. Expiration Date : %d/%d/%d\n", fridgeIngredient.expirationDate.year, fridgeIngredient.expirationDate.month, fridgeIngredient.expirationDate.day);
+    printf("EDITING %s\n\n", fridgeContent[ingredientNumber].name);
+    printf("1. Name            : %s\n", fridgeContent[ingredientNumber].name);
+    printf("2. Weight          : %0.2f\n", fridgeContent[ingredientNumber].weight);
+    printf("3. Expiration Date : %d/%d/%d\n", fridgeContent[ingredientNumber].expirationDate.year, fridgeContent[ingredientNumber].expirationDate.month, fridgeContent[ingredientNumber].expirationDate.day);
     printf("4. Opened Status   : %s\n", openStatus);
     printf("\n\n");
     printf("Enter a number to edit ingredient: ");
-    scanf(" %d", &choice); if (choice == 4) {
+    scanf(" %d", &choice); 
+    if (choice == 4) {
         printf("This will override the date. Are you sure? y/n: ");
         scanf(" %c", &choice2);
-        if(choice2 == 'y' || choice2 == 'Y'){
-            } if (fridgeContent[ingredientNumber].open.opened == 0){
+        if(choice2 == 'y' || choice2 == 'Y') {
+            if (fridgeContent[ingredientNumber].open.opened == 0){
                 fridgeContent[ingredientNumber].open.opened = 1;
                 fridgeContent[ingredientNumber].open.isopen.openDate.day = todayDate.day;
                 fridgeContent[ingredientNumber].open.isopen.openDate.month = todayDate.month;
@@ -486,8 +486,9 @@ void editIngredient(ingredients fridgeIngredient, ingredients *fridgeContent, in
             } else if (fridgeContent[ingredientNumber].open.opened == 1){
                 fridgeContent[ingredientNumber].open.opened = 0;
 
+            } 
             updateExpDates(fridgeContent);
-            editIngredient(fridgeIngredient, fridgeContent, ingredientNumber);
+            editIngredient(fridgeContent, ingredientNumber);
         } else if(choice2 == 'n' || choice2 == 'N'){
             printf("Nice bro, good choice! You're going places in your life.\n");
         }
