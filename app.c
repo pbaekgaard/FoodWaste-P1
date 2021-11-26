@@ -526,6 +526,7 @@ void addIngredient(ingredients *fridgeContent) {
     clearScreen();
     printf("What is the name of the ingredient?\n");
     scanf(" %s", fridgeContent[fridgeSize - 1].name);
+    flushInput();
 
     printf("What is the weight of the ingredient in grams?\n");
     scanf("%lf", &fridgeContent[fridgeSize - 1].weight);
@@ -535,7 +536,10 @@ void addIngredient(ingredients *fridgeContent) {
                       &fridgeContent[fridgeSize - 1].expirationDate.day);
     
     printf("Is the ingredient opened? (y/n)\n");
-    scanf(" %c", &opened);
+    while(opened != 'y' && opened != 'Y' && opened != 'n' && opened != 'N') {
+        scanf(" %c", &opened);
+        flushInput();
+    }
     if(opened == 'y' || opened == 'Y') {
         fridgeContent[fridgeSize - 1].open.opened = 1;
     }
@@ -548,7 +552,7 @@ void addIngredient(ingredients *fridgeContent) {
         scanf("%d/%d/%d", &fridgeContent[fridgeSize - 1].open.isopen.openDate.year, &fridgeContent[fridgeSize - 1].open.isopen.openDate.month,
                           &fridgeContent[fridgeSize - 1].open.isopen.openDate.day);
     }
-    printf("How long can the ingredient last after opened?\n");
+    printf("How many days can the ingredient last after being opened?\n");
     scanf("%d", &fridgeContent[fridgeSize - 1].open.isopen.daysAfterOpen);
     
     sortContent(fridgeContent);
