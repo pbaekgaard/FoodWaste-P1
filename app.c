@@ -342,7 +342,7 @@ void contents(ingredients *fridgeContent) {
 
     do{
         /*Makes sure the user inputs a valid number*/
-        if(ingredientNumber == 0 || ingredientNumber > FRIDGESIZE) {
+        if(ingredientNumber <= 0 || ingredientNumber > FRIDGESIZE) {
             clearScreen();
             printf("Your fridge contains\n");
             printFridgeContents(fridgeContent);
@@ -354,7 +354,7 @@ void contents(ingredients *fridgeContent) {
         if(strcmp(choice, "r") == 0 || strcmp(choice, "R") == 0){
             mainMenu(fridgeContent);
         }
-    } while (ingredientNumber == 0 || ingredientNumber > FRIDGESIZE);
+    } while (ingredientNumber <= 0 || ingredientNumber > FRIDGESIZE);
 
     returnMenu("Main menu", fridgeContent);
 }
@@ -562,7 +562,7 @@ void recipeMenu(ingredients *fridgeContent) {
 
     do{
         /*Makes sure the user inputs a valid number*/
-        if(recipeNumber == 0 || recipeNumber > (sizeof(recipeList)/(sizeof(recipeList[0])))) {
+        if(recipeNumber <= 0 || recipeNumber > NUMBEROFRECIPES) {
             printRecipeList(recipeList, fridgeContent);
             printf("\nPlease enter a valid Recipe Number. Or type 'R' to Return:\n");
         }
@@ -573,7 +573,7 @@ void recipeMenu(ingredients *fridgeContent) {
             mainMenu(fridgeContent);
         }
 
-    } while (recipeNumber == 0 || recipeNumber > (sizeof(recipeList)/(sizeof(recipeList[0]))));
+    } while (recipeNumber <= 0 || recipeNumber > NUMBEROFRECIPES);
     openRecipe(recipeList[recipeNumber  - 1], fridgeContent);
 }
 
