@@ -59,7 +59,7 @@ void tomorrow(date *);
 int leapYear(int);
 void contents(ingredients *);
 void printFridgeContents(ingredients *);
-void printColor(ingredients *, int);
+void printColour(ingredients *, int);
 void printWeight(ingredients *, int );
 void printExpirationDate(ingredients *, int);
 void printOpenedDate(ingredients *, int);
@@ -358,7 +358,7 @@ void printFridgeContents(ingredients *fridgeContent) {
     int itemNumber;
 
     for(itemNumber = 0; itemNumber < fridgeSize; itemNumber++) {
-        printColor(fridgeContent, itemNumber);
+        printColour(fridgeContent, itemNumber);
         
         if(strcmp(fridgeContent[itemNumber].name, "-1") == 0) {
             strcpy(fridgeContent[itemNumber].name, "?????????");
@@ -373,7 +373,7 @@ void printFridgeContents(ingredients *fridgeContent) {
     }
 }
 
-void printColor(ingredients *fridgeContent, int itemNumber) {
+void printColour(ingredients *fridgeContent, int itemNumber) {
     if(fridgeContent[itemNumber].expirationDate.day == UNKNOWN || fridgeContent[itemNumber].expirationDate.month == UNKNOWN ||
        fridgeContent[itemNumber].expirationDate.year == UNKNOWN || strcmp(fridgeContent[itemNumber].name, "-1") == 0 ||
        fridgeContent[itemNumber].weight == UNKNOWN || fridgeContent[itemNumber].open.opened == UNKNOWN ||
