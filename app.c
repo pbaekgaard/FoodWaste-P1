@@ -369,6 +369,12 @@ void printFridgeContents(ingredients *fridgeContent) {
         printExpirationDate(fridgeContent, itemNumber);
         printOpenedDate(fridgeContent, itemNumber);
 
+        if(!(fridgeContent[itemNumber].open.isopen.daysAfterOpen == UNKNOWN)){
+            printf("Shelf time after opening is %d days\n", fridgeContent[itemNumber].open.isopen.daysAfterOpen);
+        }
+        else{
+            printf("Shelf time after opening is UNKNOWN");
+        }
         printf(WHITE);
     }
 }
