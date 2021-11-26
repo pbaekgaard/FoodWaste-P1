@@ -60,7 +60,7 @@ void tomorrow(date *);
 int leapYear(int);
 void contents(ingredients *);
 void printFridgeContents(ingredients *);
-void editIngredient(ingredients);
+void editIngredient(ingredients, ingredients*, int);
 void recipeMenu(ingredients*);
 int colourization(ingredients *, char *, double);
 void printRecipeList(Recipes*, ingredients *fridgeContent);
@@ -78,7 +78,7 @@ int main(void) {
 
     todayDate = makeDayToday(); /*Global variable*/
     getFridgeContents(fridgeContent);
-    updateExpDates(fridgeContent);
+    /*updateExpDates(fridgeContent);*/
     sortContent(fridgeContent);
     mainMenu(fridgeContent);
 
@@ -356,7 +356,7 @@ void contents(ingredients *fridgeContent) {
             mainMenu(fridgeContent);
         }
     } while (ingredientNumber <= 0 || ingredientNumber > FRIDGESIZE);
-    editIngredient(fridgeContent[ingredientNumber - 1]);
+    editIngredient(fridgeContent[ingredientNumber - 1], fridgeContent, ingredientNumber);
 }
 
 void printFridgeContents(ingredients *fridgeContent) {
@@ -455,15 +455,16 @@ void printFridgeContents(ingredients *fridgeContent) {
     }
 }
 
-void editIngredient(ingredients fridgeIngredient) {
+void editIngredient(ingredients fridgeIngredient, ingredients *fridgeContent, int ingredientNumber) {
     int choice;
+    char choice2;
     char* openStatus;
     clearScreen();
-    if(fridgeIngredient.open.opened == 1) {
+    if(fridgeContent[ingredientNumber].open.opened == 1) {
         openStatus = "IN THE STATE OF OPENEDNESS";
     }
     else{
-        openStatus = "NOT IN THE STATE OF OPENEDNESS";
+        openStatus = "IN THE STATE OF NOT IN THE STATE OF OPENEDNESS";
     }
     printf("EDITING %s\n\n", fridgeIngredient.name);
 
@@ -473,9 +474,23 @@ void editIngredient(ingredients fridgeIngredient) {
     printf("4. Opened Status   : %s\n", openStatus);
     printf("\n\n");
     printf("Enter a number to edit ingredient: ");
-    scanf(" %d", &choice);
-    if (choice == 4) {
+    scanf(" %d", &choice); if (choice == 4) {
         printf("This will override the date. Are you sure? y/n: ");
+        scanf(" %c", &choice2);
+        if(choice2 == 'y' || choice2 == 'Y'){
+            } if (fridgeContent[ingredientNumber].open.opened == 0){
+                fridgeContent[ingredientNumber].open.opened = 1;
+                fridgeContent[ingredientNumber].open.isopen.openDate.day = todayDate.day;
+                fridgeContent[ingredientNumber].open.isopen.openDate.month = todayDate.month;
+                fridgeContent[ingredientNumber].open.isopen.openDate.year = todayDate.year;
+            } else if (fridgeContent[ingredientNumber].open.opened == 1){
+                fridgeContent[ingredientNumber].open.opened = 0;
+
+            updateExpDates(fridgeContent);
+            editIngredient(fridgeIngredient, fridgeContent, ingredientNumber);
+        } else if(choice2 == 'n' || choice2 == 'N'){
+            printf("Nice bro, good choice! You're going places in your life.\n");
+        }
     }
 }
 
