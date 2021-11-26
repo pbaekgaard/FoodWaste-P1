@@ -524,7 +524,6 @@ void addIngredient(ingredients *fridgeContent) {
     }
 
     clearScreen();
-    printf("%d/%d/%d\n", fridgeContent[0].expirationDate.year, fridgeContent[0].expirationDate.month, fridgeContent[0].expirationDate.day);
     printf("What is the name of the ingredient?\n");
     scanf(" %s", fridgeContent[fridgeSize - 1].name);
 
