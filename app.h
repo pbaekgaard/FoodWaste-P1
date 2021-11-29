@@ -62,6 +62,7 @@ extern void editIngredient(ingredients*, int);
 extern void changeName(ingredients*, int);
 extern void changeWeight(ingredients*, int);
 extern void changeDate(ingredients*, int);
+extern void changeOpenedState(ingredients *, int);
 extern void printColour(ingredients *, int);
 extern void printWeight(ingredients *, int );
 extern void printExpirationDate(ingredients *, int);
