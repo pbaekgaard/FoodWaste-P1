@@ -398,6 +398,10 @@ void addIngredient(ingredients *fridgeContent) {
 
     printf("What is the weight of the ingredient in grams?\n");
     scanf("%lf", &fridgeContent[fridgeSize - 1].weight);
+    while(fridgeContent[fridgeSize - 1].weight <= 0) {
+        printf("Please type a valid weight: ");
+        scanf(" %lf", &fridgeContent[fridgeSize - 1].weight);
+    }
 
     newIngredientExpirationDate(fridgeContent);
     
@@ -419,6 +423,7 @@ void addIngredient(ingredients *fridgeContent) {
     printf("How many days can the ingredient last after being opened?\n");
     scanf("%d", &fridgeContent[fridgeSize - 1].open.isopen.daysAfterOpen);
     
+    updateExpDates(fridgeContent);
     sortContent(fridgeContent);
     contents(fridgeContent);
 }
@@ -510,9 +515,16 @@ void changeName(ingredients *fridgeContent, int ingredientNumber) {
 }
 
 void changeWeight(ingredients *fridgeContent, int ingredientNumber) {
+    double tempWeight;
     printf("\nPlease type the new weight: ");
-    scanf(" %lf", &fridgeContent[ingredientNumber].weight);
+    scanf(" %lf", &tempWeight);
     flushInput();
+    while(tempWeight < 0) {
+        printf("\nPlease type a valid weight: ");
+        scanf(" %lf", &tempWeight);
+    }
+    fridgeContent[ingredientNumber].weight = tempWeight;
+    deleteIngredient(fridgeContent, ingredientNumber);
 }
 
 void changeDate(ingredients *fridgeContent, int ingredientNumber) {
@@ -554,6 +566,18 @@ void changeOpenedState(ingredients *fridgeContent, int ingredientNumber) {
     else if(choice == 'n' || choice == 'N'){
         printf("Nice bro, good choice! You're going places in your life.\n");
     }
+}
+
+void deleteIngredient(ingredients *fridgeContent, int ingredientNumber) {
+    ingredients temp;
+    if(fridgeContent[ingredientNumber].weight == 0) {
+        temp = fridgeContent[fridgeSize - 1];
+        fridgeContent[fridgeSize - 1] = fridgeContent[ingredientNumber];
+        fridgeContent[ingredientNumber] = temp;
+        fridgeContent = (ingredients *) realloc(fridgeContent, sizeof(ingredients) * --fridgeSize);
+    }
+    sortContent(fridgeContent);
+    contents(fridgeContent);
 }
 
 int dateComparatorenator(date expirationDate, date openedDate) {
