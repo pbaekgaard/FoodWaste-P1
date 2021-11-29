@@ -18,6 +18,12 @@ int getFridgeSize(ingredients *fridgeContent) {
     /* Open and read file */
     fileptr = fopen(fileName, "r");
 
+    /* If file doesn't open it gives Error message and exits */
+    if(fileptr == NULL) {
+        printf("Error - File not found");
+        exit(EXIT_FAILURE);
+    }
+
     /* Read single character of file */
     ch = getc(fileptr);
 
@@ -52,9 +58,10 @@ void getFridgeContents(ingredients *fridgeContent) {
     /* Open and read file */
     readFile = fopen(filename, "r");
 
-    /* If file doesn't open it gives Error message */
+    /* If file doesn't open it gives Error message and exits */
     if(readFile == NULL) {
-        printf("Error");
+        printf("Error - File not found");
+        exit(EXIT_FAILURE);
     }
     
     /* Scans file into the structs name and integer into the structs weight until end of file */
