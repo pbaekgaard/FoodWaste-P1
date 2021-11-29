@@ -383,7 +383,7 @@ void contents(ingredients *fridgeContent) {
             addIngredient(fridgeContent);
         }
     } while (ingredientNumber <= 0 || ingredientNumber > fridgeSize);
-    editIngredient(fridgeContent[ingredientNumber - 1]);
+    editIngredient(fridgeContent, ingredientNumber - 1);
 }
 
 void printFridgeContents(ingredients *fridgeContent) {
