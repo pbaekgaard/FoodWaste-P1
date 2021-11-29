@@ -43,7 +43,31 @@ typedef struct Recipes {
 
 int fridgeSize;
 
+/* Prototypes */
 int getFridgeSize(ingredients *);
 void getFridgeContents(ingredients *);
+void updateExpDates (ingredients *);
+void mainMenu(ingredients *);
+void sortContent(ingredients *);
+int contentCompare(const void *, const void *);
+void printNotifications(ingredients *);
+date makeDayToday();
+void tomorrow(date *);
+int leapYear(int);
+void contents(ingredients *);
+void printFridgeContents(ingredients *);
+void printColour(ingredients *, int);
+void printWeight(ingredients *, int );
+void printExpirationDate(ingredients *, int);
+void printOpenedDate(ingredients *, int);
+void addIngredient(ingredients *);
+void editIngredient(ingredients);
+void recipeMenu(ingredients*);
+int colourization(ingredients *, char *, double);
+void printRecipeList(Recipes*, ingredients *);
+int dateComparatorenator(date, date);
+void printDate(ingredients *, int);
+void returnMenu(char *, ingredients *);
+void clearScreen(void);
 
 #endif
