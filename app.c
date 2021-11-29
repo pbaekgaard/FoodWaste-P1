@@ -528,9 +528,9 @@ void changeDate(ingredients *fridgeContent, int ingredientNumber) {
     printf("\nPlease type the new date (yyyy/mm/dd): ");
     scanf(" %d/%d/%d", &tempYear, &tempMonth, &tempDay);
     while(tempDay > 31 ||
-        (tempMonth <= 0 || tempDay <= 0 ||(tempMonth == 4 || tempMonth == 6 || tempMonth == 9 || tempMonth == 11) && tempDay > 30) ||
-        (leapYear(tempYear) == 1 && tempMonth == 2 && tempDay > 28) ||
-        (tempMonth == 2 && tempDay > 29) || tempMonth < 1 || tempMonth > 12){
+        (tempMonth <= 0 || tempDay <= 0) || ((tempMonth == 4 || tempMonth == 6 || tempMonth == 9 || tempMonth == 11) && tempDay > 30) ||
+        (leapYear(tempYear) == 1 && tempMonth == 2 && tempDay > 29) ||
+        (leapYear(tempYear) == 0 && tempMonth == 2 && tempDay > 28) || tempMonth < 1 || tempMonth > 12){
         
         flushInput();
         printf("Please type a valid date!\n(yyyy/mm/dd): ");
