@@ -24,6 +24,6 @@ Parmesan 500 2022 03 15 1 2022 01 10 20
 Gorgonzola 200 2022 02 27 0 14
 Mackerel 250 2025 12 12 0 3
 Pickled_beetroots 300 2025 12 12 0 3
-Instant_yeast 50 2022 05 01 0 3
+Yeast 50 2022 05 01 0 3
 Passata 200 2023 03 04 0 10
 Cherry_tomatoes 500 2022 03 01 1 2022 01 19 3

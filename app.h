@@ -7,7 +7,7 @@
 #define TRUE 1
 #define FALSE 0
 #define UNKNOWN -1
-#define MAXINGREDIENTS 100
+#define MAXINGREDIENTS 50
 #define RED "\033[31;1m"
 #define GREEN "\033[0;32m"
 #define YELLOW "\033[33;1m"
@@ -37,7 +37,8 @@ typedef struct ingredients {
 
 typedef struct Recipes {
     char* name;
-    ingredients ingredients[100];
+    ingredients fridgeIngredients[MAXINGREDIENTS];
+    ingredients notFridgeIngredients[MAXINGREDIENTS];
     char *filename;
 } Recipes;
 
