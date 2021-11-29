@@ -576,28 +576,6 @@ void printDate(ingredients *fridgeContent, int itemNumber) {
     printf("%d/%d/%d", fridgeContent[itemNumber].expirationDate.year, fridgeContent[itemNumber].expirationDate.month, fridgeContent[itemNumber].expirationDate.day);
 }
 
-void returnMenu(char *menu, ingredients *fridgeContent) {
-    char choice;
-  
-    printf("\n\nR - Return to %s            Q - Quit\n", menu);
-    do {
-        scanf(" %c", &choice);
-        flushInput();
-        if(choice == 'R' || choice == 'r'){
-           if(strcmp(menu, "Main menu") == 0){
-                mainMenu(fridgeContent);
-            }
-            else if(strcmp(menu, "Recipes") == 0){
-                recipeMenu(fridgeContent);
-            }
-        }
-        else if(choice == 'Q' || choice == 'q') {
-            free(fridgeContent);
-            exit(EXIT_SUCCESS);
-        }
-    } while(!(choice == 'R' || choice == 'r' || choice == 'Q' || choice == 'q'));
-}
-
 void recipeMenu(ingredients *fridgeContent) {
     int recipeNumber = 1;
     char choice[1];
@@ -707,6 +685,7 @@ void printRecipeList(Recipes* recipeList, ingredients *fridgeContent) {
 void openRecipe(Recipes recipe, ingredients *fridgeContent){
     int i;
     int j;
+    char choice;
     clearScreen();
     printf("  -------------------------------------\n");
     printf("    %s recipe for 4 people\n", recipe.name);
@@ -735,7 +714,15 @@ void openRecipe(Recipes recipe, ingredients *fridgeContent){
     printf("              INSTRUCTIONS\n");
     printf("  -------------------------------------\n");
     printInstructions(recipe);
-    returnMenu("Recipes", fridgeContent);
+  
+    printf("\n\nR - Return to Recipes\n");
+    do {
+        scanf(" %c", &choice);
+        flushInput();
+        if(choice == 'R' || choice == 'r'){
+            recipeMenu(fridgeContent);    
+        }
+    } while(!(choice == 'R' || choice == 'r'));
 }
 
 int colourization(ingredients *fridgeContent, char *ingredientName, double neededWeight){

@@ -74,7 +74,6 @@ extern int colourization(ingredients *, char *, double);
 extern void printRecipeList(Recipes*, ingredients *);
 extern int dateComparatorenator(date, date);
 extern void printDate(ingredients *, int);
-extern void returnMenu(char *, ingredients *);
 extern void clearScreen(void);
 extern void flushInput(void);
 extern void openRecipe(Recipes , ingredients *);
