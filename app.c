@@ -4,7 +4,7 @@
 #include <string.h>
 #include "app.h"
 
-/* Definition of variable */
+/*DEFINING VARIABLES*/
 date todayDate;
 
 int main(void) {
@@ -584,75 +584,59 @@ void printDate(ingredients *fridgeContent, int itemNumber) {
     printf("%d/%d/%d", fridgeContent[itemNumber].expirationDate.year, fridgeContent[itemNumber].expirationDate.month, fridgeContent[itemNumber].expirationDate.day);
 }
 
-void returnMenu(char *menu, ingredients *fridgeContent) {
-    char choice;
-  
-    printf("\n\nR - Return to %s            Q - Quit\n", menu);
-    do {
-        scanf(" %c", &choice);
-        flushInput();
-        if(choice == 'R' || choice == 'r'){
-           if(strcmp(menu, "Main menu") == 0){
-                mainMenu(fridgeContent);
-            }
-            else if(strcmp(menu, "Recipes") == 0){
-                recipeMenu(fridgeContent);
-            }
-        }
-        else if(choice == 'Q' || choice == 'q') {
-            free(fridgeContent);
-            exit(EXIT_SUCCESS);
-        }
-    } while(!(choice == 'R' || choice == 'r' || choice == 'Q' || choice == 'q'));
-}
-
 void recipeMenu(ingredients *fridgeContent) {
     int recipeNumber = 1;
     char choice[1];
     /*Declaration of different recipes*/
     Recipes pizza =  {"Pizza",
 
-                     {{"Bread_flour", 300}, {"Instant_yeast", 3.1},
-                     {"Salt", 5.69}, {"Olive_oil", 13.69}, {"Passata", 95.1},
-                     {"Dried_basil", 2}, {"Garlic", 4}, {"Mozzarella", 125},
-                     {"Parmesan", 10}, {"Cherry_tomatoes", 85}, {"Last_element"}},
+                     {{"Yeast", 3.1}, {"Passata", 95.1}, {"Mozzarella", 125},
+                     {"Parmesan", 10}, {"Cherry_tomatoes", 85},},
+
+                     {{"Bread_flour", 300}, {"Salt", 5.69}, {"Olive_oil", 13.69}, 
+                     {"Dried_basil", 2}, {"Garlic", 4}},
 
                      "db/recipes/pizza/instructions.txt"};
     
     Recipes lasagne = {"Lasagne",
 
-                      {{"Onion", 200}, {"Garlic", 24},
-                      {"Ground_beef", 400}, {"Oregano", 2}, {"Thyme", 1},
-                      {"Carrots", 260}, {"Celery", 300}, {"Squash", 280},
-                      {"Tomato_puree", 55}, {"Chopped_tomatoes", 800},
-                      {"Vegetable_broth", 100}, {"Olive_oil", 30},
-                      {"Butter", 28.35}, {"Wheat_flour", 15}, {"Milk", 300},
-                      {"Nutmeg", 1}, {"Mozzarella", 250}, {"Lasagne_Plates", 200}, {"Last_element"}},
+                      {{"Ground_beef", 400}, {"Carrots", 260}, {"Celery", 300}, 
+                      {"Squash", 280},{"Tomato_puree", 55}, {"Chopped_tomatoes", 800}, 
+                      {"Butter", 28.35},  {"Milk", 300}, {"Mozzarella", 250}},
+
+                      {{"Onion", 200}, {"Garlic", 24}, {"Oregano", 2}, {"Thyme", 1}, 
+                      {"Vegetable_broth", 100}, {"Olive_oil", 30}, {"Wheat_flour", 15}, 
+                      {"Nutmeg", 1}, {"Lasagne_Plates", 200}},
 
                       "db/recipes/lasagne/instructions.txt"};
     
     Recipes burningLove = {"Burning Love",
 
-                          {{"Potatoes", 600}, {"Milk", 100},
-                          {"Butter", 25}, {"Salt", 2}, {"Bacon", 200},
-                          {"Onion", 200}, {"Pickled_beetroots", 100}, {"Last_element"}},
+                          {{"Milk", 100}, {"Butter", 25},  {"Bacon", 200}, {"Pickled_beetroots", 100}},
+
+                          {{"Potatoes", 600}, {"Salt", 2}, {"Onion", 200}},
 
                           "db/recipes/burninglove/instructions.txt"};
     
     Recipes meatLoaf = {"Meat Loaf",
 
-                       {{"Chopped_lambmeat", 500}, {"Onion", 200},
-                       {"Garlic", 12}, {"Milk", 100}, {"Cream", 47.5},
-                       {"Egg", 100}, {"Oats", 90}, {"Thyme", 18}, {"Rosemary", 6},
-                       {"Dried_tomatoes", 20}, {"Black_olives", 50}, {"Feta", 75},
-                       {"Baby_potatoes", 800}, {"Oliveoil", 15}, {"Butter", 14},
-                       {"Salt_&_pepper", 1}, {"Last_element"}},
+                       {{"Chopped_lambmeat", 500}, {"Milk", 100}, {"Cream", 47.5},
+                       {"Egg", 100}, {"Dried_tomatoes", 20}, {"Black_olives", 50}, {"Feta", 75},
+                       {"Butter", 14}},
+
+                       {{"Onion", 200}, {"Garlic", 12}, {"Oats", 90}, {"Thyme", 18}, {"Rosemary", 6}, 
+                       {"Baby_potatoes", 800}, {"Oliveoil", 15}, {"Salt_&_pepper", 1}},
 
                        "db/recipes/meatloaf/instructions.txt"};  
 
-    Recipes ricePudding = {"Rice_pudding", {{"Porridge_rice", 484.38}, {"Water", 100},
-                      {"Milk", 2000}, {"Salt", 3}, {"Cinnamon", 10},
-                      {"Sugar", 16}, {"Butter", 20}, {"Last_element"}}, "db/recipes/ricepudding/instructions.txt"};
+    Recipes ricePudding = {"Rice_pudding",
+
+                      {{"Milk", 2000}, {"Butter", 20}},
+
+                      {{"Porridge_rice", 484.38}, {"Water", 100}, {"Salt", 3}, {"Cinnamon", 10},
+                      {"Sugar", 16}},
+                      
+                       "db/recipes/ricepudding/instructions.txt"};
 
     Recipes recipeList[NUMBEROFRECIPES]; 
     recipeList[0] = pizza;
@@ -691,7 +675,7 @@ void printRecipeList(Recipes* recipeList, ingredients *fridgeContent) {
     for(i = 1; i <= NUMBEROFRECIPES; i++){
         counter = 0;
         for (j = 0 ; j < MAXINGREDIENTS ; j++){
-            if(strcmp(recipeList[i - 1].ingredients[j].name, "Last_element") == 0){
+            if(strcmp(recipeList[i - 1].fridgeIngredients[j].name, "\0") == 0){
                 break;
             }
             else{
@@ -700,7 +684,7 @@ void printRecipeList(Recipes* recipeList, ingredients *fridgeContent) {
         }
         
         for(k = 0 ; k < (counter) ; k++){
-            if(colourization(fridgeContent, recipeList[i-1].ingredients[k].name, recipeList[i-1].ingredients[k].weight) == 0){
+            if(colourization(fridgeContent, recipeList[i-1].fridgeIngredients[k].name, recipeList[i-1].fridgeIngredients[k].weight) == 0){
                 printf(RED);
                 break;
             }
@@ -715,6 +699,7 @@ void printRecipeList(Recipes* recipeList, ingredients *fridgeContent) {
 void openRecipe(Recipes recipe, ingredients *fridgeContent){
     int i;
     int j;
+    char choice;
     clearScreen();
     printf("  -------------------------------------\n");
     printf("    %s recipe for 4 people\n", recipe.name);
@@ -722,20 +707,34 @@ void openRecipe(Recipes recipe, ingredients *fridgeContent){
     printf("              INGREDIENTS\n");
     printf("  -------------------------------------\n");
     /*Prints each ingredient for the chosen recipe*/
+    printf(WHITE);
+    printf("Ingredients that are not in the fridge is assumed that you own: \n");
+
     for(i = 0 ; i < MAXINGREDIENTS ; i++){
-        if(strcmp(recipe.ingredients[i].name, "\0")){
-            if(colourization(fridgeContent, recipe.ingredients[i].name, recipe.ingredients[i].weight) == 0){
+        if(strcmp(recipe.notFridgeIngredients[i].name, "\0")){
+            printf("    %s:", recipe.notFridgeIngredients[i].name);
+            for (j = 0; j < 20 - strlen(recipe.notFridgeIngredients[i].name); j++){
+                printf(" ");
+            }
+            printf("%.2fg\n\n", recipe.notFridgeIngredients[i].weight);
+        }
+    }
+    
+    
+    printf("Ingredients that are in the fridge: \n");
+    
+    for(i = 0 ; i < MAXINGREDIENTS ; i++){
+        if(strcmp(recipe.fridgeIngredients[i].name, "\0")){
+            if(colourization(fridgeContent, recipe.fridgeIngredients[i].name, recipe.fridgeIngredients[i].weight) == 0){
                 printf(RED);
             } else {
                 printf(GREEN);
             }
-            if(strcmp(recipe.ingredients[i].name, "Last_element")){
-                printf("    %s:", recipe.ingredients[i].name);
-                for (j = 0; j < 20 - strlen(recipe.ingredients[i].name); j++) {
-                    printf(" ");
+            printf("    %s:", recipe.fridgeIngredients[i].name);
+            for (j = 0; j < 20 - strlen(recipe.fridgeIngredients[i].name); j++){
+                printf(" ");
             }
-                printf("%.2fg\n\n", recipe.ingredients[i].weight);
-            }
+            printf("%.2fg\n\n", recipe.fridgeIngredients[i].weight);
         }
     }
     printf(WHITE);
@@ -743,7 +742,15 @@ void openRecipe(Recipes recipe, ingredients *fridgeContent){
     printf("              INSTRUCTIONS\n");
     printf("  -------------------------------------\n");
     printInstructions(recipe);
-    returnMenu("Recipes", fridgeContent);
+  
+    printf("\n\nR - Return to Recipes\n");
+    do {
+        scanf(" %c", &choice);
+        flushInput();
+        if(choice == 'R' || choice == 'r'){
+            recipeMenu(fridgeContent);    
+        }
+    } while(!(choice == 'R' || choice == 'r'));
 }
 
 int colourization(ingredients *fridgeContent, char *ingredientName, double neededWeight){
