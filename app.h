@@ -1,3 +1,4 @@
+/* Include guard that prevents double declaration of any identifiers such as types, enums and static variables*/
 #ifndef app
 #define app
 
