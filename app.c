@@ -521,6 +521,7 @@ void changeName(ingredients *fridgeContent, int ingredientNumber) {
 void changeWeight(ingredients *fridgeContent, int ingredientNumber) {
     printf("\nPlease type the new weight: ");
     scanf(" %lf", &fridgeContent[ingredientNumber].weight);
+    flushInput();
 }
 
 void changeDate(ingredients *fridgeContent, int ingredientNumber) {
@@ -539,6 +540,7 @@ void changeDate(ingredients *fridgeContent, int ingredientNumber) {
     fridgeContent[ingredientNumber].expirationDate.year = tempYear;
     fridgeContent[ingredientNumber].expirationDate.month = tempMonth;
     fridgeContent[ingredientNumber].expirationDate.day = tempDay;
+    flushInput();
 }
 
 int dateComparatorenator(date expirationDate, date openedDate) {
