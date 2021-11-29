@@ -2,17 +2,25 @@
 #ifndef _APP_H
 #define _APP_H
 
-#define NUMBEROFRECIPES 5
+
 #define INSTRUCTIONLINELENGTH 256
 #define TRUE 1
 #define FALSE 0
 #define UNKNOWN -1
+#define VEGETARIANNUMBER 2
+#define LOWCARBNUMBER 1
+#define LOWCALORIENUMBER 1
+#define HIGHPROTEINNUMBER 1
+#define NUMBEROFRECIPES (VEGETARIANNUMBER + LOWCARBNUMBER + LOWCALORIENUMBER + HIGHPROTEINNUMBER + 1)
+#define TYPESOFRECIPES 5
 #define MAXINGREDIENTS 50
 #define RED "\033[31;1m"
 #define GREEN "\033[0;32m"
 #define YELLOW "\033[33;1m"
 #define WHITE "\x1B[0m"
 #define PURPLE "\033[0;34m"
+
+typedef enum recipeType {lowCarb = 1, lowCalorie, highProtein, vegetarian} recipeType;
 
 typedef struct date {
     int year, month, day;
@@ -40,6 +48,7 @@ typedef struct Recipes {
     ingredients fridgeIngredients[MAXINGREDIENTS];
     ingredients notFridgeIngredients[MAXINGREDIENTS];
     char *filename;
+    recipeType recipeType;
 } Recipes;
 
 date todayDate;
@@ -71,7 +80,9 @@ void newIngredientExpirationDate(ingredients *);
 void newIngredientOpenedDate(ingredients *);
 void recipeMenu(ingredients*);
 int colourization(ingredients *, char *, double);
-void printRecipeList(Recipes*, ingredients *);
+void printRecipeTypes (Recipes*, Recipes*, Recipes*, Recipes*, Recipes*, ingredients *);
+void RecipeList(Recipes *, ingredients *, int);
+void printRecipeList(Recipes *Recipe, ingredients *fridgeContent, int NumberOfRecipes);
 int dateComparatorenator(date, date);
 void printDate(ingredients *, int);
 void returnMenu(char *, ingredients *);
