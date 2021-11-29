@@ -41,6 +41,8 @@ typedef struct Recipes {
     char *filename;
 } Recipes;
 
+/*Global variable - Sorry. Just for testing changing days*/
+date todayDate;
 int fridgeSize;
 
 /* Prototypes */
