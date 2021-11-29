@@ -42,8 +42,8 @@ typedef struct Recipes {
     char *filename;
 } Recipes;
 
-date todayDate;
-int fridgeSize;
+extern date todayDate;
+extern int fridgeSize;
 
 /* Prototypes */
 int getFridgeSize(ingredients *);

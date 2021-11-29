@@ -4,6 +4,9 @@
 #include <string.h>
 #include "app.h"
 
+date todayDate;
+int fridgeSize;
+
 int main(void) {
     ingredients *fridgeContent = (ingredients *) calloc(1, sizeof(ingredients));
     if(fridgeContent == NULL) {
