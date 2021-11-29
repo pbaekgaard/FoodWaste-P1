@@ -767,7 +767,7 @@ int colourization(ingredients *fridgeContent, char *ingredientName, double neede
         }
     }   
     return 0;
-} 
+}
 
 void clearScreen(void) {
     system("@cls||clear");
