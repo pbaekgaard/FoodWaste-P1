@@ -43,7 +43,7 @@ typedef struct Recipes {
 
 /*Global variable - Sorry. Just for testing changing days*/
 date todayDate;
-int fridgeSize;
+int fridgeSize = 0;
 
 /* Prototypes */
 int getFridgeSize(ingredients *);
@@ -58,12 +58,15 @@ void tomorrow(date *);
 int leapYear(int);
 void contents(ingredients *);
 void printFridgeContents(ingredients *);
+void editIngredient(ingredients*, int);
+void changeName(ingredients*, int);
+void changeWeight(ingredients*, int);
+void changeDate(ingredients*, int);
 void printColour(ingredients *, int);
 void printWeight(ingredients *, int );
 void printExpirationDate(ingredients *, int);
 void printOpenedDate(ingredients *, int);
 void addIngredient(ingredients *);
-void editIngredient(ingredients);
 void recipeMenu(ingredients*);
 int colourization(ingredients *, char *, double);
 void printRecipeList(Recipes*, ingredients *);
@@ -71,5 +74,8 @@ int dateComparatorenator(date, date);
 void printDate(ingredients *, int);
 void returnMenu(char *, ingredients *);
 void clearScreen(void);
+void flushInput(void);
+void openRecipe(Recipes , ingredients *);
+void printInstructions(Recipes);
 
 #endif
