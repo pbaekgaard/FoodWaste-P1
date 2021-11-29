@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "app.h"
 
-
+int fridgeSize;
 
 int getFridgeSize(ingredients *fridgeContent) {
     int numberOfLines = 0;

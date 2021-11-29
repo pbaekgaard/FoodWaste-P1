@@ -4,6 +4,8 @@
 #include <string.h>
 #include "app.h"
 
+date todayDate;
+
 int main(void) {
     ingredients *fridgeContent = (ingredients *) calloc(1, sizeof(ingredients));
     if(fridgeContent == NULL) {
@@ -740,15 +742,15 @@ int colourization(ingredients *fridgeContent, char *ingredientName, double neede
     for(i = 0; i < fridgeSize; i++){
         if(strcmp(ingredientName, fridgeContent[i].name) == 0) {
             if(fridgeContent[i].weight < neededWeight){
-                return(0);
+                return 0;
             }
             if(dateComparatorenator(fridgeContent[i].expirationDate, todayDate) == -1) {
-                return(0);
+                return 0;
             }
-            return(1);
+            return 1;
         }
     }   
-    return(0);
+    return 0;
 } 
 
 void printInstructions(Recipes recipe) {

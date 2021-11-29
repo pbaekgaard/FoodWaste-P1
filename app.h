@@ -1,6 +1,6 @@
 /* Include guard that prevents double declaration of any identifiers such as types, enums and static variables*/
-#ifndef _APP_H
-#define _APP_H
+#ifndef APP_H
+#define APP_H
 
 #define NUMBEROFRECIPES 5
 #define INSTRUCTIONLINELENGTH 256
@@ -41,42 +41,42 @@ typedef struct Recipes {
     char *filename;
 } Recipes;
 
-date todayDate;
-int fridgeSize;
+extern date todayDate;
+extern int fridgeSize;
 
 /* Prototypes */
-int getFridgeSize(ingredients *);
-void getFridgeContents(ingredients *);
-void updateExpDates (ingredients *);
-void mainMenu(ingredients *);
-void sortContent(ingredients *);
-int contentCompare(const void *, const void *);
-void printNotifications(ingredients *);
-date makeDayToday();
-void tomorrow(date *);
-int leapYear(int);
-void contents(ingredients *);
-void printFridgeContents(ingredients *);
-void editIngredient(ingredients*, int);
-void changeName(ingredients*, int);
-void changeWeight(ingredients*, int);
-void changeDate(ingredients*, int);
-void printColour(ingredients *, int);
-void printWeight(ingredients *, int );
-void printExpirationDate(ingredients *, int);
-void printOpenedDate(ingredients *, int);
-void addIngredient(ingredients *);
-void newIngredientExpirationDate(ingredients *);
-void newIngredientOpenedDate(ingredients *);
-void recipeMenu(ingredients*);
-int colourization(ingredients *, char *, double);
-void printRecipeList(Recipes*, ingredients *);
-int dateComparatorenator(date, date);
-void printDate(ingredients *, int);
-void returnMenu(char *, ingredients *);
-void clearScreen(void);
-void flushInput(void);
-void openRecipe(Recipes , ingredients *);
-void printInstructions(Recipes);
+extern int getFridgeSize(ingredients *);
+extern void getFridgeContents(ingredients *);
+extern void updateExpDates (ingredients *);
+extern void mainMenu(ingredients *);
+extern void sortContent(ingredients *);
+extern int contentCompare(const void *, const void *);
+extern void printNotifications(ingredients *);
+extern date makeDayToday();
+extern void tomorrow(date *);
+extern int leapYear(int);
+extern void contents(ingredients *);
+extern void printFridgeContents(ingredients *);
+extern void editIngredient(ingredients*, int);
+extern void changeName(ingredients*, int);
+extern void changeWeight(ingredients*, int);
+extern void changeDate(ingredients*, int);
+extern void printColour(ingredients *, int);
+extern void printWeight(ingredients *, int );
+extern void printExpirationDate(ingredients *, int);
+extern void printOpenedDate(ingredients *, int);
+extern void addIngredient(ingredients *);
+extern void newIngredientExpirationDate(ingredients *);
+extern void newIngredientOpenedDate(ingredients *);
+extern void recipeMenu(ingredients*);
+extern int colourization(ingredients *, char *, double);
+extern void printRecipeList(Recipes*, ingredients *);
+extern int dateComparatorenator(date, date);
+extern void printDate(ingredients *, int);
+extern void returnMenu(char *, ingredients *);
+extern void clearScreen(void);
+extern void flushInput(void);
+extern void openRecipe(Recipes , ingredients *);
+extern void printInstructions(Recipes);
 
 #endif
