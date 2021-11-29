@@ -596,7 +596,7 @@ void returnMenu(char *menu, ingredients *fridgeContent) {
 }
 
 void recipeMenu(ingredients *fridgeContent) {
-    int recipeNumber = 1;
+    int recipeKind = 1;
     char choice[1];
     /*Declaration of different recipes*/
     Recipes pizza =  {"Pizza",
@@ -658,11 +658,11 @@ void recipeMenu(ingredients *fridgeContent) {
     vegetarianRecipes[0] = pizza;
     vegetarianRecipes[1] = lasagne;
 
-    /*lowCarbRecipes[0]
+    lowCarbRecipes[0] = burningLove;
 
-    lowCalorieRecipes[0] = 
+    lowCalorieRecipes[0] = meatLoaf;
 
-    highProteinRecipes[0] =*/
+    highProteinRecipes[0] = ricePudding;
     
     
     allRecipes[0] = pizza;
@@ -679,97 +679,122 @@ void recipeMenu(ingredients *fridgeContent) {
 
     do{
         /*Makes sure the user inputs a valid number*/
-        if(recipeNumber <= 0 || recipeNumber > NUMBEROFRECIPES) {
+        if(recipeKind <= 0 || recipeKind > NUMBEROFRECIPES) {
             printRecipeTypes(vegetarianRecipes, lowCarbRecipes, lowCalorieRecipes, highProteinRecipes, allRecipes, fridgeContent);
             printf("\nPlease enter a valid Recipe Number. Or type 'R' to Return:\n");
         }
         scanf(" %s", choice);
-        recipeNumber = atoi(choice);
+        recipeKind = atoi(choice);
         /*Return to main menu if user presses 'R'*/
         if(strcmp(choice, "r") == 0 || strcmp(choice, "R") == 0){
             mainMenu(fridgeContent);
         }
-    } while (recipeNumber <= 0 || recipeNumber > NUMBEROFRECIPES);
+    } while (recipeKind <= 0 || recipeKind > NUMBEROFRECIPES);
 
-    if (recipeNumber == vegetarian){
+    switch (recipeKind){
+    case vegetarian:
         RecipeList(vegetarianRecipes, fridgeContent, VEGETARIANNUMBER);
-    }
-    else if (recipeNumber == lowCarb){
+        break;
+    case lowCarb:
         RecipeList(lowCarbRecipes, fridgeContent, LOWCARBNUMBER);
-    }
-    else if (recipeNumber == lowCalorie){
+        break;
+    case lowCalorie:
         RecipeList(lowCalorieRecipes, fridgeContent, LOWCALORIENUMBER);
-    }
-    else if (recipeNumber == highProtein){
+        break;
+    case highProtein:
         RecipeList(highProteinRecipes, fridgeContent, HIGHPROTEINNUMBER);
-    }
-    else{
+        break;
+    default:
         RecipeList(allRecipes, fridgeContent, NUMBEROFRECIPES);
+        break;
     }
 }
 
 void printRecipeTypes (Recipes* vegetarian, Recipes* lowCarb, Recipes* lowCalorie, Recipes* highProtein, Recipes* allRecipes, ingredients * fridgeContent){
     printf("Your recipe types:\n");
-    printf("1. Low carb\n");
+    colorForRecipeType (lowCarb, fridgeContent, LOWCARBNUMBER);
+    printf("1. Lown carb\n");
+    colorForRecipeType (lowCalorie, fridgeContent, LOWCALORIENUMBER);
     printf("2. Low calorie\n");
+    colorForRecipeType (highProtein, fridgeContent, HIGHPROTEINNUMBER);
     printf("3. High protein\n");
+    colorForRecipeType (vegetarian, fridgeContent, VEGETARIANNUMBER);
     printf("4. Vegetarian\n");
+    colorForRecipeType (allRecipes, fridgeContent, NUMBEROFRECIPES);
     printf("5. All recipes\n");
+    printf(WHITE);
 }
 
-void RecipeList(Recipes *Recipe, ingredients *fridgeContent, int NumberOfRecipes){
-    int i, j, k, counter;
+void colorForRecipeType (Recipes *recipe, ingredients *fridgeContent, int numberOfRecipes){
+    int i;
+    for (i = 1; i <= numberOfRecipes; i++){
+        if (colorForRecipe(i, recipe, fridgeContent) == 1){
+            printf(GREEN);
+            break;
+        }
+        else{
+            printf(RED);
+        }
+    }
+}
+void RecipeList(Recipes *recipe, ingredients *fridgeContent, int numberOfRecipes){
     char choice[1];
     int recipeNumber = 1;
     clearScreen();
    
-    printRecipeList(Recipe, fridgeContent, NumberOfRecipes);
+    printRecipeList(recipe, fridgeContent, numberOfRecipes);
     
-    printf("\nWhich recipe do you want to see? (press R to return):\n");
+    printf("\nWhich recipe do you want to see? (press R to return to recipes):\n");
     do{
         /*Makes sure the user inputs a valid number*/
-        if(recipeNumber <= 0 || recipeNumber > NumberOfRecipes) {
+        if(recipeNumber <= 0 || recipeNumber > numberOfRecipes) {
             clearScreen();
-            printRecipeList(Recipe, fridgeContent, NumberOfRecipes);
-            printf("\nPlease enter a valid Recipe Number. Or type 'R' to Return:\n");
+            printRecipeList(recipe, fridgeContent, numberOfRecipes);
+            printf("\nPlease enter a valid Recipe Number. Or type 'R' to return to recipes:\n");
         }
         scanf(" %s", choice);
         recipeNumber = atoi(choice);
-        /*Return to main menu if user presses 'R'*/
+        /*Return to recipe menu if user presses 'R'*/
         if(strcmp(choice, "r") == 0 || strcmp(choice, "R") == 0){
-            mainMenu(fridgeContent);
+            recipeMenu(fridgeContent);
         }
 
-    } while (recipeNumber <= 0 || recipeNumber > NumberOfRecipes);
+    } while (recipeNumber <= 0 || recipeNumber > numberOfRecipes);
+    openRecipe(recipe[recipeNumber - 1], fridgeContent);
 }
 
-void printRecipeList(Recipes *Recipe, ingredients *fridgeContent, int NumberOfRecipes){
-    int i, j, k, counter;
+void printRecipeList(Recipes *recipe, ingredients *fridgeContent, int numberOfRecipes){
+    int i;
 
     printf("This is a list of the recipes in your cookbook\n");
     /*Print the list of recipes of the given type*/
-    for(i = 1; i <= NumberOfRecipes; i++){
-        counter = 0;
-        for (j = 0 ; j < MAXINGREDIENTS ; j++){
-            if(strcmp(Recipe[i - 1].fridgeIngredients[j].name, "Last_element") == 0){
-                break;
-            }
-            else{
-                counter++;
-            } 
-        }
-        for(k = 0 ; k < (counter) ; k++){
-            if(colourization(fridgeContent, Recipe[i-1].fridgeIngredients[k].name, Recipe[i-1].fridgeIngredients[k].weight) == 0){
-                printf(RED);
-                break;
-            }
-            printf(GREEN);  
-        }
-        printf("%d. %s\n", i, Recipe[i - 1].name);
+    for(i = 1; i <= numberOfRecipes; i++){
+        colorForRecipe(i, recipe, fridgeContent);
+        printf("%d. %s\n", i, recipe[i - 1].name);
     }
     printf(WHITE);
 }
 
+int colorForRecipe (int i, Recipes *recipe, ingredients *fridgeContent){
+    int j, k, numberOfIngredients = 0, isGreen = TRUE;
+    for (j = 0 ; j < MAXINGREDIENTS ; j++){
+        if(strcmp(recipe[i - 1].fridgeIngredients[j].name, "Last_element") == 0){
+            break;
+        }
+        else{
+            numberOfIngredients++;
+        } 
+    }
+    for(k = 0 ; k < (numberOfIngredients) ; k++){
+        if(colourization(fridgeContent, recipe[i-1].fridgeIngredients[k].name, recipe[i-1].fridgeIngredients[k].weight) == 0){
+            printf(RED);
+            isGreen = FALSE;
+            break;
+        }
+        printf(GREEN);  
+    }
+    return isGreen;
+}
 
 void openRecipe(Recipes recipe, ingredients *fridgeContent){
     int i;

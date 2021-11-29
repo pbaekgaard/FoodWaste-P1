@@ -11,7 +11,7 @@
 #define LOWCARBNUMBER 1
 #define LOWCALORIENUMBER 1
 #define HIGHPROTEINNUMBER 1
-#define NUMBEROFRECIPES (VEGETARIANNUMBER + LOWCARBNUMBER + LOWCALORIENUMBER + HIGHPROTEINNUMBER + 1)
+#define NUMBEROFRECIPES (VEGETARIANNUMBER + LOWCARBNUMBER + LOWCALORIENUMBER + HIGHPROTEINNUMBER)
 #define TYPESOFRECIPES 5
 #define MAXINGREDIENTS 50
 #define RED "\033[31;1m"
@@ -89,6 +89,8 @@ void returnMenu(char *, ingredients *);
 void clearScreen(void);
 void flushInput(void);
 void openRecipe(Recipes , ingredients *);
+int colorForRecipe (int, Recipes *, ingredients *);
+void colorForRecipeType (Recipes *, ingredients *, int);
 void printInstructions(Recipes);
 
 #endif
