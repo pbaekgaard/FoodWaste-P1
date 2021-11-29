@@ -768,6 +768,7 @@ void printInstructions(Recipes recipe) {
 
     if(fp == NULL) {
         printf("ERROR: Couldn't find instructions");
+        exit(EXIT_FAILURE);
     }
 
     while (fgets(buffer, INSTRUCTIONLINELENGTH, fp)){
