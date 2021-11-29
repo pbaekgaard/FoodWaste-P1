@@ -82,12 +82,12 @@ int main(void) {
     ingredients *fridgeContent = (ingredients *) calloc(1, sizeof(ingredients));
     if(fridgeContent == NULL) {
         printf("Couldn't allocate memory!!");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
     fridgeContent = (ingredients *) realloc(fridgeContent, sizeof(ingredients) * getFridgeSize(fridgeContent));
     if(fridgeContent == NULL) {
         printf("Couldn't re-allocate memory");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
     todayDate = makeDayToday(); /*Global variable*/
@@ -220,7 +220,7 @@ void mainMenu(ingredients *fridgeContent) {
             break;
         case 'Q': case 'q':
             free(fridgeContent);
-            exit(0);
+            exit(EXIT_SUCCESS);
             break;
         case 'F': case 'f':
             tomorrow(&todayDate);
@@ -522,7 +522,7 @@ void addIngredient(ingredients *fridgeContent) {
     fridgeContent = (ingredients *) realloc(fridgeContent, sizeof(ingredients) * ++fridgeSize);
     if(fridgeContent == NULL) {
         printf("Couldn't re-allocate memory");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
     clearScreen();
@@ -666,7 +666,7 @@ void returnMenu(char *menu, ingredients *fridgeContent) {
         }
         else if(choice == 'Q' || choice == 'q') {
             free(fridgeContent);
-            exit(0);
+            exit(EXIT_SUCCESS);
         }
     } while(!(choice == 'R' || choice == 'r' || choice == 'Q' || choice == 'q'));
 }
