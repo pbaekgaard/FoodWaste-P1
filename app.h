@@ -1,5 +1,5 @@
 /* Include guard that prevents double declaration of any identifiers such as types, enums and static variables*/
-#ifndef app
+#ifndef APP_H_
 #define app
 
 #define NUMBEROFRECIPES 5
@@ -41,9 +41,42 @@ typedef struct Recipes {
     char *filename;
 } Recipes;
 
+date todayDate;
 int fridgeSize;
 
+/* Prototypes */
 int getFridgeSize(ingredients *);
 void getFridgeContents(ingredients *);
+void updateExpDates (ingredients *);
+void mainMenu(ingredients *);
+void sortContent(ingredients *);
+int contentCompare(const void *, const void *);
+void printNotifications(ingredients *);
+date makeDayToday();
+void tomorrow(date *);
+int leapYear(int);
+void contents(ingredients *);
+void printFridgeContents(ingredients *);
+void editIngredient(ingredients*, int);
+void changeName(ingredients*, int);
+void changeWeight(ingredients*, int);
+void changeDate(ingredients*, int);
+void printColour(ingredients *, int);
+void printWeight(ingredients *, int );
+void printExpirationDate(ingredients *, int);
+void printOpenedDate(ingredients *, int);
+void addIngredient(ingredients *);
+void newIngredientExpirationDate(ingredients *);
+void newIngredientOpenedDate(ingredients *);
+void recipeMenu(ingredients*);
+int colourization(ingredients *, char *, double);
+void printRecipeList(Recipes*, ingredients *);
+int dateComparatorenator(date, date);
+void printDate(ingredients *, int);
+void returnMenu(char *, ingredients *);
+void clearScreen(void);
+void flushInput(void);
+void openRecipe(Recipes , ingredients *);
+void printInstructions(Recipes);
 
 #endif
