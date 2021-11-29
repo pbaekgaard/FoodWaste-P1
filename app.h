@@ -41,6 +41,7 @@ typedef struct Recipes {
     char *filename;
 } Recipes;
 
+/* Global variables - Extern means declaration only. No memory is allocated but the compiler is aware that the variable exists */
 extern date todayDate;
 extern int fridgeSize;
 

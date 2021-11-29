@@ -4,6 +4,7 @@
 #include <string.h>
 #include "app.h"
 
+/* Definition of variable */
 date todayDate;
 
 int main(void) {
