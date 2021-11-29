@@ -1,5 +1,5 @@
 /* Include guard that prevents double declaration of any identifiers such as types, enums and static variables*/
-#ifndef app
+#ifndef APP_H_
 #define app
 
 #define NUMBEROFRECIPES 5
