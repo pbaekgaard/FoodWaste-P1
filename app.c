@@ -566,7 +566,7 @@ void newIngredientExpirationDate(ingredients *fridgeContent) {
     while(tempDay > 31 ||
           ((tempMonth == 4 || tempMonth == 6 || tempMonth == 9 || tempMonth == 11) && tempDay > 30) ||
           (leapYear(tempYear) == 1 && tempMonth == 2 && tempDay > 28) ||
-          (tempMonth == 2 && tempDay > 29) || tempMonth < 1 || tempMonth > 12 || tempDay <= 0){
+          (tempMonth == 2 && tempDay > 29) || tempMonth < 1 || tempMonth > 12 || tempDay < 1){
         
         flushInput();
         printf("Please type a valid date!\n(yyyy/mm/dd): ");
@@ -586,7 +586,7 @@ void newIngredientOpenedDate(ingredients *fridgeContent) {
     while(tempDay > 31 ||
           ((tempMonth == 4 || tempMonth == 6 || tempMonth == 9 || tempMonth == 11) && tempDay > 30) ||
           (leapYear(tempYear) == 1 && tempMonth == 2 && tempDay > 28) ||
-          (tempMonth == 2 && tempDay > 29) || tempMonth < 1 || tempMonth > 12 || tempDay <= 0){
+          (tempMonth == 2 && tempDay > 29) || tempMonth < 1 || tempMonth > 12 || tempDay < 1){
         
         flushInput();
         printf("Please type a valid date!\n(yyyy/mm/dd): ");
