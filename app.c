@@ -492,7 +492,7 @@ void editIngredient(ingredients *fridgeContent, int ingredientNumber) {
             changeDate(fridgeContent, ingredientNumber);
             break;
         case '4': 
-            changeOpenedState(fridgeContent, ingredientNumber, choice);
+            changeOpenedState(fridgeContent, ingredientNumber);
             break;
         case 'r': case 'R':
             sortContent(fridgeContent);
@@ -534,7 +534,9 @@ void changeDate(ingredients *fridgeContent, int ingredientNumber) {
     flushInput();
 }
 
-void changeOpenedState(ingredients *fridgeContent, int ingredientNumber, char choice) {
+void changeOpenedState(ingredients *fridgeContent, int ingredientNumber) {
+    char choice;
+
     printf("This will override the date. Are you sure? y/n: ");
     scanf(" %c", &choice);
     if(choice == 'y' || choice == 'Y') {
