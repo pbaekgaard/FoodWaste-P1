@@ -4,37 +4,6 @@
 #include <string.h>
 #include "app.h"
 
-/*Global variable - Sorry. Just for testing changing days*/
-date todayDate;
-
-/* Prototypes */
-void updateExpDates (ingredients *);
-void mainMenu(ingredients *);
-void sortContent(ingredients *);
-int contentCompare(const void *, const void *);
-void printNotifications(ingredients *);
-date makeDayToday();
-void tomorrow(date *);
-int leapYear(int);
-void contents(ingredients *);
-void printFridgeContents(ingredients *);
-void printColour(ingredients *, int);
-void printWeight(ingredients *, int );
-void printExpirationDate(ingredients *, int);
-void printOpenedDate(ingredients *, int);
-void addIngredient(ingredients *);
-void editIngredient(ingredients);
-void recipeMenu(ingredients*);
-int colourization(ingredients *, char *, double);
-void printRecipeList(Recipes*, ingredients *);
-int dateComparatorenator(date, date);
-void printDate(ingredients *, int);
-void returnMenu(char *, ingredients *);
-void clearScreen(void);
-void flushInput(void);
-void openRecipe(Recipes , ingredients *);
-void printInstructions(Recipes);
-
 int main(void) {
     ingredients *fridgeContent = (ingredients *) calloc(1, sizeof(ingredients));
     if(fridgeContent == NULL) {
