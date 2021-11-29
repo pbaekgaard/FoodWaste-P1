@@ -1,5 +1,5 @@
-#ifndef FileReading
-#define FileReading
+#ifndef app
+#define app
 
 #define NUMBEROFRECIPES 5
 #define INSTRUCTIONLINELENGTH 256
