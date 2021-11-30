@@ -2,17 +2,24 @@
 #ifndef APP_H
 #define APP_H
 
-#define NUMBEROFRECIPES 5
 #define INSTRUCTIONLINELENGTH 256
 #define TRUE 1
 #define FALSE 0
 #define UNKNOWN -1
+#define VEGETARIANNUMBER 2
+#define LOWCARBNUMBER 1
+#define LOWCALORIENUMBER 1
+#define HIGHPROTEINNUMBER 1
+#define NUMBEROFRECIPES (VEGETARIANNUMBER + LOWCARBNUMBER + LOWCALORIENUMBER + HIGHPROTEINNUMBER)
+#define TYPESOFRECIPES 5
 #define MAXINGREDIENTS 50
 #define RED "\033[31;1m"
 #define GREEN "\033[0;32m"
 #define YELLOW "\033[33;1m"
 #define WHITE "\x1B[0m"
 #define PURPLE "\033[0;34m"
+
+typedef enum recipeType {lowCarb = 2, lowCalorie, highProtein, vegetarian} recipeType;
 
 typedef struct date {
     int year, month, day;
@@ -40,6 +47,7 @@ typedef struct Recipes {
     ingredients fridgeIngredients[MAXINGREDIENTS];
     ingredients notFridgeIngredients[MAXINGREDIENTS];
     char *filename;
+    recipeType recipeType;
 } Recipes;
 
 /* Global variables - Extern means declaration only. No memory is allocated but the compiler is aware that the variable exists */
@@ -74,12 +82,16 @@ extern void newIngredientExpirationDate(ingredients *);
 extern void newIngredientOpenedDate(ingredients *);
 extern void recipeMenu(ingredients*);
 extern int colourization(ingredients *, char *, double);
-extern void printRecipeList(Recipes*, ingredients *);
+extern void printRecipeTypes (Recipes*, Recipes*, Recipes*, Recipes*, Recipes*, ingredients *);
+extern void RecipeList(Recipes *, ingredients *, int);
+extern void printRecipeList(Recipes *Recipe, ingredients *fridgeContent, int NumberOfRecipes);
 extern int dateComparatorenator(date, date);
 extern void printDate(ingredients *, int);
+extern void returnMenu(char *, ingredients *);
 extern void clearScreen(void);
 extern void flushInput(void);
 extern void openRecipe(Recipes , ingredients *);
+extern int colorForRecipe (int, Recipes *, ingredients *);
+extern void colorForRecipeType (Recipes *, ingredients *, int);
 extern void printInstructions(Recipes);
-
 #endif
