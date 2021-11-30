@@ -234,8 +234,14 @@ void contents(ingredients *fridgeContent) {
     printf("\nWhich ingredient do you want to change? (press 'R' to return or 'N' to add an ingredient):\n");
 
     do{
-        /*Makes sure the user inputs a valid number*/
-        if(ingredientNumber <= 0 || ingredientNumber > fridgeSize) {
+        /* If fridge is empty */
+        if(fridgeSize == 0) {
+            clearScreen();
+            printf("Your fridge is empty\n");
+            printf("Press 'R' to return or 'N' to add an ingredient:\n");
+        }
+        /* Makes sure the user inputs a valid number */
+        else if(ingredientNumber <= 0 || ingredientNumber > fridgeSize) {
             clearScreen();
             printf("Your fridge contains\n");
             printFridgeContents(fridgeContent);
@@ -243,7 +249,7 @@ void contents(ingredients *fridgeContent) {
         }
         scanf(" %s", choice);
         ingredientNumber = atoi(choice);
-        /*Return to main menu if user presses 'R'*/
+        /* Return to main menu if user presses 'R' */
         if(strcmp(choice, "r") == 0 || strcmp(choice, "R") == 0){
             mainMenu(fridgeContent);
         }
