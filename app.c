@@ -881,22 +881,6 @@ int colourization(ingredients *fridgeContent, char *ingredientName, double neede
         }
     }   
     return 0;
-} 
-
-void printInstructions(Recipes recipe) {
-    FILE *fp = fopen(recipe.filename, "r");
-    char buffer[INSTRUCTIONLINELENGTH];
-
-    if(fp == NULL) {
-        printf("ERROR: Couldn't find instructions");
-        exit(EXIT_FAILURE);
-    }
-
-    while (fgets(buffer, INSTRUCTIONLINELENGTH, fp)){
-        printf("%s", buffer);
-    }
-    fclose(fp);
-
 }
 
 void clearScreen(void) {

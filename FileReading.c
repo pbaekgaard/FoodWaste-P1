@@ -78,3 +78,18 @@ void getFridgeContents(ingredients *fridgeContent) {
     /* Closes file */
     fclose(readFile);
 }
+
+void printInstructions(Recipes recipe) {
+    FILE *fp = fopen(recipe.filename, "r");
+    char buffer[INSTRUCTIONLINELENGTH];
+
+    if(fp == NULL) {
+        printf("ERROR: Couldn't find instructions");
+        exit(EXIT_FAILURE);
+    }
+
+    while (fgets(buffer, INSTRUCTIONLINELENGTH, fp)){
+        printf("%s", buffer);
+    }
+    fclose(fp);
+}
