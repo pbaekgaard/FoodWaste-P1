@@ -575,9 +575,9 @@ void deleteIngredient(ingredients *fridgeContent, int ingredientNumber) {
         fridgeContent[fridgeSize - 1] = fridgeContent[ingredientNumber];
         fridgeContent[ingredientNumber] = temp;
         fridgeContent = (ingredients *) realloc(fridgeContent, sizeof(ingredients) * --fridgeSize);
+        sortContent(fridgeContent);
+        contents(fridgeContent);
     }
-    sortContent(fridgeContent);
-    contents(fridgeContent);
 }
 
 int dateComparatorenator(date expirationDate, date openedDate) {
