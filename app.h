@@ -20,7 +20,7 @@
 #define WHITE "\x1B[0m"
 #define PURPLE "\033[0;34m"
 
-typedef enum recipeType {lowCarb = 1, lowCalorie, highProtein, vegetarian} recipeType;
+typedef enum recipeType {lowCarb = 2, lowCalorie, highProtein, vegetarian} recipeType;
 
 typedef struct date {
     int year, month, day;

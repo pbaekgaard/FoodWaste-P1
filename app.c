@@ -711,17 +711,21 @@ void recipeMenu(ingredients *fridgeContent) {
 }
 
 void printRecipeTypes (Recipes* vegetarian, Recipes* lowCarb, Recipes* lowCalorie, Recipes* highProtein, Recipes* allRecipes, ingredients * fridgeContent){
+    clearScreen();
     printf("Your recipe types:\n");
+    printf("----------------------------\n");
+    printf("1. All recipes\n");
+    printf("----------------------------\n");
     colorForRecipeType (lowCarb, fridgeContent, LOWCARBNUMBER);
-    printf("1. Lown carb\n");
+    printf("2. Lown carb\n");
     colorForRecipeType (lowCalorie, fridgeContent, LOWCALORIENUMBER);
-    printf("2. Low calorie\n");
+    printf("3. Low calorie\n");
     colorForRecipeType (highProtein, fridgeContent, HIGHPROTEINNUMBER);
-    printf("3. High protein\n");
+    printf("4. High protein\n");
     colorForRecipeType (vegetarian, fridgeContent, VEGETARIANNUMBER);
-    printf("4. Vegetarian\n");
-    colorForRecipeType (allRecipes, fridgeContent, NUMBEROFRECIPES);
-    printf("5. All recipes\n");
+    printf("5. Vegetarian\n");
+
+    
     printf(WHITE);
 }
 
