@@ -730,7 +730,7 @@ void printRecipeTypes (Recipes* vegetarian, Recipes* lowCarb, Recipes* lowCalori
     printf("1. All recipes\n");
     printf("----------------------------\n");
     colorForRecipeType (lowCarb, fridgeContent, LOWCARBNUMBER);
-    printf("2. Lown carb\n");
+    printf("2. Low carb\n");
     colorForRecipeType (lowCalorie, fridgeContent, LOWCALORIENUMBER);
     printf("3. Low calorie\n");
     colorForRecipeType (highProtein, fridgeContent, HIGHPROTEINNUMBER);
@@ -792,7 +792,7 @@ void printRecipeList(Recipes *recipe, ingredients *fridgeContent, int numberOfRe
 int colorForRecipe (int i, Recipes *recipe, ingredients *fridgeContent){
     int j, k, numberOfIngredients = 0, isGreen = TRUE;
     for (j = 0 ; j < MAXINGREDIENTS ; j++){
-        if(strcmp(recipe[i - 1].fridgeIngredients[j].name, "Last_element") == 0){
+        if(strcmp(recipe[i - 1].fridgeIngredients[j].name, "\0") == 0){
             break;
         }
         else{
