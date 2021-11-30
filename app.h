@@ -1,6 +1,6 @@
 /* Include guard that prevents double declaration of any identifiers such as types, enums and static variables*/
-#ifndef _APP_H
-#define _APP_H
+#ifndef APP_H
+#define APP_H
 
 #define INSTRUCTIONLINELENGTH 256
 #define TRUE 1
@@ -50,6 +50,7 @@ typedef struct Recipes {
     recipeType recipeType;
 } Recipes;
 
+/* Global variables - Extern means declaration only. No memory is allocated but the compiler is aware that the variable exists */
 extern date todayDate;
 extern int fridgeSize;
 
@@ -70,8 +71,10 @@ extern void editIngredient(ingredients*, int);
 extern void changeName(ingredients*, int);
 extern void changeWeight(ingredients*, int);
 extern void changeDate(ingredients*, int);
+extern void changeOpenedState(ingredients *, int);
+extern void deleteIngredient(ingredients *, int);
 extern void printColour(ingredients *, int);
-extern void printWeight(ingredients *, int );
+extern void printWeight(ingredients *, int);
 extern void printExpirationDate(ingredients *, int);
 extern void printOpenedDate(ingredients *, int);
 extern void addIngredient(ingredients *);
