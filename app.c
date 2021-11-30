@@ -486,6 +486,7 @@ void editIngredient(ingredients *fridgeContent, int ingredientNumber) {
     printf("\n\n");
     printf("# - EDIT         R - RETURN\n");
     scanf(" %c", &choice);
+    flushInput();
     switch (choice) {
         case '1': 
             changeName(fridgeContent, ingredientNumber);
