@@ -88,6 +88,7 @@ extern void printRecipeList(Recipes *Recipe, ingredients *fridgeContent, int Num
 extern int dateComparatorenator(date, date);
 extern void printDate(ingredients *, int);
 extern void returnMenu(char *, ingredients *);
+extern int searchinator(ingredients *);
 extern void clearScreen(void);
 extern void flushInput(void);
 extern void openRecipe(Recipes , ingredients *);

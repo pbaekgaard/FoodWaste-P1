@@ -288,6 +288,8 @@ void printFridgeContents(ingredients *fridgeContent) {
         }
         printf(WHITE);
     }
+
+    printf("%d", searchinator(fridgeContent));
 }
 
 void printColour(ingredients *fridgeContent, int itemNumber) {
@@ -888,6 +890,21 @@ int colourization(ingredients *fridgeContent, char *ingredientName, double neede
         }
     }   
     return 0;
+}
+
+int searchinator(ingredients *fridgeContent){
+    int i, j;
+    char* ret;
+
+    for(i = 0 ; i < 29 ; i++){
+        ret = strstr("Mi", fridgeContent[i].name);
+        j = strcmp(ret, "\0");
+        if(j == 0){
+            break;
+        }
+    }
+
+    return j;
 }
 
 void clearScreen(void) {
