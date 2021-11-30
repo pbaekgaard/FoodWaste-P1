@@ -73,6 +73,7 @@ void getFridgeContents(ingredients *fridgeContent) {
         else{
             fscanf(readFile, " %d", &fridgeContent[i].open.isopen.daysAfterOpen);
         }
+        fscanf(readFile, " %s", fridgeContent[i].ingredientType);
         i++;
     }
     /* Closes file */
