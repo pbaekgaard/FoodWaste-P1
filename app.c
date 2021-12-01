@@ -257,7 +257,7 @@ void contents(ingredients *fridgeContent) {
             mainMenu(fridgeContent);
         }
         else if(strcmp(choice, "n") == 0 || strcmp(choice, "N") == 0){
-            addIngredient(fridgeContent);
+            addIngredient(fridgeContent, "\0");
         }
         else if(strcmp(choice, "s") == 0 || strcmp(choice, "S") == 0){
             search(fridgeContent, &ingredientNumber);
@@ -295,7 +295,7 @@ void search(ingredients *fridgeContent, int *ingredientNumber) {
 }
 
 void searchIngredient(ingredients *fridgeContent) {
-    char searchTerm[20], ingredientName[20];
+    char searchTerm[20], ingredientName[20], choice;
     int i, j;
 
     printf("What would you like to search for?\n");
@@ -317,6 +317,14 @@ void searchIngredient(ingredients *fridgeContent) {
 
         if(strstr(ingredientName, searchTerm) != NULL) {
             printIngredient(fridgeContent, i);
+        }
+        else {
+            printf("You don't have that item. Would you like to add it? (y/n)\n");
+            scanf(" %c", &choice);
+            if(choice == 'y' || choice == 'Y') {
+                searchTerm[0] = toupper(searchTerm[0]);
+                addIngredient(fridgeContent, searchTerm);
+            }
         }
     }
 }
@@ -446,7 +454,7 @@ void printOpenedDate(ingredients *fridgeContent, int itemNumber) {
     }
 }
 
-void addIngredient(ingredients *fridgeContent) {
+void addIngredient(ingredients *fridgeContent, char *ingredientName) {
     char opened;
     fridgeContent = (ingredients *) realloc(fridgeContent, sizeof(ingredients) * ++fridgeSize);
     if(fridgeContent == NULL) {
@@ -455,9 +463,14 @@ void addIngredient(ingredients *fridgeContent) {
     }
 
     clearScreen();
-    printf("What is the name of the ingredient?\n");
-    scanf(" %s", fridgeContent[fridgeSize - 1].name);
-    flushInput();
+    if(strcmp(ingredientName, "\0") == 0) {
+        printf("What is the name of the ingredient?\n");
+        scanf(" %s", fridgeContent[fridgeSize - 1].name);
+        flushInput();
+    }
+    else {
+        strcpy(fridgeContent[fridgeSize - 1].name, ingredientName);
+    }
 
     printf("What is the weight of the ingredient in grams?\n");
     scanf("%lf", &fridgeContent[fridgeSize - 1].weight);
@@ -709,7 +722,7 @@ void recipeMenu(ingredients *fridgeContent) {
     Recipes meatLoaf = {"Meat Loaf",
 
                        {{"Chopped_lambmeat", 500}, {"Milk", 100}, {"Cream", 47.5},
-                       {"Egg", 100}, {"Dried_tomatoes", 20}, {"Black_olives", 50}, {"Feta", 75},
+                       {"Eggs", 100}, {"Dried_tomatoes", 20}, {"Black_olives", 50}, {"Feta", 75},
                        {"Butter", 14}},
 
                        {{"Onion", 200}, {"Garlic", 12}, {"Oats", 90}, {"Thyme", 18}, {"Rosemary", 6}, 

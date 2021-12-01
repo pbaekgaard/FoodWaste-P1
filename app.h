@@ -80,7 +80,7 @@ extern void printColour(ingredients *, int);
 extern void printWeight(ingredients *, int);
 extern void printExpirationDate(ingredients *, int);
 extern void printOpenedDate(ingredients *, int);
-extern void addIngredient(ingredients *);
+extern void addIngredient(ingredients *, char *);
 extern void newIngredientExpirationDate(ingredients *);
 extern void newIngredientOpenedDate(ingredients *);
 extern void recipeMenu(ingredients*);
