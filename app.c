@@ -302,30 +302,69 @@ void searchIngredient(ingredients *fridgeContent) {
 
     printf("What would you like to search for?\n");
     scanf(" %s", searchTerm);
+    printf("\n");
 
-    /*Convert the searched term to all lowercase*/
-    for(j = 0; j < strlen(searchTerm); j++) {
-        searchTerm[j] = tolower(searchTerm[j]);
-    }
-
-    for(i = 0; i < fridgeSize; i++) {  
-
-        strcpy(ingredientName, fridgeContent[i].name);
-
-        /*Convert the ingredient name to all lowercase*/
-        for(j = 0; j < strlen(ingredientName); j++) {
-            ingredientName[j] = tolower(ingredientName[j]);
+    if(strcmp(searchTerm, "types") == 0){
+        searchTypes(fridgeContent);
+    } else {
+        /*Convert the searched term to all lowercase*/
+        for(j = 0; j < strlen(searchTerm); j++) {
+            searchTerm[j] = tolower(searchTerm[j]);
         }
 
-        if(strstr(ingredientName, searchTerm) != NULL) {
-            printIngredient(fridgeContent, i);
+        for(i = 0; i < fridgeSize; i++) {  
+
+            strcpy(ingredientName, fridgeContent[i].name);
+
+            /*Convert the ingredient name to all lowercase*/
+            for(j = 0; j < strlen(ingredientName); j++) {
+                ingredientName[j] = tolower(ingredientName[j]);
+            }
+
+            if(strstr(ingredientName, searchTerm) != NULL) {
+                printIngredient(fridgeContent, i);
+                hasFound = TRUE;
+            }
+        }
+        if(hasFound == FALSE){
+            clearScreen();
+            printFridgeContents(fridgeContent);
+            printf("No matches was found for %s.\n", searchTerm);
+        }
+    }
+}
+
+void searchTypes(ingredients *fridgeContent){
+    int i, j, hasFound = FALSE;
+    char searchType[20], ingredientType[20];
+
+    printf("What food type would you like to search for?\n");
+    scanf(" %s", searchType);
+    printf("\n");
+
+    for(i = 0 ; i < strlen(searchType) ; i++){
+        searchType[i] = tolower(searchType[i]);
+    }
+
+    for(j = 0 ; j < fridgeSize ; j++){  
+
+        strcpy(ingredientType, fridgeContent[j].ingredientType);
+
+        /*Convert the ingredient name to all lowercase*/
+        for(i = 0; i < strlen(ingredientType); i++) {
+            ingredientType[i] = tolower(ingredientType[i]);
+        }
+
+        if(strcmp(searchType, ingredientType) == 0) {
+            printIngredient(fridgeContent, j);
             hasFound = TRUE;
         }
     }
+
     if(hasFound == FALSE){
         clearScreen();
         printFridgeContents(fridgeContent);
-        printf("No matches was found for %s.\n", searchTerm);
+        printf("No matches was found for %s.\n", searchType);
     }
 }
 

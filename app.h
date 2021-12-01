@@ -70,6 +70,7 @@ extern void contents(ingredients *);
 extern void printFridgeContents(ingredients *);
 extern void search(ingredients *, int *);
 extern void searchIngredient(ingredients *);
+extern void searchTypes(ingredients *);
 extern void printIngredient(ingredients *, int);
 extern void editIngredient(ingredients*, int);
 extern void changeName(ingredients*, int);
