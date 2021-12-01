@@ -5,7 +5,7 @@
 #include <ctype.h>
 #include "app.h"
 
-/*DEFINING VARIABLES*/
+
 date todayDate;
 
 int main(void) {
