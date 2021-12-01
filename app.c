@@ -87,6 +87,7 @@ void mainMenu(ingredients *fridgeContent) {
             break;
         case 'Q': case 'q':
             free(fridgeContent);
+            clearScreen();
             exit(EXIT_SUCCESS);
             break;
         case 'F': case 'f':
