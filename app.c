@@ -276,6 +276,7 @@ void printFridgeContents(ingredients *fridgeContent) {
             printf(" %d - %s", itemNumber + 1, fridgeContent[itemNumber].name);
         }
 
+        printIngType(fridgeContent, itemNumber);
         printWeight(fridgeContent, itemNumber);
         printExpirationDate(fridgeContent, itemNumber);
         printOpenedDate(fridgeContent, itemNumber);
@@ -310,30 +311,40 @@ void printColour(ingredients *fridgeContent, int itemNumber) {
     }
 }
 
+void printIngType(ingredients *fridgeContent, int itemNumber) {
+    int i;
+
+    for (i = 0; i < 20 - strlen(fridgeContent[itemNumber].name); i++){
+        printf(" ");
+    }
+    printf("%s", fridgeContent[itemNumber].ingredientType);
+}
+
 void printWeight(ingredients *fridgeContent, int itemNumber) {
     int i;
+    
     if(fridgeContent[itemNumber].weight == UNKNOWN) {
-        for (i = 0; i < 23 - strlen(fridgeContent[itemNumber].name); i++){
+        for (i = 0; i < 13 - strlen(fridgeContent[itemNumber].ingredientType); i++){
             printf(" ");
         }
     }
     else if(fridgeContent[itemNumber].weight < 10 && fridgeContent[itemNumber].weight > 0) {
-        for(i = 0; i < 25 - strlen(fridgeContent[itemNumber].name); i++) {
+        for(i = 0; i < 15 - strlen(fridgeContent[itemNumber].ingredientType); i++) {
             printf(" ");
         } 
     } 
     else if(fridgeContent[itemNumber].weight < 100 && fridgeContent[itemNumber].weight >= 10) {
-        for(i = 0; i < 24 - strlen(fridgeContent[itemNumber].name); i++) {
+        for(i = 0; i < 14 - strlen(fridgeContent[itemNumber].ingredientType); i++) {
             printf(" ");
         }           
     }
     else if(fridgeContent[itemNumber].weight < 1000 && fridgeContent[itemNumber].weight >= 100) {
-        for(i = 0; i < 23 - strlen(fridgeContent[itemNumber].name); i++) {
+        for(i = 0; i < 13 - strlen(fridgeContent[itemNumber].ingredientType); i++) {
             printf(" ");
         }           
     }
     else if(fridgeContent[itemNumber].weight < 10000 && fridgeContent[itemNumber].weight >= 1000) {
-        for(i = 0; i < 22 - strlen(fridgeContent[itemNumber].name); i++) {
+        for(i = 0; i < 12 - strlen(fridgeContent[itemNumber].ingredientType); i++) {
             printf(" ");
         }           
     }
@@ -621,7 +632,7 @@ void recipeMenu(ingredients *fridgeContent) {
     /*Declaration of different recipes*/
     Recipes pizza =  {"Pizza",
 
-                     {{"Yeast", 3.1}, {"Passata", 95.1}, {"Mozzarella", 125},
+                     {{"Yeast", 3.1}, {"Tomato_puree", 95.1}, {"Mozzarella", 125},
                      {"Parmesan", 10}, {"Cherry_tomatoes", 85},},
 
                      {{"Bread_flour", 300}, {"Salt", 5.69}, {"Olive_oil", 13.69}, 
