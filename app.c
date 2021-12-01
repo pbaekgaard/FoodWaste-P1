@@ -413,6 +413,11 @@ void printWeight(ingredients *fridgeContent, int itemNumber) {
             printf(" ");
         }           
     }
+    else if(fridgeContent[itemNumber].weight < 100000 && fridgeContent[itemNumber].weight >= 10000) {
+        for(i = 0; i < 11 - strlen(fridgeContent[itemNumber].ingredientType); i++) {
+            printf(" ");
+        }           
+    }    
 
     if(fridgeContent[itemNumber].weight > 0){
         printf("%.2f g", fridgeContent[itemNumber].weight);           
@@ -467,6 +472,7 @@ void printOpenedDate(ingredients *fridgeContent, int itemNumber) {
 
 void addIngredient(ingredients *fridgeContent) {
     char opened;
+    char weightTemp[10];
     fridgeContent = (ingredients *) realloc(fridgeContent, sizeof(ingredients) * ++fridgeSize);
     if(fridgeContent == NULL) {
         printf("Couldn't re-allocate memory");
@@ -477,10 +483,16 @@ void addIngredient(ingredients *fridgeContent) {
     printf("What is the name of the ingredient?\n");
     scanf(" %s", fridgeContent[fridgeSize - 1].name);
     flushInput();
+    printf("What type of food is it?\n");
+    scanf("%s", fridgeContent[fridgeSize - 1].ingredientType);
+    fridgeContent[fridgeSize - 1].ingredientType[0] = toupper(fridgeContent[fridgeSize - 1].ingredientType[0]);
+    flushInput();
 
     printf("What is the weight of the ingredient in grams?\n");
-    scanf("%lf", &fridgeContent[fridgeSize - 1].weight);
-    while(fridgeContent[fridgeSize - 1].weight <= 0) {
+
+    scanf("%s", weightTemp);
+    fridgeContent[fridgeSize - 1].weight = atof(weightTemp);
+    while(!(fridgeContent[fridgeSize - 1].weight > 0 || fridgeContent[fridgeSize - 1].weight == -1)) {
         printf("Please type a valid weight: ");
         scanf(" %lf", &fridgeContent[fridgeSize - 1].weight);
     }
@@ -504,7 +516,7 @@ void addIngredient(ingredients *fridgeContent) {
     }
     printf("How many days can the ingredient last after being opened?\n");
     scanf("%d", &fridgeContent[fridgeSize - 1].open.isopen.daysAfterOpen);
-    
+
     updateExpDates(fridgeContent);
     sortContent(fridgeContent);
     contents(fridgeContent);
