@@ -230,8 +230,7 @@ void contents(ingredients *fridgeContent) {
     char choice[2];
 
     clearScreen();
-    printf("Your fridge contains\n");
-    printFridgeContents(fridgeContent, fridgeSize);
+    printFridgeContents(fridgeContent);
 
     printf("\nWhich ingredient do you want to change? (press 'S' to search, 'N' to add an ingredient, or 'R' to return):\n");
 
@@ -245,8 +244,7 @@ void contents(ingredients *fridgeContent) {
         /* Makes sure the user inputs a valid number */
         else if(ingredientNumber <= 0 || ingredientNumber > fridgeSize) {
             clearScreen();
-            printf("Your fridge contains\n");
-            printFridgeContents(fridgeContent, fridgeSize);
+            printFridgeContents(fridgeContent);
             printf("\nPlease enter a valid ingredient number, type 'S' to search,'N' to add an ingredient, or 'R' to Return:\n");
 
         }
@@ -257,7 +255,7 @@ void contents(ingredients *fridgeContent) {
             mainMenu(fridgeContent);
         }
         else if(strcmp(choice, "n") == 0 || strcmp(choice, "N") == 0){
-            addIngredient(fridgeContent, "\0");
+            addIngredient(fridgeContent);
         }
         else if(strcmp(choice, "s") == 0 || strcmp(choice, "S") == 0){
             search(fridgeContent, &ingredientNumber);
@@ -266,10 +264,10 @@ void contents(ingredients *fridgeContent) {
     editIngredient(fridgeContent, ingredientNumber - 1);
 }
 
-void printFridgeContents(ingredients *fridgeContent, int numberOfIngredients) {
+void printFridgeContents(ingredients *fridgeContent) {
     int itemNumber;
-
-    for(itemNumber = 0; itemNumber < numberOfIngredients; itemNumber++) {
+    printf("Your fridge contains\n");
+    for(itemNumber = 0; itemNumber < fridgeSize; itemNumber++) {
         printIngredient(fridgeContent, itemNumber);
     }
 }
@@ -278,25 +276,29 @@ void search(ingredients *fridgeContent, int *ingredientNumber) {
     char choice[2];
 
     clearScreen();
-    printFridgeContents(fridgeContent, fridgeSize);
+    printFridgeContents(fridgeContent);
     searchIngredient(fridgeContent);
     do{
-        printf("\nWhich ingredient do you want to change? (press 'S' to search or 'R' to return):\n");
+        printf("\nWhich ingredient do you want to change? (press 'S' to search, 'N' to add an ingredient, or 'R' to return):\n");
         scanf(" %s", choice);
         *ingredientNumber = atoi(choice);
         /* Return to main menu if user presses 'R' */
         if(strcmp(choice, "r") == 0 || strcmp(choice, "R") == 0){
-            contents(fridgeContent);
+            mainMenu(fridgeContent);
         }
         else if(strcmp(choice, "s") == 0 || strcmp(choice, "S") == 0){
             search(fridgeContent, ingredientNumber);
+        }
+        else if(strcmp(choice, "n") == 0 || strcmp(choice, "N") == 0){
+            addIngredient(fridgeContent);       
         }
     } while(*ingredientNumber <= 0 || *ingredientNumber > fridgeSize);
 }
 
 void searchIngredient(ingredients *fridgeContent) {
-    char searchTerm[20], ingredientName[20], choice;
-    int i, j;
+    char searchTerm[20], ingredientName[20];
+    int i, j, hasFound = FALSE;
+
 
     printf("What would you like to search for?\n");
     scanf(" %s", searchTerm);
@@ -317,15 +319,13 @@ void searchIngredient(ingredients *fridgeContent) {
 
         if(strstr(ingredientName, searchTerm) != NULL) {
             printIngredient(fridgeContent, i);
+            hasFound = TRUE;
         }
-        else {
-            printf("You don't have that item. Would you like to add it? (y/n)\n");
-            scanf(" %c", &choice);
-            if(choice == 'y' || choice == 'Y') {
-                searchTerm[0] = toupper(searchTerm[0]);
-                addIngredient(fridgeContent, searchTerm);
-            }
-        }
+    }
+    if(hasFound == FALSE){
+        clearScreen();
+        printFridgeContents(fridgeContent);
+        printf("No matches was found for %s.\n", searchTerm);
     }
 }
 
@@ -454,7 +454,7 @@ void printOpenedDate(ingredients *fridgeContent, int itemNumber) {
     }
 }
 
-void addIngredient(ingredients *fridgeContent, char *ingredientName) {
+void addIngredient(ingredients *fridgeContent) {
     char opened;
     fridgeContent = (ingredients *) realloc(fridgeContent, sizeof(ingredients) * ++fridgeSize);
     if(fridgeContent == NULL) {
@@ -463,14 +463,9 @@ void addIngredient(ingredients *fridgeContent, char *ingredientName) {
     }
 
     clearScreen();
-    if(strcmp(ingredientName, "\0") == 0) {
-        printf("What is the name of the ingredient?\n");
-        scanf(" %s", fridgeContent[fridgeSize - 1].name);
-        flushInput();
-    }
-    else {
-        strcpy(fridgeContent[fridgeSize - 1].name, ingredientName);
-    }
+    printf("What is the name of the ingredient?\n");
+    scanf(" %s", fridgeContent[fridgeSize - 1].name);
+    flushInput();
 
     printf("What is the weight of the ingredient in grams?\n");
     scanf("%lf", &fridgeContent[fridgeSize - 1].weight);
