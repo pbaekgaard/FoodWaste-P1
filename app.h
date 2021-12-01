@@ -40,6 +40,7 @@ typedef struct ingredients {
     double weight;
     date expirationDate;
     open open;
+    char ingredientType[20];
 } ingredients;
 
 typedef struct Recipes {
@@ -75,6 +76,7 @@ extern void changeName(ingredients*, int);
 extern void changeWeight(ingredients*, int);
 extern void changeDate(ingredients*, int);
 extern void changeOpenedState(ingredients *, int);
+extern void printIngType(ingredients *, int);
 extern void deleteIngredient(ingredients *, int);
 extern void printColour(ingredients *, int);
 extern void printWeight(ingredients *, int);
