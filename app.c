@@ -289,7 +289,25 @@ void printFridgeContents(ingredients *fridgeContent) {
         printf(WHITE);
     }
 
-    printf("%d", searchinator(fridgeContent));
+    printSearch(fridgeContent);
+}
+
+void printSearch(ingredients *fridgeContent){
+    int i, searchNumber = 0, checkpoint;
+    char searchedItem[40];
+    
+    printf("Enter the ingredient you are trying to find: ");
+    scanf("%s", searchedItem);
+
+    checkpoint = 0;
+    for(i = 0 ; i < fridgeSize ; i++){    
+        searchNumber = searchinator(fridgeContent, checkpoint, searchedItem);
+        if(searchNumber == 0){
+            break;
+        }
+        printf("%s\n", fridgeContent[searchNumber].name);
+        checkpoint = searchNumber + 1;
+    }
 }
 
 void printColour(ingredients *fridgeContent, int itemNumber) {
@@ -892,19 +910,19 @@ int colourization(ingredients *fridgeContent, char *ingredientName, double neede
     return 0;
 }
 
-int searchinator(ingredients *fridgeContent){
-    int i, j;
+int searchinator(ingredients *fridgeContent, int checkpoint, char *searchedItem){
+    int i;
     char* ret;
 
-    for(i = 0 ; i < 29 ; i++){
-        ret = strstr("Mi", fridgeContent[i].name);
-        j = strcmp(ret, "\0");
-        if(j == 0){
-            break;
+    for(i = checkpoint ; i < 29 ; i++){
+        ret = strstr(fridgeContent[i].name, searchedItem);
+        if(ret != NULL){
+            return i;
         }
     }
-
-    return j;
+    
+    i = 0;
+    return i;
 }
 
 void clearScreen(void) {

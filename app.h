@@ -67,6 +67,7 @@ extern void tomorrow(date *);
 extern int leapYear(int);
 extern void contents(ingredients *);
 extern void printFridgeContents(ingredients *);
+extern void printSearch(ingredients *);
 extern void editIngredient(ingredients*, int);
 extern void changeName(ingredients*, int);
 extern void changeWeight(ingredients*, int);
@@ -88,7 +89,7 @@ extern void printRecipeList(Recipes *Recipe, ingredients *fridgeContent, int Num
 extern int dateComparatorenator(date, date);
 extern void printDate(ingredients *, int);
 extern void returnMenu(char *, ingredients *);
-extern int searchinator(ingredients *);
+extern int searchinator(ingredients *, int, char *);
 extern void clearScreen(void);
 extern void flushInput(void);
 extern void openRecipe(Recipes , ingredients *);
