@@ -300,11 +300,11 @@ void searchIngredient(ingredients *fridgeContent) {
     char searchTerm[20], ingredientName[20];
     int i, j, hasFound = FALSE;
 
-    printf("What would you like to search for?\n");
+    printf("What would you like to search for? ('.type' for types of food)\n");
     scanf(" %s", searchTerm);
     printf("\n");
 
-    if(strcmp(searchTerm, "types") == 0){
+    if(strcmp(searchTerm, ".type") == 0){
         searchTypes(fridgeContent);
     } else {
         /*Convert the searched term to all lowercase*/
@@ -338,10 +338,11 @@ void searchTypes(ingredients *fridgeContent){
     int i, j, hasFound = FALSE;
     char searchType[20], ingredientType[20];
 
-    printf("What food type would you like to search for?\n");
+    printf("What food type would you like to search for? ('.s' to return)\n");
     scanf(" %s", searchType);
     printf("\n");
 
+    if(strcmp(searchType, ".s") != 0){
     for(i = 0 ; i < strlen(searchType) ; i++){
         searchType[i] = tolower(searchType[i]);
     }
@@ -365,6 +366,9 @@ void searchTypes(ingredients *fridgeContent){
         clearScreen();
         printFridgeContents(fridgeContent);
         printf("No matches was found for %s.\n", searchType);
+    }
+    } else{
+        searchIngredient(fridgeContent);
     }
 }
 
