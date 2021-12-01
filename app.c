@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <ctype.h>
 #include "app.h"
 
 /*DEFINING VARIABLES*/
@@ -227,11 +228,11 @@ int leapYear(int year){
 void contents(ingredients *fridgeContent) {
     int ingredientNumber = 1;
     char choice[2];
+
     clearScreen();
-    printf("Your fridge contains\n");
     printFridgeContents(fridgeContent);
 
-    printf("\nWhich ingredient do you want to change? (press 'R' to return or 'N' to add an ingredient):\n");
+    printf("\nWhich ingredient do you want to change? (press 'S' to search, 'N' to add an ingredient, or 'R' to return):\n");
 
     do{
         /* If fridge is empty */
@@ -243,9 +244,9 @@ void contents(ingredients *fridgeContent) {
         /* Makes sure the user inputs a valid number */
         else if(ingredientNumber <= 0 || ingredientNumber > fridgeSize) {
             clearScreen();
-            printf("Your fridge contains\n");
             printFridgeContents(fridgeContent);
-            printf("\nPlease enter a valid ingredient number, type 'R' to Return, or 'N' to add an ingredient:\n");
+            printf("\nPlease enter a valid ingredient number, type 'S' to search,'N' to add an ingredient, or 'R' to return:\n");
+
         }
         scanf(" %s", choice);
         ingredientNumber = atoi(choice);
@@ -256,39 +257,102 @@ void contents(ingredients *fridgeContent) {
         else if(strcmp(choice, "n") == 0 || strcmp(choice, "N") == 0){
             addIngredient(fridgeContent);
         }
+        else if(strcmp(choice, "s") == 0 || strcmp(choice, "S") == 0){
+            search(fridgeContent, &ingredientNumber);
+        }
     } while (ingredientNumber <= 0 || ingredientNumber > fridgeSize);
     editIngredient(fridgeContent, ingredientNumber - 1);
 }
 
 void printFridgeContents(ingredients *fridgeContent) {
     int itemNumber;
-
+    printf("Your fridge contains\n");
     for(itemNumber = 0; itemNumber < fridgeSize; itemNumber++) {
-        printColour(fridgeContent, itemNumber);
-        
-        if(strcmp(fridgeContent[itemNumber].name, "-1") == 0) {
-            strcpy(fridgeContent[itemNumber].name, "?????????");
-        }
-        if (itemNumber + 1 < 10) {
-            printf("  %d - %s", itemNumber + 1, fridgeContent[itemNumber].name);
-        }
-        else {
-            printf(" %d - %s", itemNumber + 1, fridgeContent[itemNumber].name);
-        }
-
-        printIngType(fridgeContent, itemNumber);
-        printWeight(fridgeContent, itemNumber);
-        printExpirationDate(fridgeContent, itemNumber);
-        printOpenedDate(fridgeContent, itemNumber);
-
-        if(!(fridgeContent[itemNumber].open.isopen.daysAfterOpen == UNKNOWN)){
-            printf("Shelf time after opening is %d days\n", fridgeContent[itemNumber].open.isopen.daysAfterOpen);
-        }
-        else{
-            printf("Shelf time after opening is UNKNOWN\n");
-        }
-        printf(WHITE);
+        printIngredient(fridgeContent, itemNumber);
     }
+}
+
+void search(ingredients *fridgeContent, int *ingredientNumber) {
+    char choice[2];
+
+    clearScreen();
+    printFridgeContents(fridgeContent);
+    searchIngredient(fridgeContent);
+    do{
+        printf("\nWhich ingredient do you want to change? (press 'S' to search, 'N' to add an ingredient, or 'R' to return):\n");
+        scanf(" %s", choice);
+        *ingredientNumber = atoi(choice);
+        /* Return to main menu if user presses 'R' */
+        if(strcmp(choice, "r") == 0 || strcmp(choice, "R") == 0){
+            mainMenu(fridgeContent);
+        }
+        else if(strcmp(choice, "s") == 0 || strcmp(choice, "S") == 0){
+            search(fridgeContent, ingredientNumber);
+        }
+        else if(strcmp(choice, "n") == 0 || strcmp(choice, "N") == 0){
+            addIngredient(fridgeContent);       
+        }
+    } while(*ingredientNumber <= 0 || *ingredientNumber > fridgeSize);
+}
+
+void searchIngredient(ingredients *fridgeContent) {
+    char searchTerm[20], ingredientName[20];
+    int i, j, hasFound = FALSE;
+
+    printf("What would you like to search for?\n");
+    scanf(" %s", searchTerm);
+
+    /*Convert the searched term to all lowercase*/
+    for(j = 0; j < strlen(searchTerm); j++) {
+        searchTerm[j] = tolower(searchTerm[j]);
+    }
+
+    for(i = 0; i < fridgeSize; i++) {  
+
+        strcpy(ingredientName, fridgeContent[i].name);
+
+        /*Convert the ingredient name to all lowercase*/
+        for(j = 0; j < strlen(ingredientName); j++) {
+            ingredientName[j] = tolower(ingredientName[j]);
+        }
+
+        if(strstr(ingredientName, searchTerm) != NULL) {
+            printIngredient(fridgeContent, i);
+            hasFound = TRUE;
+        }
+    }
+    if(hasFound == FALSE){
+        clearScreen();
+        printFridgeContents(fridgeContent);
+        printf("No matches was found for %s.\n", searchTerm);
+    }
+}
+
+void printIngredient(ingredients *fridgeContent, int itemNumber) {
+    printColour(fridgeContent, itemNumber);
+        
+    if(strcmp(fridgeContent[itemNumber].name, "-1") == 0) {
+        strcpy(fridgeContent[itemNumber].name, "?????????");
+    }
+    if (itemNumber + 1 < 10) {
+        printf("  %d - %s", itemNumber + 1, fridgeContent[itemNumber].name);
+    }
+    else {
+        printf(" %d - %s", itemNumber + 1, fridgeContent[itemNumber].name);
+    }
+    
+    printIngType(fridgeContent, itemNumber);
+    printWeight(fridgeContent, itemNumber);
+    printExpirationDate(fridgeContent, itemNumber);
+    printOpenedDate(fridgeContent, itemNumber);
+
+    if(!(fridgeContent[itemNumber].open.isopen.daysAfterOpen == UNKNOWN)){
+        printf("Shelf time after opening is %d days\n", fridgeContent[itemNumber].open.isopen.daysAfterOpen);
+    }
+    else{
+        printf("Shelf time after opening is UNKNOWN\n");
+    }
+    printf(WHITE);
 }
 
 void printColour(ingredients *fridgeContent, int itemNumber) {
@@ -663,7 +727,7 @@ void recipeMenu(ingredients *fridgeContent) {
     Recipes meatLoaf = {"Meat Loaf",
 
                        {{"Chopped_lambmeat", 500}, {"Milk", 100}, {"Cream", 47.5},
-                       {"Egg", 100}, {"Dried_tomatoes", 20}, {"Black_olives", 50}, {"Feta", 75},
+                       {"Eggs", 100}, {"Dried_tomatoes", 20}, {"Black_olives", 50}, {"Feta", 75},
                        {"Butter", 14}},
 
                        {{"Onion", 200}, {"Garlic", 12}, {"Oats", 90}, {"Thyme", 18}, {"Rosemary", 6}, 
