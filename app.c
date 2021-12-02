@@ -74,7 +74,8 @@ void mainMenu(ingredients *fridgeContent) {
         scanf(" %c", &choice);
         flushInput();
         
-        if(choice == '1' || choice == '2' || choice == 'Q' || choice == 'q' || choice == 'F' || choice == 'f' || choice == 'G' || choice == 'g') {
+        if(choice == '1' || choice == '2' || choice == 'Q' || choice == 'q' || 
+           choice == 'F' || choice == 'f' || choice == 'G' || choice == 'g') {
             run = 0;
         }
     }
@@ -231,6 +232,7 @@ int leapYear(int year){
 }
 
 void skipToDate() {
+    currentDate.day = 0;
     printf("What date do you want to skip to? (yyyy/mm/dd)\n");
     scanf("%d/%d/%d", &currentDate.year, &currentDate.month, &currentDate.day);
 
