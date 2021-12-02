@@ -10,7 +10,8 @@
 #define LOWCARBNUMBER 1
 #define LOWCALORIENUMBER 1
 #define HIGHPROTEINNUMBER 1
-#define NUMBEROFRECIPES (VEGETARIANNUMBER + LOWCARBNUMBER + LOWCALORIENUMBER + HIGHPROTEINNUMBER)
+#define UNCATEGORIZEDNUMBER 5
+#define NUMBEROFRECIPES (VEGETARIANNUMBER + LOWCARBNUMBER + LOWCALORIENUMBER + HIGHPROTEINNUMBER + UNCATEGORIZEDNUMBER)
 #define TYPESOFRECIPES 5
 #define MAXINGREDIENTS 50
 #define RED "\033[31;1m"
@@ -48,7 +49,7 @@ typedef struct Recipes {
     ingredients fridgeIngredients[MAXINGREDIENTS];
     ingredients notFridgeIngredients[MAXINGREDIENTS];
     char *filename;
-    recipeType recipeType;
+    char *recipeType;
 } Recipes;
 
 /* Global variables - Extern means declaration only. No memory is allocated but the compiler is aware that the variable exists */
@@ -86,6 +87,7 @@ extern void addIngredient(ingredients *);
 extern void newIngredientExpirationDate(ingredients *);
 extern void newIngredientOpenedDate(ingredients *);
 extern void recipeMenu(ingredients*);
+extern void makeRecipes(ingredients*, Recipes*, Recipes*, Recipes*, Recipes*, Recipes*, Recipes*);
 extern int colourization(ingredients *, char *, double);
 extern void printRecipeTypes (Recipes*, Recipes*, Recipes*, Recipes*, Recipes*, ingredients *);
 extern void RecipeList(Recipes *, ingredients *, int);

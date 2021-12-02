@@ -701,79 +701,14 @@ void printDate(ingredients *fridgeContent, int itemNumber) {
 void recipeMenu(ingredients *fridgeContent) {
     int recipeKind = 1;
     char choice[1];
-    /*Declaration of different recipes*/
-    Recipes pizza =  {"Pizza",
-
-                     {{"Yeast", 3.1}, {"Tomato_puree", 95.1}, {"Mozzarella", 125},
-                     {"Parmesan", 10}, {"Cherry_tomatoes", 85},},
-
-                     {{"Bread_flour", 300}, {"Salt", 5.69}, {"Olive_oil", 13.69}, 
-                     {"Dried_basil", 2}, {"Garlic", 4}},
-
-                     "db/recipes/pizza/instructions.txt"};
-    
-    Recipes lasagne = {"Lasagne",
-
-                      {{"Ground_beef", 400}, {"Carrots", 260}, {"Celery", 300}, 
-                      {"Squash", 280},{"Tomato_puree", 55}, {"Chopped_tomatoes", 800}, 
-                      {"Butter", 28.35},  {"Milk", 300}, {"Mozzarella", 250}},
-
-                      {{"Onion", 200}, {"Garlic", 24}, {"Oregano", 2}, {"Thyme", 1}, 
-                      {"Vegetable_broth", 100}, {"Olive_oil", 30}, {"Wheat_flour", 15}, 
-                      {"Nutmeg", 1}, {"Lasagne_Plates", 200}},
-
-                      "db/recipes/lasagne/instructions.txt"};
-    
-    Recipes burningLove = {"Burning Love",
-
-                          {{"Milk", 100}, {"Butter", 25},  {"Bacon", 200}, {"Pickled_beetroots", 100}},
-
-                          {{"Potatoes", 600}, {"Salt", 2}, {"Onion", 200}},
-
-                          "db/recipes/burninglove/instructions.txt"};
-    
-    Recipes meatLoaf = {"Meat Loaf",
-
-                       {{"Chopped_lambmeat", 500}, {"Milk", 100}, {"Cream", 47.5},
-                       {"Eggs", 100}, {"Dried_tomatoes", 20}, {"Black_olives", 50}, {"Feta", 75},
-                       {"Butter", 14}},
-
-                       {{"Onion", 200}, {"Garlic", 12}, {"Oats", 90}, {"Thyme", 18}, {"Rosemary", 6}, 
-                       {"Baby_potatoes", 800}, {"Oliveoil", 15}, {"Salt_&_pepper", 1}},
-
-                       "db/recipes/meatloaf/instructions.txt"};  
-
-    Recipes ricePudding = {"Rice_pudding",
-
-                      {{"Milk", 2000}, {"Butter", 20}},
-
-                      {{"Porridge_rice", 484.38}, {"Water", 100}, {"Salt", 3}, {"Cinnamon", 10},
-                      {"Sugar", 16}},
-                      
-                       "db/recipes/ricepudding/instructions.txt"};
-
     Recipes vegetarianRecipes[VEGETARIANNUMBER]; 
     Recipes lowCarbRecipes[LOWCARBNUMBER]; 
     Recipes lowCalorieRecipes[LOWCALORIENUMBER]; 
-    Recipes highProteinRecipes[HIGHPROTEINNUMBER]; 
+    Recipes highProteinRecipes[HIGHPROTEINNUMBER];
+    Recipes uncategorizedRecipes[UNCATEGORIZEDNUMBER]; 
     Recipes allRecipes[NUMBEROFRECIPES];
-
-    vegetarianRecipes[0] = pizza;
-    vegetarianRecipes[1] = lasagne;
-
-    lowCarbRecipes[0] = burningLove;
-
-    lowCalorieRecipes[0] = meatLoaf;
-
-    highProteinRecipes[0] = ricePudding;
     
-    
-    allRecipes[0] = pizza;
-    allRecipes[1] = lasagne;
-    allRecipes[2] = burningLove;
-    allRecipes[3] = meatLoaf;
-    allRecipes[4] = ricePudding;
-
+    makeRecipes(fridgeContent, vegetarianRecipes, lowCarbRecipes, lowCalorieRecipes, highProteinRecipes, uncategorizedRecipes, allRecipes);
 
     clearScreen();
     /*printRecipeList(recipeList, fridgeContent);*/
@@ -906,6 +841,7 @@ void openRecipe(Recipes recipe, ingredients *fridgeContent){
     char choice;
     clearScreen();
     printf("  -------------------------------------\n");
+    printf("          Category: %s\n", recipe.recipeType);
     printf("    %s recipe for 4 people\n", recipe.name);
     printf("  -------------------------------------\n");
     printf("              INGREDIENTS\n");
