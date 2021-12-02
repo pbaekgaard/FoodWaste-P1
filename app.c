@@ -68,15 +68,15 @@ void mainMenu(ingredients *fridgeContent) {
         printf("---------------------\n");
         printf("Q - Quit\n");
         printf("F - ENTER FUTURE\n");
+        printf("G - Go to date\n");
         printf("---------------------\n\n");
         printNotifications(fridgeContent);
         scanf(" %c", &choice);
         flushInput();
         
-        if(choice == '1' || choice == '2' || choice == 'Q' || choice == 'q' || choice == 'F' || choice == 'f') {
+        if(choice == '1' || choice == '2' || choice == 'Q' || choice == 'q' || choice == 'F' || choice == 'f' || choice == 'G' || choice == 'g') {
             run = 0;
         }
-
     }
     switch(choice) {
         case '1':
@@ -92,6 +92,10 @@ void mainMenu(ingredients *fridgeContent) {
             break;
         case 'F': case 'f':
             tomorrow(&todayDate);
+            mainMenu(fridgeContent);
+            break;
+        case 'G': case 'g':
+            skipToDate();
             mainMenu(fridgeContent);
             break;
     }
@@ -224,6 +228,21 @@ int leapYear(int year){
   else result = 0;
 
   return result;
+}
+
+void skipToDate() {
+    printf("What date do you want to skip to? (yyyy/mm/dd)\n");
+    scanf("%d/%d/%d", &todayDate.year, &todayDate.month, &todayDate.day);
+
+    while(todayDate.day > 31 ||
+          ((todayDate.month == 4 || todayDate.month == 6 || todayDate.month == 9 || todayDate.month == 11) && todayDate.day > 30) ||
+          (leapYear(todayDate.year) == 1 && todayDate.month == 2 && todayDate.day > 28) ||
+          (todayDate.month == 2 && todayDate.day > 29) || todayDate.month < 1 || todayDate.month > 12 || todayDate.day < 1){
+        
+        flushInput();
+        printf("Please type a valid date!\n(yyyy/mm/dd): ");
+        scanf(" %d/%d/%d", &todayDate.year, &todayDate.month, &todayDate.day);
+    }
 }
 
 void contents(ingredients *fridgeContent) {
