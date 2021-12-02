@@ -6,7 +6,7 @@
 #include "app.h"
 
 
-date todayDate;
+date currentDate;
 
 int main(void) {
     ingredients *fridgeContent = (ingredients *) calloc(1, sizeof(ingredients));
@@ -20,7 +20,7 @@ int main(void) {
         exit(EXIT_FAILURE);
     }
 
-    todayDate = makeDayToday(); /*Global variable*/
+    currentDate = makeDayToday(); /*Global variable*/
     getFridgeContents(fridgeContent);
     updateExpDates(fridgeContent);
     sortContent(fridgeContent);
@@ -62,7 +62,7 @@ void mainMenu(ingredients *fridgeContent) {
     while(run) {
         clearScreen();
         printf("Welcome to SmartFrAPP\n---------------------\n");
-        printf("     %d/%d/%d\n\n", todayDate.year, todayDate.month, todayDate.day);
+        printf("     %d/%d/%d\n\n", currentDate.year, currentDate.month, currentDate.day);
         printf("1 - Fridge Contents\n");
         printf("2 - Recipes\n");
         printf("---------------------\n");
@@ -91,7 +91,7 @@ void mainMenu(ingredients *fridgeContent) {
             exit(EXIT_SUCCESS);
             break;
         case 'F': case 'f':
-            tomorrow(&todayDate);
+            tomorrow(&currentDate);
             mainMenu(fridgeContent);
             break;
         case 'G': case 'g':
@@ -125,7 +125,7 @@ void printNotifications(ingredients *fridgeContent){
     int i = 0;
     /*SOON TO EXPIRE*/
     for(i = 0; i < fridgeSize; i++) {
-        if(dateComparatorenator(fridgeContent[i].expirationDate, todayDate) == 0) {
+        if(dateComparatorenator(fridgeContent[i].expirationDate, currentDate) == 0) {
             printf("###########################\n");            
             printf("         EXPIRING         \n");
             printf("---------------------------\n");
@@ -134,7 +134,7 @@ void printNotifications(ingredients *fridgeContent){
     }
 
     for (i = 0; i < fridgeSize; i++) {
-        if(dateComparatorenator(fridgeContent[i].expirationDate, todayDate) == 0) {
+        if(dateComparatorenator(fridgeContent[i].expirationDate, currentDate) == 0) {
             printf(YELLOW);
             printf("%s IS EXPIRING\n", fridgeContent[i].name);
             printf(WHITE);
@@ -146,7 +146,7 @@ void printNotifications(ingredients *fridgeContent){
 
     for(i = 0; i < fridgeSize; i++) {
         if(!(fridgeContent[i].expirationDate.day == UNKNOWN || fridgeContent[i].expirationDate.month == UNKNOWN || fridgeContent[i].expirationDate.year == UNKNOWN) 
-            && dateComparatorenator(fridgeContent[i].expirationDate, todayDate) == -1) {
+            && dateComparatorenator(fridgeContent[i].expirationDate, currentDate) == -1) {
             printf("         EXPIRED\n");
             printf("---------------------------\n");
             break;
@@ -154,7 +154,7 @@ void printNotifications(ingredients *fridgeContent){
     }
     for (i = 0; i < fridgeSize; i++) {
         if(!(fridgeContent[i].expirationDate.day == UNKNOWN || fridgeContent[i].expirationDate.month == UNKNOWN || fridgeContent[i].expirationDate.year == UNKNOWN) 
-            && dateComparatorenator(fridgeContent[i].expirationDate, todayDate) == -1) {
+            && dateComparatorenator(fridgeContent[i].expirationDate, currentDate) == -1) {
             printf(RED);
             printf("%s HAS EXPIRED\n", fridgeContent[i].name);
             printf(WHITE);
@@ -232,16 +232,16 @@ int leapYear(int year){
 
 void skipToDate() {
     printf("What date do you want to skip to? (yyyy/mm/dd)\n");
-    scanf("%d/%d/%d", &todayDate.year, &todayDate.month, &todayDate.day);
+    scanf("%d/%d/%d", &currentDate.year, &currentDate.month, &currentDate.day);
 
-    while(todayDate.day > 31 ||
-          ((todayDate.month == 4 || todayDate.month == 6 || todayDate.month == 9 || todayDate.month == 11) && todayDate.day > 30) ||
-          (leapYear(todayDate.year) == 1 && todayDate.month == 2 && todayDate.day > 28) ||
-          (todayDate.month == 2 && todayDate.day > 29) || todayDate.month < 1 || todayDate.month > 12 || todayDate.day < 1){
+    while(currentDate.day > 31 ||
+          ((currentDate.month == 4 || currentDate.month == 6 || currentDate.month == 9 || currentDate.month == 11) && currentDate.day > 30) ||
+          (leapYear(currentDate.year) == 1 && currentDate.month == 2 && currentDate.day > 28) ||
+          (currentDate.month == 2 && currentDate.day > 29) || currentDate.month < 1 || currentDate.month > 12 || currentDate.day < 1){
         
         flushInput();
         printf("Please type a valid date!\n(yyyy/mm/dd): ");
-        scanf(" %d/%d/%d", &todayDate.year, &todayDate.month, &todayDate.day);
+        scanf(" %d/%d/%d", &currentDate.year, &currentDate.month, &currentDate.day);
     }
 }
 
@@ -384,10 +384,10 @@ void printColour(ingredients *fridgeContent, int itemNumber) {
        fridgeContent[itemNumber].open.isopen.daysAfterOpen == UNKNOWN))) {
         printf(PURPLE);
     }
-    else if(dateComparatorenator(fridgeContent[itemNumber].expirationDate, todayDate) == -1) {
+    else if(dateComparatorenator(fridgeContent[itemNumber].expirationDate, currentDate) == -1) {
         printf(RED);
     }
-    else if(dateComparatorenator(fridgeContent[itemNumber].expirationDate, todayDate) == 1) {
+    else if(dateComparatorenator(fridgeContent[itemNumber].expirationDate, currentDate) == 1) {
         printf(GREEN);
     }
     else {
@@ -656,9 +656,9 @@ void changeOpenedState(ingredients *fridgeContent, int ingredientNumber) {
     if(choice == 'y' || choice == 'Y') {
         if (fridgeContent[ingredientNumber].open.opened == 0){
             fridgeContent[ingredientNumber].open.opened = 1;
-            fridgeContent[ingredientNumber].open.isopen.openDate.day = todayDate.day;
-            fridgeContent[ingredientNumber].open.isopen.openDate.month = todayDate.month;
-            fridgeContent[ingredientNumber].open.isopen.openDate.year = todayDate.year;
+            fridgeContent[ingredientNumber].open.isopen.openDate.day = currentDate.day;
+            fridgeContent[ingredientNumber].open.isopen.openDate.month = currentDate.month;
+            fridgeContent[ingredientNumber].open.isopen.openDate.year = currentDate.year;
             updateExpDates(fridgeContent);
         }
         else if (fridgeContent[ingredientNumber].open.opened == 1){
@@ -976,7 +976,7 @@ int colourization(ingredients *fridgeContent, char *ingredientName, double neede
             if(fridgeContent[i].weight < neededWeight){
                 return 0;
             }
-            if(dateComparatorenator(fridgeContent[i].expirationDate, todayDate) == -1) {
+            if(dateComparatorenator(fridgeContent[i].expirationDate, currentDate) == -1) {
                 return 0;
             }
             return 1;
