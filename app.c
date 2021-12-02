@@ -227,13 +227,13 @@ int leapYear(int year){
 }
 
 void contents(ingredients *fridgeContent) {
-    int ingredientNumber = 1;
+    int ingredientNumber = 1, searchOption;
     char choice[2];
 
     clearScreen();
     printFridgeContents(fridgeContent);
 
-    printf("\nWhich ingredient do you want to change? (press 'S' to search, 'N' to add an ingredient, or 'R' to return):\n");
+    printf("\nWhich ingredient do you want to change? (press 'S' to search, 'T' to search food by type, 'N' to add an ingredient, or 'R' to return):\n");
 
     do{
         /* If fridge is empty */
@@ -246,8 +246,7 @@ void contents(ingredients *fridgeContent) {
         else if(ingredientNumber <= 0 || ingredientNumber > fridgeSize) {
             clearScreen();
             printFridgeContents(fridgeContent);
-            printf("\nPlease enter a valid ingredient number, type 'S' to search,'N' to add an ingredient, or 'R' to return:\n");
-
+            printf("\nWhich ingredient do you want to change? (press 'S' to search, 'T' to search food by type, 'N' to add an ingredient, or 'R' to return):\n");
         }
         scanf(" %s", choice);
         ingredientNumber = atoi(choice);
@@ -259,7 +258,12 @@ void contents(ingredients *fridgeContent) {
             addIngredient(fridgeContent);
         }
         else if(strcmp(choice, "s") == 0 || strcmp(choice, "S") == 0){
-            search(fridgeContent, &ingredientNumber);
+            searchOption = 1;
+            search(fridgeContent, &ingredientNumber, searchOption);
+        }
+        else if(strcmp(choice, "t") == 0 || strcmp(choice, "T") == 0){
+            searchOption = 0;
+            search(fridgeContent, &ingredientNumber, searchOption);       
         }
     } while (ingredientNumber <= 0 || ingredientNumber > fridgeSize);
     editIngredient(fridgeContent, ingredientNumber - 1);
@@ -273,14 +277,21 @@ void printFridgeContents(ingredients *fridgeContent) {
     }
 }
 
-void search(ingredients *fridgeContent, int *ingredientNumber) {
+void search(ingredients *fridgeContent, int *ingredientNumber, int searchOption) {
     char choice[2];
 
-    clearScreen();
-    printFridgeContents(fridgeContent);
-    searchIngredient(fridgeContent);
+
+    if(searchOption == 1){
+        clearScreen();
+        printFridgeContents(fridgeContent);
+        searchIngredient(fridgeContent);
+    } else if(searchOption == 0){
+        clearScreen();
+        printFridgeContents(fridgeContent);
+        searchTypes(fridgeContent);
+    }
     do{
-        printf("\nWhich ingredient do you want to change? (press 'S' to search, 'N' to add an ingredient, or 'R' to return):\n");
+        printf("\nWhich ingredient do you want to change? (press 'S' to search, 'T' to search food by type, 'N' to add an ingredient, or 'R' to return):\n");
         scanf(" %s", choice);
         *ingredientNumber = atoi(choice);
         /* Return to main menu if user presses 'R' */
@@ -288,10 +299,15 @@ void search(ingredients *fridgeContent, int *ingredientNumber) {
             mainMenu(fridgeContent);
         }
         else if(strcmp(choice, "s") == 0 || strcmp(choice, "S") == 0){
-            search(fridgeContent, ingredientNumber);
+            searchOption = 1;
+            search(fridgeContent, ingredientNumber, searchOption);
+        }
+        else if(strcmp(choice, "t") == 0 || strcmp(choice, "T") == 0){
+            searchOption = 0;
+            search(fridgeContent, ingredientNumber, searchOption);       
         }
         else if(strcmp(choice, "n") == 0 || strcmp(choice, "N") == 0){
-            addIngredient(fridgeContent);       
+            addIngredient(fridgeContent);
         }
     } while(*ingredientNumber <= 0 || *ingredientNumber > fridgeSize);
 }
@@ -300,37 +316,33 @@ void searchIngredient(ingredients *fridgeContent) {
     char searchTerm[20], ingredientName[20];
     int i, j, hasFound = FALSE;
 
-    printf("What would you like to search for? ('.type' for types of food)\n");
+    printf("What would you like to search for?\n");
     scanf(" %s", searchTerm);
     printf("\n");
 
-    if(strcmp(searchTerm, ".type") == 0){
-        searchTypes(fridgeContent);
-    } else {
-        /*Convert the searched term to all lowercase*/
-        for(j = 0; j < strlen(searchTerm); j++) {
-            searchTerm[j] = tolower(searchTerm[j]);
+    /*Convert the searched term to all lowercase*/
+    for(j = 0; j < strlen(searchTerm); j++) {
+        searchTerm[j] = tolower(searchTerm[j]);
+    }
+
+    for(i = 0; i < fridgeSize; i++) {  
+
+        strcpy(ingredientName, fridgeContent[i].name);
+
+        /*Convert the ingredient name to all lowercase*/
+        for(j = 0; j < strlen(ingredientName); j++) {
+            ingredientName[j] = tolower(ingredientName[j]);
         }
 
-        for(i = 0; i < fridgeSize; i++) {  
-
-            strcpy(ingredientName, fridgeContent[i].name);
-
-            /*Convert the ingredient name to all lowercase*/
-            for(j = 0; j < strlen(ingredientName); j++) {
-                ingredientName[j] = tolower(ingredientName[j]);
-            }
-
-            if(strstr(ingredientName, searchTerm) != NULL) {
-                printIngredient(fridgeContent, i);
-                hasFound = TRUE;
-            }
+        if(strstr(ingredientName, searchTerm) != NULL) {
+            printIngredient(fridgeContent, i);
+            hasFound = TRUE;
         }
-        if(hasFound == FALSE){
-            clearScreen();
-            printFridgeContents(fridgeContent);
+    }
+    if(hasFound == FALSE){
+        clearScreen();
+        printFridgeContents(fridgeContent);
             printf("No matches was found for %s.\n", searchTerm);
-        }
     }
 }
 
@@ -338,11 +350,10 @@ void searchTypes(ingredients *fridgeContent){
     int i, j, hasFound = FALSE;
     char searchType[20], ingredientType[20];
 
-    printf("What food type would you like to search for? ('.s' to return)\n");
+    printf("What food type would you like to search for?\n");
     scanf(" %s", searchType);
     printf("\n");
 
-    if(strcmp(searchType, ".s") != 0){
     for(i = 0 ; i < strlen(searchType) ; i++){
         searchType[i] = tolower(searchType[i]);
     }
@@ -366,9 +377,6 @@ void searchTypes(ingredients *fridgeContent){
         clearScreen();
         printFridgeContents(fridgeContent);
         printf("No matches was found for %s.\n", searchType);
-    }
-    } else{
-        searchIngredient(fridgeContent);
     }
 }
 
