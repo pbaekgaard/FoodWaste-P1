@@ -911,7 +911,6 @@ void recipeMenu(ingredients *fridgeContent) {
 
 
     clearScreen();
-    /*printRecipeList(recipeList, fridgeContent);*/
     printRecipeTypes(vegetarianRecipes, lowCarbRecipes, lowCalorieRecipes, highProteinRecipes, allRecipes, fridgeContent);
     printf("\nWhich recipes do you want to see? (press R to return to the main menu):\n");
 
@@ -972,7 +971,8 @@ void printRecipeTypes (Recipes* vegetarian, Recipes* lowCarb, Recipes* lowCalori
 void colorForRecipeType (Recipes *recipe, ingredients *fridgeContent, int numberOfRecipes){
     int i;
     for (i = 1; i <= numberOfRecipes; i++){
-        /*Not sure what colorforRecipe does*/
+        /*Set the color of the recipe type to green
+          if it contains atleast one recipe that can be made*/
         if (colorForRecipe(i, recipe, fridgeContent) == 1){
             printf(GREEN);
             break;
@@ -982,6 +982,8 @@ void colorForRecipeType (Recipes *recipe, ingredients *fridgeContent, int number
         }
     }
 }
+
+/*Recipe Menu function*/
 void RecipeList(Recipes *recipe, ingredients *fridgeContent, int numberOfRecipes){
     char choice[1];
     int recipeNumber = 1;
@@ -1018,9 +1020,10 @@ void printRecipeList(Recipes *recipe, ingredients *fridgeContent, int numberOfRe
     printf(WHITE);
 }
 
-/*SOME ONE EXPLAIN PLZ*/
+/*Function for coloring a single recipe*/
 int colorForRecipe (int i, Recipes *recipe, ingredients *fridgeContent){
     int j, k, numberOfIngredients = 0, isGreen = TRUE;
+    /*Count number of ingredients in the recipe*/
     for (j = 0 ; j < MAXINGREDIENTS ; j++){
         if(strcmp(recipe[i - 1].fridgeIngredients[j].name, "\0") == 0){
             break;
@@ -1029,6 +1032,7 @@ int colorForRecipe (int i, Recipes *recipe, ingredients *fridgeContent){
             numberOfIngredients++;
         } 
     }
+    /*Set the color for the recipe*/
     for(k = 0 ; k < (numberOfIngredients) ; k++){
         if(colourization(fridgeContent, recipe[i-1].fridgeIngredients[k].name, recipe[i-1].fridgeIngredients[k].weight) == 0){
             printf(RED);
@@ -1100,9 +1104,11 @@ void openRecipe(Recipes recipe, ingredients *fridgeContent){
     } while(!(choice == 'R' || choice == 'r'));
 }
 
-/*SOMEONE EXPLAIN*/
+/*Function for colorization of different ingredients in a recipe*/
 int colourization(ingredients *fridgeContent, char *ingredientName, double neededWeight){
     int i;
+    /*Go through the different ingredients of a recipe
+      and see if there is enough in the fridge*/
     for(i = 0; i < fridgeSize; i++){
         if(strcmp(ingredientName, fridgeContent[i].name) == 0) {
             if(fridgeContent[i].weight < neededWeight){
