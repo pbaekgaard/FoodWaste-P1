@@ -63,13 +63,13 @@ void getFridgeContents(ingredients *fridgeContent) {
         printf("Error - File not found");
         exit(EXIT_FAILURE);
     }
-    
+
     /* Scans file into the structs name and integer into the structs weight until end of file */
     while(!feof(readFile)){
         fscanf(readFile, " %s %lf %d %d %d %d", fridgeContent[i].name, &fridgeContent[i].weight, &fridgeContent[i].expirationDate.year, &fridgeContent[i].expirationDate.month, &fridgeContent[i].expirationDate.day, &fridgeContent[i].open.opened);
         if(fridgeContent[i].open.opened == TRUE){
             fscanf(readFile, " %d %d %d %d", &fridgeContent[i].open.isopen.openDate.year, &fridgeContent[i].open.isopen.openDate.month, &fridgeContent[i].open.isopen.openDate.day, &fridgeContent[i].open.isopen.daysAfterOpen);
-        }       
+        }
         else{
             fscanf(readFile, " %d", &fridgeContent[i].open.isopen.daysAfterOpen);
         }
