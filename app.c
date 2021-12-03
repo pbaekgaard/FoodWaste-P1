@@ -309,7 +309,7 @@ void search(ingredients *fridgeContent, int *ingredientNumber, int searchOption)
         else if(strcmp(choice, "n") == 0 || strcmp(choice, "N") == 0){
             addIngredient(fridgeContent);
         }
-        else {
+        else if(*ingredientNumber <= 0 || *ingredientNumber > fridgeSize) {
             clearScreen();
             contents(fridgeContent);
         }
