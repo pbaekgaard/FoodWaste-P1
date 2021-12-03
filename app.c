@@ -295,10 +295,7 @@ void search(ingredients *fridgeContent, int *ingredientNumber, int searchOption)
         scanf(" %s", choice);
         *ingredientNumber = atoi(choice);
         /* Return to main menu if user presses 'R' */
-        if(strcmp(choice, "r") == 0 || strcmp(choice, "R") == 0){
-            mainMenu(fridgeContent);
-        }
-        else if(strcmp(choice, "s") == 0 || strcmp(choice, "S") == 0){
+        if(strcmp(choice, "s") == 0 || strcmp(choice, "S") == 0){
             searchOption = 1;
             search(fridgeContent, ingredientNumber, searchOption);
         }
@@ -308,6 +305,9 @@ void search(ingredients *fridgeContent, int *ingredientNumber, int searchOption)
         }
         else if(strcmp(choice, "n") == 0 || strcmp(choice, "N") == 0){
             addIngredient(fridgeContent);
+        }
+        else {
+            mainMenu(fridgeContent);
         }
     } while(*ingredientNumber <= 0 || *ingredientNumber > fridgeSize);
 }
