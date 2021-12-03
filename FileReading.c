@@ -61,7 +61,7 @@ void getFridgeContents(ingredients *fridgeContent) {
         printf("Error - File not found");
         exit(EXIT_FAILURE);
     }
-    
+
     /* Scans file into the structs name and integer into the structs weight until end of file */
     while(!feof(readFile)){
         fscanf(readFile, " %s %lf %d %d %d %d", fridgeContent[i].name, &fridgeContent[i].weight,
