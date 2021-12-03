@@ -290,8 +290,8 @@ void search(ingredients *fridgeContent, int *ingredientNumber, int searchOption)
         printFridgeContents(fridgeContent);
         searchTypes(fridgeContent);
     }
+    printf("\nWhich ingredient do you want to change? (press 'S' to search, 'T' to search food by type, 'N' to add an ingredient, or 'R' to return):\n");
     do{
-        printf("\nWhich ingredient do you want to change? (press 'S' to search, 'T' to search food by type, 'N' to add an ingredient, or 'R' to return):\n");
         scanf(" %s", choice);
         *ingredientNumber = atoi(choice);
         /* Return to main menu if user presses 'R' */
