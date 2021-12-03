@@ -2,6 +2,7 @@
 #ifndef APP_H
 #define APP_H
 
+#define BUFFERMAX 1000
 #define INSTRUCTIONLINELENGTH 256
 #define TRUE 1
 #define FALSE 0
@@ -58,6 +59,7 @@ extern int fridgeSize;
 /* Prototypes */
 extern int getFridgeSize(void);
 extern void getFridgeContents(ingredients *);
+char *decodeIngredientName(char *);
 extern void updateExpDates (ingredients *);
 extern void mainMenu(ingredients *);
 extern void sortContent(ingredients *);

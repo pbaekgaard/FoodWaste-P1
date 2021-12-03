@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "app.h"
 
 int fridgeSize;
@@ -76,10 +77,24 @@ void getFridgeContents(ingredients *fridgeContent) {
             fscanf(readFile, " %d", &fridgeContent[i].open.isopen.daysAfterOpen);
         }
         fscanf(readFile, " %s", fridgeContent[i].ingredientType);
+
+        /*Replaces underscore (_) from ingredient name with a space*/
+        strcpy(fridgeContent[i].name, decodeIngredientName(fridgeContent[i].name));
         i++;
     }
     /* Closes file */
     fclose(readFile);
+}
+
+char *decodeIngredientName(char *ingredientName) {
+    int stringLength = strlen(ingredientName), i;
+    
+    for(i = 0; i < stringLength; i++) {
+        if(ingredientName[i] == '_') {
+            ingredientName[i] = ' ';
+        }
+    }
+    return ingredientName;
 }
 
 void printInstructions(Recipes recipe) {

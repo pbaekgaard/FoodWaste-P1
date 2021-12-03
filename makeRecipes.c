@@ -6,9 +6,9 @@ void makeRecipes (ingredients *fridgeContents, Recipes *vegetarianRecipes, Recip
 /*Declaration of different recipes*/
     Recipes macNCheese =  {"MacNCheese",
 
-                     {{"Broccoli", 210}, {"Cauliflower", 130}, {"Carrots", 165}, {"Celery", 80}, {"Butter", 12}, {"Milk", 240}, {"Cheddar", 250}, {"Dijon_mustard", 15}, {"Chicken_broth", 100}}, 
+                     {{"Broccoli", 210}, {"Cauliflower", 130}, {"Carrots", 165}, {"Celery", 80}, {"Butter", 12}, {"Milk", 240}, {"Cheddar", 250}, {"Dijon mustard", 15}, {"Chicken broth", 100}}, 
 
-                     {{"Onion", 150}, {"Wheat_flour", 32}, {"Salt", 2}, {"Pepper", 1}, {"Paprika", 2}},
+                     {{"Onion", 150}, {"Wheat flour", 32}, {"Salt", 2}, {"Pepper", 1}, {"Paprika", 2}},
 
                      "db/recipes/macNCheese/instructions.txt",
                      
@@ -19,85 +19,85 @@ void makeRecipes (ingredients *fridgeContents, Recipes *vegetarianRecipes, Recip
 
                      {{"Eggs", 60}},
 
-                     {{"Dried_Chickpeas", 170}, {"Baking_soda", 3}, {"Cilantro_leaves", 17}, {"Mint_leaves", 15}, 
-                     {"Garlic_cloves", 20}, {"Ground_coriander", 6}, {"Chili_powder", 6}, {"Salt", 6}, {"Pepper", 3}, {"Sesame_seeds", 6}, {"Baking_powder", 6}},
+                     {{"Dried Chickpeas", 170}, {"Baking soda", 3}, {"Cilantro leaves", 17}, {"Mint leaves", 15}, 
+                     {"Garlic cloves", 20}, {"Ground coriander", 6}, {"Chili powder", 6}, {"Salt", 6}, {"Pepper", 3}, {"Sesame seeds", 6}, {"Baking powder", 6}},
 
                      "db/recipes/falafel/instructions.txt",
                      
                      "Vegetarian"};
 
-    Recipes zucchiniMushroomBake =  {"Zucchini_Mushroom_Bake",
+    Recipes zucchiniMushroomBake =  {"Zucchini Mushroom Bake",
 
-                     {{"Squash", 450}, {"Fresh_Mushroom", 150}, {"Cheddar", 120}},
+                     {{"Squash", 450}, {"Fresh Mushroom", 150}, {"Cheddar", 120}},
 
-                     {{"Onion", 20}, {"Dried_basil", 3}, {"Salt", 2}},
+                     {{"Onion", 20}, {"Dried basil", 3}, {"Salt", 2}},
 
                      "db/recipes/zucchiniMushroomBake/instructions.txt",
                      
-                     "Vegetarian_and_Low_carb"};
+                     "Vegetarian and Low carb"};
 
-    Recipes ovenRoastedSalmom =  {"Oven_Roasted_Salmom",
+    Recipes ovenRoastedSalmom =  {"Oven Roasted Salmom",
 
-                     {{"Salmon_fillet", 675}},
+                     {{"Salmon fillet", 675}},
 
-                     {{"Olive_oil", 15}, {"Salt", 3}, {"Pepper", 2}},
+                     {{"Olive oil", 15}, {"Salt", 3}, {"Pepper", 2}},
 
                      "db/recipes/ovenRoastedSalmom/instructions.txt",
                      
-                     "Low_carb"};
+                     "Low carb"};
 
 
-    Recipes butterChickenMeatballs =  {"Butter_Chicken_Meatballs",
+    Recipes butterChickenMeatballs =  {"Butter Chicken Meatballs",
 
-                     {{"Ground_chicken", 675}, {"Eggs", 60}, {"Butter_chicken_sauce", 400}},
+                     {{"Ground chicken", 675}, {"Eggs", 60}, {"Butter chicken sauce", 400}},
 
-                     {{"Bread_crumbs", 60}, {"Garam_masala", 6}, {"Tandoori_masala", 3}, {"Salt", 3}, {"Cayenne_pepper", 2}, {"Cilantro", 5}},
+                     {{"Bread crumbs", 60}, {"Garam masala", 6}, {"Tandoori masala", 3}, {"Salt", 3}, {"Cayenne pepper", 2}, {"Cilantro", 5}},
 
                      "db/recipes/butterChickenMeatballs/instructions.txt",
                      
-                     "Low_carb"};
+                     "Low carb"};
 
 
-    Recipes coconutCurryChicken =  {"Coconut_Curry_Chicken",
+    Recipes coconutCurryChicken =  {"Coconut Curry Chicken",
 
-                     {{"Potatos", 300}, {"Chicken_breast", 200}, {"Cooked_rice", 500}},
+                     {{"Potatos", 300}, {"Chicken breast", 200}, {"Cooked rice", 500}},
 
-                     {{"Onion", 115}, {"Canola_oil", 12}, {"Coconut_milk", 240}, {"Curry_powder", 24}, 
-                     {"Garlic_cloves", 5}, {"Chicken_bouillon_granules", 6}, {"Salt", 2}, {"Pepper", 2}},
+                     {{"Onion", 115}, {"Canola oil", 12}, {"Coconut milk", 240}, {"Curry powder", 24}, 
+                     {"Garlic cloves", 5}, {"Chicken bouillon granules", 6}, {"Salt", 2}, {"Pepper", 2}},
 
                      "db/recipes/coconutCurryChicken/instructions.txt",
                      
-                     "Low_calorie"};
+                     "Low calorie"};
 
-    Recipes eggplantCasserole =  {"Eggplant_Casserole",
+    Recipes eggplantCasserole =  {"Eggplant Casserole",
 
-                     {{"Eggplant", 550}, {"Ground_beef", 675}, {"Green_pepper", 120}, {"Tomato", 180}, {"Milk", 120}, {"Eggs", 65}, {"Butter", 30}},
+                     {{"Eggplant", 550}, {"Ground beef", 675}, {"Green pepper", 120}, {"Tomato", 180}, {"Milk", 120}, {"Eggs", 65}, {"Butter", 30}},
 
-                     {{"Water", 950}, {"Onion", 150}, {"Bread_crumbs", 50}},
+                     {{"Water", 950}, {"Onion", 150}, {"Bread crumbs", 50}},
 
                      "db/recipes/eggplantCasserole/instructions.txt",
                      
-                     "Low_calorie"};
+                     "Low calorie"};
 
-    Recipes orangeBarleyChicken =  {"Orange_Barley_Chicken",
+    Recipes orangeBarleyChicken =  {"Orange Barley Chicken",
 
-                     {{"Chicken", 1800}, {"Butter", 14}, {"Orange_juice", 300}, {"Parsnip", 300}, {"Pearl_barley", 260}, {"Fresh_mushroom", 225}, {"Chicken_broth", 300}},
+                     {{"Chicken", 1800}, {"Butter", 14}, {"Orange juice", 300}, {"Parsnip", 300}, {"Pearl barley", 260}, {"Fresh mushroom", 225}, {"Chicken broth", 300}},
 
-                     {{"Wheat_flour", 150}, {"Celery_salt", 6}, {"Pepper", 3}, {"Olive_oil", 12}, {"Onion", 150}, {"Bay_leave", 0.5}},
+                     {{"Wheat flour", 150}, {"Celery salt", 6}, {"Pepper", 3}, {"Olive oil", 12}, {"Onion", 150}, {"Bay leave", 0.5}},
 
                      "db/recipes/orangeBarleyChicken/instructions.txt",
 
-                     "Low_calorie"};
+                     "Low calorie"};
 
     Recipes jambalaya = {"Jambalaya",
 
-                        {{"Diced_tomatoes", 793.8}, {"Chicken_broth", 240}, {"Green_pepper", 164},
-                        {"Celery_ribs", 110}, {"White_wine", 117.2}, {"Chicken", 907.2},
-                        {"Chicken_sausage", 340.2}, {"Medium_shrimp", 907.2}},
+                        {{"Diced tomatoes", 793.8}, {"Chicken broth", 240}, {"Green pepper", 164},
+                        {"Celery ribs", 110}, {"White wine", 117.2}, {"Chicken", 907.2},
+                        {"Chicken sausage", 340.2}, {"Medium shrimp", 907.2}},
 
-                        {{"Onion", 170}, {"Garlic_cloves", 11.2}, {"Cajun_seasosning", 8}, {"Dried_parsley", 1.58},
-                        {"Dried_basil", 0.71}, {"Dried_oregano", 1.01}, {"Salt", 4.5}, {"Cayenne_pepper", 1.8},
-                        {"Brown_rice", 1520}},
+                        {{"Onion", 170}, {"Garlic cloves", 11.2}, {"Cajun seasosning", 8}, {"Dried parsley", 1.58},
+                        {"Dried basil", 0.71}, {"Dried oregano", 1.01}, {"Salt", 4.5}, {"Cayenne pepper", 1.8},
+                        {"Brown rice", 1520}},
 
                         "db/recipes/Jambalaya/instructions.txt",
 
@@ -105,12 +105,12 @@ void makeRecipes (ingredients *fridgeContents, Recipes *vegetarianRecipes, Recip
 
     Recipes chickenTikkaMasala = {"Chicken Tikka Masala",
     
-                                {{"Tomato_puree", 425.24}, {"Tomato_paste", 28.1}, {"Grated_lemon_zest", 4.2},
-                                {"Lemon_juice", 14.4}, {"Hot_pepper_sauce", 4.7}, {"Chicken", 340.2},
-                                {"Greek_yogurt", 42.52}, {"Unsalted_butter", 4.71}},
+                                {{"Tomato puree", 425.24}, {"Tomato paste", 28.1}, {"Grated lemon zest", 4.2},
+                                {"Lemon juice", 14.4}, {"Hot pepper sauce", 4.7}, {"Chicken", 340.2},
+                                {"Greek yogurt", 42.52}, {"Unsalted butter", 4.71}},
 
-                                {{"Onion", 125}, {"Garlic_cloves", 8.4}, {"Canola_oil", 13.4}, {"Rice", 500},
-                                {"Curry_powder", 2.42}, {"Salt", 6}, {"Pepper", 0.57}, {"Garam_masala", 3.5}},
+                                {{"Onion", 125}, {"Garlic cloves", 8.4}, {"Canola oil", 13.4}, {"Rice", 500},
+                                {"Curry powder", 2.42}, {"Salt", 6}, {"Pepper", 0.57}, {"Garam masala", 3.5}},
 
                                 "db/recipes/chickenTikkaMasala/instructions.txt",
 
