@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "app.h"
 
-void makeRecipes (ingredients *fridgeContents, Recipes *vegetarianRecipes, Recipes *lowCarbRecipes, Recipes *lowCalorieRecipes, Recipes *highProteinRecipes, Recipes *uncategorizedRecipes, Recipes *allRecipes){
+void makeRecipes (ingredients *fridgeContents, Recipes *vegetarianRecipes, Recipes *lowCarbRecipes, Recipes *lowCalorieRecipes, Recipes *highProteinRecipes, Recipes *allRecipes){
 /*Declaration of different recipes*/
     Recipes pizza =  {"Pizza",
 

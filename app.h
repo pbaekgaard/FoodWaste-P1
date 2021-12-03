@@ -10,8 +10,7 @@
 #define LOWCARBNUMBER 1
 #define LOWCALORIENUMBER 1
 #define HIGHPROTEINNUMBER 1
-#define UNCATEGORIZEDNUMBER 5
-#define NUMBEROFRECIPES (VEGETARIANNUMBER + LOWCARBNUMBER + LOWCALORIENUMBER + HIGHPROTEINNUMBER + UNCATEGORIZEDNUMBER)
+#define NUMBEROFRECIPES (VEGETARIANNUMBER + LOWCARBNUMBER + LOWCALORIENUMBER + HIGHPROTEINNUMBER)
 #define TYPESOFRECIPES 5
 #define MAXINGREDIENTS 50
 #define RED "\033[31;1m"
@@ -87,7 +86,7 @@ extern void addIngredient(ingredients *);
 extern void newIngredientExpirationDate(ingredients *);
 extern void newIngredientOpenedDate(ingredients *);
 extern void recipeMenu(ingredients*);
-extern void makeRecipes(ingredients*, Recipes*, Recipes*, Recipes*, Recipes*, Recipes*, Recipes*);
+extern void makeRecipes(ingredients*, Recipes*, Recipes*, Recipes*, Recipes*, Recipes*);
 extern int colourization(ingredients *, char *, double);
 extern void printRecipeTypes (Recipes*, Recipes*, Recipes*, Recipes*, Recipes*, ingredients *);
 extern void RecipeList(Recipes *, ingredients *, int);

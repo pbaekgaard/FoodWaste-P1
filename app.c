@@ -705,10 +705,9 @@ void recipeMenu(ingredients *fridgeContent) {
     Recipes lowCarbRecipes[LOWCARBNUMBER]; 
     Recipes lowCalorieRecipes[LOWCALORIENUMBER]; 
     Recipes highProteinRecipes[HIGHPROTEINNUMBER];
-    Recipes uncategorizedRecipes[UNCATEGORIZEDNUMBER]; 
     Recipes allRecipes[NUMBEROFRECIPES];
     
-    makeRecipes(fridgeContent, vegetarianRecipes, lowCarbRecipes, lowCalorieRecipes, highProteinRecipes, uncategorizedRecipes, allRecipes);
+    makeRecipes(fridgeContent, vegetarianRecipes, lowCarbRecipes, lowCalorieRecipes, highProteinRecipes, allRecipes);
 
     clearScreen();
     /*printRecipeList(recipeList, fridgeContent);*/
