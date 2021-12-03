@@ -86,8 +86,36 @@ void makeRecipes (ingredients *fridgeContents, Recipes *vegetarianRecipes, Recip
                      {{"Wheat_flour", 150}, {"Celery_salt", 6}, {"Pepper", 3}, {"Olive_oil", 12}, {"Onion", 150}, {"Chicken_broth", 300}, {"Bay_leave", 0.5}},
 
                      "db/recipes/orangeBarleyChicken/instructions.txt",
-                     
+
                      "Low_calorie"};
+
+    Recipes jambalaya = {"Jambalaya",
+
+                        {{"Diced_tomatoes", 793.8}, {"Reduced-sodium_chicken_broth", 240}, {"Green_pepper", 164},
+                        {"Celery_ribs", 110}, {"White_wine", 117.2}, {"Chicken", 907.2},
+                        {"Chicken_sausage", 340.2}, {"Medium_shrimp", 907.2}},
+
+                        {{"Onion", 170}, {"Garlic_cloves", 11.2}, {"Cajun_seasosning", 8}, {"Dried_parsley", 1.58},
+                        {"Dried_basil", 0.71}, {"Dried_oregano", 1.01}, {"Salt", 4.5}, {"Cayenne_pepper", 1.8},
+                        {"Brown_rice", 1520}},
+
+                        "db/recipes/Jambalaya/instructions.txt",
+
+                        "High protein"};
+
+    Recipes chickenTikkaMasala = {"Chicken Tikka Masala",
+    
+                                {{"Tomato_puree", 425.24}, {"Tomato_paste", 28.1}, {"Grated_lemon_zest", 4.2},
+                                {"Lemon_juice", 14.4}, {"Hot_pepper_sauce", 4.7}, {"Chicken", 340.2},
+                                {"Greek_yogurt", 42.52}, {"Unsalted_butter", 4.71}},
+
+                                {{"Onion", 125}, {"Garlic_cloves", 8.4}, {"Canola_oil", 13.4}, {"Rice", 500},
+                                {"Curry_powder", 2.42}, {"Salt", 6}, {"Pepper", 0.57}, {"Garam_masala", 3.5}},
+
+                                "db/recipes/chikenTikkaMasala/instructions.txt",
+
+                                "High protein"};
+
 
 
 
