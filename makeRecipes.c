@@ -112,7 +112,7 @@ void makeRecipes (ingredients *fridgeContents, Recipes *vegetarianRecipes, Recip
                                 {{"Onion", 125}, {"Garlic_cloves", 8.4}, {"Canola_oil", 13.4}, {"Rice", 500},
                                 {"Curry_powder", 2.42}, {"Salt", 6}, {"Pepper", 0.57}, {"Garam_masala", 3.5}},
 
-                                "db/recipes/chikenTikkaMasala/instructions.txt",
+                                "db/recipes/chickenTikkaMasala/instructions.txt",
 
                                 "High protein"};
 
