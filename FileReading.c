@@ -5,7 +5,6 @@
 int fridgeSize;
 
 int getFridgeSize(ingredients *fridgeContent) {
-    int numberOfLines = 0;
     /* Pointer to a FILE */
     FILE *fileptr;
 
@@ -31,17 +30,16 @@ int getFridgeSize(ingredients *fridgeContent) {
     while(ch != EOF) {
         /* Count number of newlines in the file */
         if(ch == '\n') {
-            numberOfLines++;
+            fridgeSize++;
         }
         /* Read single character of file */
         ch = getc(fileptr);
     }
     /* The last ingredient is without a newline in the file */
-    numberOfLines++;
+    fridgeSize++;
     /* Close the file */
     fclose(fileptr);
 
-    fridgeSize = numberOfLines;
 
     return fridgeSize;
 }
