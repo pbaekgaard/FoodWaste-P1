@@ -56,7 +56,7 @@ extern date todayDate;
 extern int fridgeSize;
 
 /* Prototypes */
-extern int getFridgeSize(ingredients *);
+extern int getFridgeSize(void);
 extern void getFridgeContents(ingredients *);
 extern void updateExpDates (ingredients *);
 extern void mainMenu(ingredients *);

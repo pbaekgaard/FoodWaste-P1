@@ -4,7 +4,7 @@
 
 int fridgeSize;
 
-int getFridgeSize(ingredients *fridgeContent) {
+int getFridgeSize(void) {
     /* Pointer to a FILE */
     FILE *fileptr;
 
@@ -64,9 +64,13 @@ void getFridgeContents(ingredients *fridgeContent) {
     
     /* Scans file into the structs name and integer into the structs weight until end of file */
     while(!feof(readFile)){
-        fscanf(readFile, " %s %lf %d %d %d %d", fridgeContent[i].name, &fridgeContent[i].weight, &fridgeContent[i].expirationDate.year, &fridgeContent[i].expirationDate.month, &fridgeContent[i].expirationDate.day, &fridgeContent[i].open.opened);
+        fscanf(readFile, " %s %lf %d %d %d %d", fridgeContent[i].name, &fridgeContent[i].weight,
+                                                &fridgeContent[i].expirationDate.year, &fridgeContent[i].expirationDate.month,
+                                                &fridgeContent[i].expirationDate.day, &fridgeContent[i].open.opened);
         if(fridgeContent[i].open.opened == TRUE){
-            fscanf(readFile, " %d %d %d %d", &fridgeContent[i].open.isopen.openDate.year, &fridgeContent[i].open.isopen.openDate.month, &fridgeContent[i].open.isopen.openDate.day, &fridgeContent[i].open.isopen.daysAfterOpen);
+            fscanf(readFile, " %d %d %d %d", &fridgeContent[i].open.isopen.openDate.year,
+                                             &fridgeContent[i].open.isopen.openDate.month, &fridgeContent[i].open.isopen.openDate.day,
+                                             &fridgeContent[i].open.isopen.daysAfterOpen);
         }       
         else{
             fscanf(readFile, " %d", &fridgeContent[i].open.isopen.daysAfterOpen);
