@@ -311,7 +311,8 @@ void search(ingredients *fridgeContent, int *ingredientNumber, int searchOption)
         }
         else if(*ingredientNumber <= 0 || *ingredientNumber > fridgeSize) {
             clearScreen();
-            contents(fridgeContent);
+            printFridgeContents(fridgeContent);
+            printf("\nPlease enter a valid ingredient number! (press 'S' to search, 'T' to search food by type, 'N' to add an ingredient, or 'R' to return):\n");
         }
 
     } while(*ingredientNumber <= 0 || *ingredientNumber > fridgeSize);
