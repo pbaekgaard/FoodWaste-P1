@@ -66,6 +66,7 @@ extern void printNotifications(ingredients *);
 extern date makeDayToday();
 extern void tomorrow(date *);
 extern int leapYear(int);
+extern void skipToDate();
 extern void contents(ingredients *);
 extern void printFridgeContents(ingredients *);
 extern void search(ingredients *, int *, int);
