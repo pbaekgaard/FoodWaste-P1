@@ -4,6 +4,34 @@
 
 void makeRecipes (ingredients *fridgeContents, Recipes *vegetarianRecipes, Recipes *lowCarbRecipes, Recipes *lowCalorieRecipes, Recipes *highProteinRecipes, Recipes *allRecipes){
 /*Declaration of different recipes*/
+    Recipes falafel =  {"Falafel",
+
+                     {{"Broccoli", 210}, {"Cauliflower", 130}, {"Carrots", 165}, {"Celery", }}, 
+
+                     {{"Elbow_macaroni", 150}, {"Baking_soda", 3}, {"Cilantro_leaves", 17}, {"Mint_leaves", 15}, 
+                     {"Garlic_cloves", 20}, {"Ground_coriander", 6}, {"Chili_powder", 6}, {"Salt", 6}, {"Pepper", 3}, {"Sesame_seeds", 6}, {"Baking_powder", 6}},
+
+                     "db/recipes/pizza/instructions.txt",
+                     
+                     "Vegitarian",
+                     
+                     "4 pieces: 224 calories, 13g fat (1g saturated fat), 0 cholesterol, 760mg sodium, 32g carbohydrate (1g sugars, 16g fiber), 9g protein."};
+
+
+    Recipes macNCheese =  {"MacNCheese",
+
+                     {},
+
+                     {{"Dried_Chickpeas", 170}, {"Baking_soda", 3}, {"Cilantro_leaves", 17}, {"Mint_leaves", 15}, 
+                     {"Garlic_cloves", 20}, {"Ground_coriander", 6}, {"Chili_powder", 6}, {"Salt", 6}, {"Pepper", 3}, {"Sesame_seeds", 6}, {"Baking_powder", 6}},
+
+                     "db/recipes/pizza/instructions.txt",
+                     
+                     "Vegitarian",
+                     
+                     "4 pieces: 224 calories, 13g fat (1g saturated fat), 0 cholesterol, 760mg sodium, 32g carbohydrate (1g sugars, 16g fiber), 9g protein."};
+
+
     Recipes pizza =  {"Pizza",
 
                      {{"Yeast", 3.1}, {"Tomato_puree", 95.1}, {"Mozzarella", 125},
