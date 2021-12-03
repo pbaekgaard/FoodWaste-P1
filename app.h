@@ -56,7 +56,7 @@ extern date todayDate;
 extern int fridgeSize;
 
 /* Prototypes */
-extern int getFridgeSize(ingredients *);
+extern int getFridgeSize(void);
 extern void getFridgeContents(ingredients *);
 extern void updateExpDates (ingredients *);
 extern void mainMenu(ingredients *);
@@ -66,10 +66,13 @@ extern void printNotifications(ingredients *);
 extern date makeDayToday();
 extern void tomorrow(date *);
 extern int leapYear(int);
+extern void skipToDate();
 extern void contents(ingredients *);
 extern void printFridgeContents(ingredients *);
-extern void search(ingredients *, int *);
+extern void search(ingredients *, int *, int);
+extern void searchTypeFix(ingredients *);
 extern void searchIngredient(ingredients *);
+extern void searchTypes(ingredients *);
 extern void printIngredient(ingredients *, int);
 extern void editIngredient(ingredients*, int);
 extern void changeName(ingredients*, int);
