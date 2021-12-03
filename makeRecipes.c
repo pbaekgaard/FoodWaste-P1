@@ -6,9 +6,9 @@ void makeRecipes (ingredients *fridgeContents, Recipes *vegetarianRecipes, Recip
 /*Declaration of different recipes*/
     Recipes macNCheese =  {"MacNCheese",
 
-                     {{"Broccoli", 210}, {"Cauliflower", 130}, {"Carrots", 165}, {"Celery", 80}, {"Butter", 12}, {"Milk", 240}, {"Cheddar", 250}, {"Dijon_mustard", 15}}, 
+                     {{"Broccoli", 210}, {"Cauliflower", 130}, {"Carrots", 165}, {"Celery", 80}, {"Butter", 12}, {"Milk", 240}, {"Cheddar", 250}, {"Dijon_mustard", 15}, {"Chicken_broth", 100}}, 
 
-                     {{"Onion", 150}, {"Wheat_flour", 32}, {"Chicken_broth", 100}, {"Salt", 2}, {"Pepper", 1}, {"Paprika", 2}},
+                     {{"Onion", 150}, {"Wheat_flour", 32}, {"Salt", 2}, {"Pepper", 1}, {"Paprika", 2}},
 
                      "db/recipes/macNCheese/instructions.txt",
                      
@@ -17,7 +17,7 @@ void makeRecipes (ingredients *fridgeContents, Recipes *vegetarianRecipes, Recip
 
     Recipes falafel =  {"Falafel",
 
-                     {{}},
+                     {{"Egg", 60}},
 
                      {{"Dried_Chickpeas", 170}, {"Baking_soda", 3}, {"Cilantro_leaves", 17}, {"Mint_leaves", 15}, 
                      {"Garlic_cloves", 20}, {"Ground_coriander", 6}, {"Chili_powder", 6}, {"Salt", 6}, {"Pepper", 3}, {"Sesame_seeds", 6}, {"Baking_powder", 6}},
@@ -81,9 +81,9 @@ void makeRecipes (ingredients *fridgeContents, Recipes *vegetarianRecipes, Recip
 
     Recipes orangeBarleyChicken =  {"Orange_Barley_Chicken",
 
-                     {{"Chicken", 1800}, {"Butter", 14}, {"Orange_juice", 300}, {"Parsnip", 300}, {"Pearl_barley", 260}, {"Fresh_mushroom", 225}},
+                     {{"Chicken", 1800}, {"Butter", 14}, {"Orange_juice", 300}, {"Parsnip", 300}, {"Pearl_barley", 260}, {"Fresh_mushroom", 225}, {"Chicken_broth", 300}},
 
-                     {{"Wheat_flour", 150}, {"Celery_salt", 6}, {"Pepper", 3}, {"Olive_oil", 12}, {"Onion", 150}, {"Chicken_broth", 300}, {"Bay_leave", 0.5}},
+                     {{"Wheat_flour", 150}, {"Celery_salt", 6}, {"Pepper", 3}, {"Olive_oil", 12}, {"Onion", 150}, {"Bay_leave", 0.5}},
 
                      "db/recipes/orangeBarleyChicken/instructions.txt",
 
@@ -91,7 +91,7 @@ void makeRecipes (ingredients *fridgeContents, Recipes *vegetarianRecipes, Recip
 
     Recipes jambalaya = {"Jambalaya",
 
-                        {{"Diced_tomatoes", 793.8}, {"Reduced-sodium_chicken_broth", 240}, {"Green_pepper", 164},
+                        {{"Diced_tomatoes", 793.8}, {"Chicken_broth", 240}, {"Green_pepper", 164},
                         {"Celery_ribs", 110}, {"White_wine", 117.2}, {"Chicken", 907.2},
                         {"Chicken_sausage", 340.2}, {"Medium_shrimp", 907.2}},
 
