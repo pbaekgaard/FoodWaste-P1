@@ -852,7 +852,7 @@ void openRecipe(Recipes recipe, ingredients *fridgeContent){
     for(i = 0 ; i < MAXINGREDIENTS ; i++){
         if(strcmp(recipe.notFridgeIngredients[i].name, "\0")){
             printf("    %s:", recipe.notFridgeIngredients[i].name);
-            for (j = 0; j < 20 - strlen(recipe.notFridgeIngredients[i].name); j++){
+            for (j = 0; j < 30 - strlen(recipe.notFridgeIngredients[i].name); j++){
                 printf(" ");
             }
             printf("%.2fg\n\n", recipe.notFridgeIngredients[i].weight);
@@ -870,7 +870,7 @@ void openRecipe(Recipes recipe, ingredients *fridgeContent){
                 printf(GREEN);
             }
             printf("    %s:", recipe.fridgeIngredients[i].name);
-            for (j = 0; j < 20 - strlen(recipe.fridgeIngredients[i].name); j++){
+            for (j = 0; j < 30 - strlen(recipe.fridgeIngredients[i].name); j++){
                 printf(" ");
             }
             printf("%.2fg\n\n", recipe.fridgeIngredients[i].weight);

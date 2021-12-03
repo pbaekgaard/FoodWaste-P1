@@ -17,7 +17,7 @@ void makeRecipes (ingredients *fridgeContents, Recipes *vegetarianRecipes, Recip
 
     Recipes falafel =  {"Falafel",
 
-                     {{"Egg", 60}},
+                     {{"Eggs", 60}},
 
                      {{"Dried_Chickpeas", 170}, {"Baking_soda", 3}, {"Cilantro_leaves", 17}, {"Mint_leaves", 15}, 
                      {"Garlic_cloves", 20}, {"Ground_coriander", 6}, {"Chili_powder", 6}, {"Salt", 6}, {"Pepper", 3}, {"Sesame_seeds", 6}, {"Baking_powder", 6}},
@@ -49,7 +49,7 @@ void makeRecipes (ingredients *fridgeContents, Recipes *vegetarianRecipes, Recip
 
     Recipes butterChickenMeatballs =  {"Butter_Chicken_Meatballs",
 
-                     {{"Ground_chicken", 675}, {"Egg", 60}, {"Butter_chicken_sauce", 400}},
+                     {{"Ground_chicken", 675}, {"Eggs", 60}, {"Butter_chicken_sauce", 400}},
 
                      {{"Bread_crumbs", 60}, {"Garam_masala", 6}, {"Tandoori_masala", 3}, {"Salt", 3}, {"Cayenne_pepper", 2}, {"Cilantro", 5}},
 
@@ -71,7 +71,7 @@ void makeRecipes (ingredients *fridgeContents, Recipes *vegetarianRecipes, Recip
 
     Recipes eggplantCasserole =  {"Eggplant_Casserole",
 
-                     {{"Eggplant", 550}, {"Ground_beef", 675}, {"Green_pepper", 120}, {"Tomato", 180}, {"Milk", 120}, {"Egg", 65}, {"Butter", 30}},
+                     {{"Eggplant", 550}, {"Ground_beef", 675}, {"Green_pepper", 120}, {"Tomato", 180}, {"Milk", 120}, {"Eggs", 65}, {"Butter", 30}},
 
                      {{"Water", 950}, {"Onion", 150}, {"Bread_crumbs", 50}},
 
