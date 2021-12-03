@@ -97,22 +97,29 @@ void mainMenu(ingredients *fridgeContent) {
     }
 }
 
+/* Sorts the items the in fridge using qsort from stdlib.h */
 void sortContent(ingredients *fridgeContent) {
     qsort(fridgeContent, fridgeSize, sizeof(fridgeContent[0]), contentCompare);
 }
 
+/* Compare function used in qsort. Compares expiration dates */
 int contentCompare(const void *content1, const void *content2) {
     date dateContent1 = ((ingredients *)content1)->expirationDate;
     date dateContent2 = ((ingredients *)content2)->expirationDate;
 
+    /* Returns 1 if dateContent1 expires after dateContent2 */
     if((dateContent1.year > dateContent2.year) ||
        (dateContent1.year == dateContent2.year && dateContent1.month > dateContent2.month) ||
-       (dateContent1.year == dateContent2.year && dateContent1.month == dateContent2.month && dateContent1.day > dateContent2.day)) {
+       (dateContent1.year == dateContent2.year && dateContent1.month == dateContent2.month &&
+       dateContent1.day > dateContent2.day)) {
         return 1;
     }
-    else if(dateContent1.year == dateContent2.year && dateContent1.month == dateContent2.month && dateContent1.day == dateContent2.day) {
+    /* Returns 0 if dateContent1 and dateContent 2 expire on the same day */
+    else if(dateContent1.year == dateContent2.year && dateContent1.month == dateContent2.month &&
+            dateContent1.day == dateContent2.day) {
         return 0;
-    }   
+    }
+    /* Returns -1 if dateContent1 expires before dateContent2 */
     else
         return -1;
 }
