@@ -12,9 +12,7 @@ void makeRecipes (ingredients *fridgeContents, Recipes *vegetarianRecipes, Recip
 
                      "db/recipes/macNCheese/instructions.txt",
                      
-                     "Vegetarian",
-                     
-                     "1 cup: 200 calories, 11g fat (6g saturated fat), 33mg cholesterol, 391mg sodium, 15g carbohydrate (3g sugars, 2g fiber), 10g protein."};
+                     "Vegetarian"};
 
 
     Recipes falafel =  {"Falafel",
@@ -26,9 +24,7 @@ void makeRecipes (ingredients *fridgeContents, Recipes *vegetarianRecipes, Recip
 
                      "db/recipes/falafel/instructions.txt",
                      
-                     "Vegetarian",
-                     
-                     "4 pieces: 224 calories, 13g fat (1g saturated fat), 0 cholesterol, 760mg sodium, 32g carbohydrate (1g sugars, 16g fiber), 9g protein."};
+                     "Vegetarian"};
 
     Recipes zucchiniMushroomBake =  {"Zucchini_Mushroom_Bake",
 
@@ -38,9 +34,7 @@ void makeRecipes (ingredients *fridgeContents, Recipes *vegetarianRecipes, Recip
 
                      "db/recipes/zucchiniMushroomBake/instructions.txt",
                      
-                     "Vegetarian_and_Low_carb",
-                     
-                     "2/3 cup: 83 calories, 5g fat (3g saturated fat), 14mg cholesterol, 249mg sodium, 5g carbohydrate (3g sugars, 1g fiber), 5g protein. Diabetic Exchanges: 1 medium-fat meat, 1 vegetable."};
+                     "Vegetarian_and_Low_carb"};
 
     Recipes ovenRoastedSalmom =  {"Oven_Roasted_Salmom",
 
@@ -50,22 +44,18 @@ void makeRecipes (ingredients *fridgeContents, Recipes *vegetarianRecipes, Recip
 
                      "db/recipes/ovenRoastedSalmom/instructions.txt",
                      
-                     "Low_carb",
-                     
-                     "1 fillet: 295 calories, 19g fat (4g saturated fat), 85mg cholesterol, 380mg sodium, 0 carbohydrate (0 sugars, 0 fiber), 29g protein. Diabetic Exchanges: 4 lean meat, 1/2 fat."};
+                     "Low_carb"};
 
 
     Recipes butterChickenMeatballs =  {"Butter_Chicken_Meatballs",
 
                      {{"Ground_chicken", 675}, {"Egg", 60}, {"Butter_chicken_sauce", 400}},
 
-                     {{"Bread_crumbs", 60}, {"Garam_masala", 6}, {"Tandoori_masala" 3}, {"Salt", 3}, {"Cayenne_pepper", 2}, {"Cilantro", 5}},
+                     {{"Bread_crumbs", 60}, {"Garam_masala", 6}, {"Tandoori_masala", 3}, {"Salt", 3}, {"Cayenne_pepper", 2}, {"Cilantro", 5}},
 
                      "db/recipes/butterChickenMeatballs/instructions.txt",
                      
-                     "Low_carb",
-                     
-                     "1 meatball: 40 calories, 2g fat (1g saturated fat), 18mg cholesterol, 87mg sodium, 1g carbohydrate (1g sugars, 0 fiber), 3g protein."};
+                     "Low_carb"};
 
 
     Recipes coconutCurryChicken =  {"Coconut_Curry_Chicken",
@@ -77,9 +67,7 @@ void makeRecipes (ingredients *fridgeContents, Recipes *vegetarianRecipes, Recip
 
                      "db/recipes/coconutCurryChicken/instructions.txt",
                      
-                     "Low_calorie",
-                     
-                     "1 serving: 371 calories, 10g fat (4g saturated fat), 63mg cholesterol, 265mg sodium, 42g carbohydrate (3g sugars, 3g fiber), 27g protein. Diabetic Exchanges: 3 starch, 3 lean meat, 1-1/2 fat."};
+                     "Low_calorie"};
 
     Recipes eggplantCasserole =  {"Eggplant_Casserole",
 
@@ -89,21 +77,17 @@ void makeRecipes (ingredients *fridgeContents, Recipes *vegetarianRecipes, Recip
 
                      "db/recipes/eggplantCasserole/instructions.txt",
                      
-                     "Low_calorie",
-                     
-                     "1-1/3 cups: 342 calories, 19g fat (8g saturated fat), 113mg cholesterol, 186mg sodium, 18g carbohydrate (7g sugars, 4g fiber), 25g protein."};
+                     "Low_calorie"};
 
     Recipes orangeBarleyChicken =  {"Orange_Barley_Chicken",
 
                      {{"Chicken", 1800}, {"Butter", 14}, {"Orange_juice", 300}, {"Parsnip", 300}, {"Pearl_barley", 260}, {"Fresh_mushroom", 225}},
 
-                     {{"Wheat_flour", 150}, {"Celery_salt", 6}, {"Pepper", 3}, {"Olive_oil", 12}, {"Onion", 150}, {"Chicken_broth", 300}, {"Bay_leave", 0,5}},
+                     {{"Wheat_flour", 150}, {"Celery_salt", 6}, {"Pepper", 3}, {"Olive_oil", 12}, {"Onion", 150}, {"Chicken_broth", 300}, {"Bay_leave", 0.5}},
 
                      "db/recipes/orangeBarleyChicken/instructions.txt",
                      
-                     "Low_calorie",
-                     
-                     "1 serving: 384 calories, 8g fat (2g saturated fat), 59mg cholesterol, 349mg sodium, 54g carbohydrate (13g sugars, 8g fiber), 26g protein."};
+                     "Low_calorie"};
 
 
 
@@ -116,7 +100,7 @@ void makeRecipes (ingredients *fridgeContents, Recipes *vegetarianRecipes, Recip
 
     lowCarbRecipes[0] = ovenRoastedSalmom;/*https://www.tasteofhome.com/recipes/oven-roasted-salmon/*/
     lowCarbRecipes[1] = butterChickenMeatballs;/*https://www.tasteofhome.com/recipes/butter-chicken-meatballs/*/
-    LowCarbRecipes[2] = zucchiniMushroomBake;/*https://www.tasteofhome.com/recipes/zucchini-mushroom-bake/*/
+    lowCarbRecipes[2] = zucchiniMushroomBake;/*https://www.tasteofhome.com/recipes/zucchini-mushroom-bake/*/
 
     lowCalorieRecipes[0] = coconutCurryChicken;/*https://www.tasteofhome.com/recipes/coconut-curry-chicken/*/
     lowCalorieRecipes[1] = eggplantCasserole;/*https://www.tasteofhome.com/recipes/eggplant-casserole/*/
@@ -136,7 +120,7 @@ void makeRecipes (ingredients *fridgeContents, Recipes *vegetarianRecipes, Recip
     allRecipes[6] = coconutCurryChicken;
     allRecipes[7] = eggplantCasserole;
     allRecipes[8] = orangeBarleyChicken;
-    allRecipes[9] = chickenTikkaMasala
+    allRecipes[9] = chickenTikkaMasala;
     
 
 }

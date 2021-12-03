@@ -36,7 +36,7 @@ typedef struct open {
 } open;
 
 typedef struct ingredients {
-    char name[20];    
+    char name[25];    
     double weight;
     date expirationDate;
     open open;
@@ -49,7 +49,6 @@ typedef struct Recipes {
     ingredients notFridgeIngredients[MAXINGREDIENTS];
     char *filename;
     char *recipeType;
-    char *nutrition;
 } Recipes;
 
 /* Global variables - Extern means declaration only. No memory is allocated but the compiler is aware that the variable exists */
