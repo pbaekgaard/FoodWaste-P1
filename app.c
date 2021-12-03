@@ -246,7 +246,7 @@ void contents(ingredients *fridgeContent) {
         else if(ingredientNumber <= 0 || ingredientNumber > fridgeSize) {
             clearScreen();
             printFridgeContents(fridgeContent);
-            printf("\nWhich ingredient do you want to change? (press 'S' to search, 'T' to search food by type, 'N' to add an ingredient, or 'R' to return):\n");
+            printf("\nPlease enter a valid ingredient number! (press 'S' to search, 'T' to search food by type, 'N' to add an ingredient, or 'R' to return):\n");
         }
         scanf(" %s", choice);
         ingredientNumber = atoi(choice);
