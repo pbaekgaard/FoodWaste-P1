@@ -1016,7 +1016,7 @@ void colorForRecipeType (Recipes *recipe, ingredients *fridgeContent, int number
 void recipeList(Recipes *recipe, ingredients *fridgeContent, int numberOfRecipes){
     char choice[1];
     int recipeNumber = 1;
-    
+
     printRecipeList(recipe, fridgeContent, numberOfRecipes);
     printf("\nWhich recipe do you want to see? (press R to return to recipes):\n");
     do{
@@ -1077,7 +1077,6 @@ int colorForRecipe (int i, Recipes *recipe, ingredients *fridgeContent){
 /*Function for opening a recipe*/
 void openRecipe(Recipes recipe, ingredients *fridgeContent){
     int i;
-    int j;
     char choice;
     clearScreen();
     printf("  -------------------------------------\n");
@@ -1092,11 +1091,7 @@ void openRecipe(Recipes recipe, ingredients *fridgeContent){
     printf("Ingredients that are not in the fridge is assumed that you own: \n");
     for(i = 0 ; i < MAXINGREDIENTS ; i++){
         if(strcmp(recipe.notFridgeIngredients[i].name, "\0")){
-            printf("    %s:", recipe.notFridgeIngredients[i].name);
-            for (j = 0; j < 30 - strlen(recipe.notFridgeIngredients[i].name); j++){
-                printf(" ");
-            }
-            printf("%.2fg\n\n", recipe.notFridgeIngredients[i].weight);
+            printf("    %s:%*.2fg\n\n", recipe.notFridgeIngredients[i].name, 35 - strlen(recipe.notFridgeIngredients[i].name),recipe.notFridgeIngredients[i].weight);
         }
     }
     
@@ -1110,11 +1105,7 @@ void openRecipe(Recipes recipe, ingredients *fridgeContent){
             } else {
                 printf(GREEN);
             }
-            printf("    %s:", recipe.fridgeIngredients[i].name);
-            for (j = 0; j < 30 - strlen(recipe.fridgeIngredients[i].name); j++){
-                printf(" ");
-            }
-            printf("%.2fg\n\n", recipe.fridgeIngredients[i].weight);
+            printf("    %s:%*.2fg\n\n", recipe.fridgeIngredients[i].name, 35 - strlen(recipe.fridgeIngredients[i].name),recipe.fridgeIngredients[i].weight);
         }
     }
     /*Print the instructions for the recipe*/
