@@ -557,7 +557,7 @@ void printIngType(ingredients *fridgeContent, int itemNumber) {
     int i;
 
     /*Prints the appropriate amount of spaces in regards to the length of the name*/
-    for (i = 0; i < 20 - strlen(fridgeContent[itemNumber].name); i++){
+    for (i = 0; i < 25 - strlen(fridgeContent[itemNumber].name); i++){
         printf(" ");
     }
     printf("%s", fridgeContent[itemNumber].ingredientType);
@@ -676,8 +676,8 @@ void addIngredient(ingredients *fridgeContent) {
       expiration date, opened state, opened date and how long it can last when opened*/
     clearScreen();
 
-    printf("What is the name of the ingredient?\n");
-    scanf(" %s", fridgeContent[fridgeSize - 1].name);
+    printf("What is the name of the ingredient? (Max 20 characters)\n");
+    scanf(" %20s", fridgeContent[fridgeSize - 1].name);
     flushInput();
     fridgeContent[fridgeSize - 1].name[0] = toupper(fridgeContent[fridgeSize - 1].name[0]);
 
