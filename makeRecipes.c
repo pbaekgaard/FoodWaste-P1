@@ -116,29 +116,22 @@ void makeRecipes (ingredients *fridgeContents, Recipes *vegetarianRecipes, Recip
 
                         "High protein"};
 
+    vegetarianRecipes[0] = falafel;                 /*https://www.tasteofhome.com/recipes/falafel-2/*/
+    vegetarianRecipes[1] = macNCheese;              /*https://www.tasteofhome.com/recipes/veggie-macaroni-cheese/*/
+    vegetarianRecipes[2] = zucchiniMushroomBake;    /*https://www.tasteofhome.com/recipes/zucchini-mushroom-bake/*/
 
+    lowCarbRecipes[0] = ovenRoastedSalmom;          /*https://www.tasteofhome.com/recipes/oven-roasted-salmon/*/
+    lowCarbRecipes[1] = butterChickenMeatballs;     /*https://www.tasteofhome.com/recipes/butter-chicken-meatballs/*/
+    lowCarbRecipes[2] = zucchiniMushroomBake;       /*https://www.tasteofhome.com/recipes/zucchini-mushroom-bake/*/
 
+    lowCalorieRecipes[0] = coconutCurryChicken;     /*https://www.tasteofhome.com/recipes/coconut-curry-chicken/*/
+    lowCalorieRecipes[1] = eggplantCasserole;       /*https://www.tasteofhome.com/recipes/eggplant-casserole/*/
+    lowCalorieRecipes[2] = orangeBarleyChicken;     /*https://www.tasteofhome.com/recipes/orange-barley-chicken/*/
 
-    
-
-
-    vegetarianRecipes[0] = falafel; /*https://www.tasteofhome.com/recipes/falafel-2/*/
-    vegetarianRecipes[1] = macNCheese;/*https://www.tasteofhome.com/recipes/veggie-macaroni-cheese/*/
-    vegetarianRecipes[2] = zucchiniMushroomBake;/*https://www.tasteofhome.com/recipes/zucchini-mushroom-bake/*/
-
-    lowCarbRecipes[0] = ovenRoastedSalmom;/*https://www.tasteofhome.com/recipes/oven-roasted-salmon/*/
-    lowCarbRecipes[1] = butterChickenMeatballs;/*https://www.tasteofhome.com/recipes/butter-chicken-meatballs/*/
-    lowCarbRecipes[2] = zucchiniMushroomBake;/*https://www.tasteofhome.com/recipes/zucchini-mushroom-bake/*/
-
-    lowCalorieRecipes[0] = coconutCurryChicken;/*https://www.tasteofhome.com/recipes/coconut-curry-chicken/*/
-    lowCalorieRecipes[1] = eggplantCasserole;/*https://www.tasteofhome.com/recipes/eggplant-casserole/*/
-    lowCalorieRecipes[2] = orangeBarleyChicken;/*https://www.tasteofhome.com/recipes/orange-barley-chicken/*/
-
-    highProteinRecipes[0] = jambalaya; /*https://www.tasteofhome.com/recipes/meaty-slow-cooked-jambalaya/*/
-    highProteinRecipes[1] = chickenTikkaMasala; /*https://www.tasteofhome.com/recipes/slow-cooker-chicken-tikka-masala/*/
+    highProteinRecipes[0] = jambalaya;              /*https://www.tasteofhome.com/recipes/meaty-slow-cooked-jambalaya/*/
+    highProteinRecipes[1] = chickenTikkaMasala;     /*https://www.tasteofhome.com/recipes/slow-cooker-chicken-tikka-masala/*/
     highProteinRecipes[2] = coconutCurryChicken; 
     
-
     allRecipes[0] = falafel;
     allRecipes[1] = macNCheese;
     allRecipes[2] = zucchiniMushroomBake;
@@ -149,6 +142,4 @@ void makeRecipes (ingredients *fridgeContents, Recipes *vegetarianRecipes, Recip
     allRecipes[7] = eggplantCasserole;
     allRecipes[8] = orangeBarleyChicken;
     allRecipes[9] = chickenTikkaMasala;
-    
-
 }
