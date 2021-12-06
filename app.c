@@ -883,10 +883,7 @@ void changeOpenedState(ingredients *fridgeContent, int ingredientNumber) {
             fridgeContent[ingredientNumber].open.opened = 0;
         } 
     }
-    /*Do nothing if the user declines*/
-    else if(choice == 'n' || choice == 'N'){
-        printf("Nice bro, good choice! You're going places in your life.\n");
-    }
+    /*Do nothing if the user inputs anything but 'y' or 'Y'*/
 }
 
 /*Function for deleting an existing ingredient*/
