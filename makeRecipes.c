@@ -6,88 +6,88 @@ void makeRecipes (ingredients *fridgeContents, Recipes *vegetarianRecipes, Recip
 /*Declaration of different recipes*/
     Recipes macNCheese =  {"MacNCheese",
 
-                     {{"Broccoli", 210}, {"Cauliflower", 130}, {"Carrots", 165}, {"Celery", 80}, {"Butter", 12}, {"Milk", 240}, {"Cheddar", 250}, {"Dijon mustard", 15}, {"Chicken broth", 100}}, 
+                        {{"Broccoli", 210}, {"Cauliflower", 130}, {"Carrots", 165}, {"Celery", 80}, {"Butter", 12}, {"Milk", 240}, {"Cheddar", 250}, {"Dijon mustard", 15}, {"Chicken broth", 100}}, 
 
-                     {{"Onion", 150}, {"Wheat flour", 32}, {"Salt", 2}, {"Pepper", 1}, {"Paprika", 2}},
+                        {{"Onion", 150}, {"Wheat flour", 32}, {"Salt", 2}, {"Pepper", 1}, {"Paprika", 2}},
 
-                     "db/recipes/macNCheese/instructions.txt",
+                        "db/recipes/macNCheese/instructions.txt",
                      
-                     "Vegetarian"};
+                        "Vegetarian"};
 
 
     Recipes falafel =  {"Falafel",
 
-                     {{"Eggs", 60}},
+                        {{"Eggs", 60}},
 
-                     {{"Dried Chickpeas", 170}, {"Baking soda", 3}, {"Cilantro leaves", 17}, {"Mint leaves", 15}, 
-                     {"Garlic cloves", 20}, {"Ground coriander", 6}, {"Chili powder", 6}, {"Salt", 6}, {"Pepper", 3}, {"Sesame seeds", 6}, {"Baking powder", 6}},
+                        {{"Dried Chickpeas", 170}, {"Baking soda", 3}, {"Cilantro leaves", 17}, {"Mint leaves", 15}, 
+                        {"Garlic cloves", 20}, {"Ground coriander", 6}, {"Chili powder", 6}, {"Salt", 6}, {"Pepper", 3}, {"Sesame seeds", 6}, {"Baking powder", 6}},
 
-                     "db/recipes/falafel/instructions.txt",
+                        "db/recipes/falafel/instructions.txt",
                      
-                     "Vegetarian"};
+                        "Vegetarian"};
 
     Recipes zucchiniMushroomBake =  {"Zucchini Mushroom Bake",
 
-                     {{"Squash", 450}, {"Fresh Mushroom", 150}, {"Cheddar", 120}},
+                        {{"Squash", 450}, {"Fresh Mushroom", 150}, {"Cheddar", 120}},
 
-                     {{"Onion", 20}, {"Dried basil", 3}, {"Salt", 2}},
+                        {{"Onion", 20}, {"Dried basil", 3}, {"Salt", 2}},
 
-                     "db/recipes/zucchiniMushroomBake/instructions.txt",
+                        "db/recipes/zucchiniMushroomBake/instructions.txt",
                      
-                     "Vegetarian and Low carb"};
+                        "Vegetarian and Low carb"};
 
     Recipes ovenRoastedSalmom =  {"Oven Roasted Salmom",
 
-                     {{"Salmon fillet", 675}},
+                        {{"Salmon fillet", 675}},
 
-                     {{"Olive oil", 15}, {"Salt", 3}, {"Pepper", 2}},
+                        {{"Olive oil", 15}, {"Salt", 3}, {"Pepper", 2}},
 
-                     "db/recipes/ovenRoastedSalmom/instructions.txt",
+                        "db/recipes/ovenRoastedSalmom/instructions.txt",
                      
-                     "Low carb"};
+                        "Low carb"};
 
 
     Recipes butterChickenMeatballs =  {"Butter Chicken Meatballs",
 
-                     {{"Ground chicken", 675}, {"Eggs", 60}, {"Butter chicken sauce", 400}},
+                        {{"Ground chicken", 675}, {"Eggs", 60}, {"Butter chicken sauce", 400}},
 
-                     {{"Bread crumbs", 60}, {"Garam masala", 6}, {"Tandoori masala", 3}, {"Salt", 3}, {"Cayenne pepper", 2}, {"Cilantro", 5}},
+                        {{"Bread crumbs", 60}, {"Garam masala", 6}, {"Tandoori masala", 3}, {"Salt", 3}, {"Cayenne pepper", 2}, {"Cilantro", 5}},
 
-                     "db/recipes/butterChickenMeatballs/instructions.txt",
+                        "db/recipes/butterChickenMeatballs/instructions.txt",
                      
-                     "Low carb"};
+                        "Low carb"};
 
 
     Recipes coconutCurryChicken =  {"Coconut Curry Chicken",
 
-                     {{"Potatos", 300}, {"Chicken breast", 200}, {"Cooked rice", 500}},
+                        {{"Potatos", 300}, {"Chicken breast", 200}, {"Cooked rice", 500}},
 
-                     {{"Onion", 115}, {"Canola oil", 12}, {"Coconut milk", 240}, {"Curry powder", 24}, 
-                     {"Garlic cloves", 5}, {"Chicken bouillon granules", 6}, {"Salt", 2}, {"Pepper", 2}},
+                        {{"Onion", 115}, {"Canola oil", 12}, {"Coconut milk", 240}, {"Curry powder", 24}, 
+                        {"Garlic cloves", 5}, {"Chicken bouillon granules", 6}, {"Salt", 2}, {"Pepper", 2}},
 
-                     "db/recipes/coconutCurryChicken/instructions.txt",
+                        "db/recipes/coconutCurryChicken/instructions.txt",
                      
-                     "Low calorie"};
+                        "Low calorie"};
 
     Recipes eggplantCasserole =  {"Eggplant Casserole",
 
-                     {{"Eggplant", 550}, {"Ground beef", 675}, {"Green pepper", 120}, {"Tomato", 180}, {"Milk", 120}, {"Eggs", 65}, {"Butter", 30}},
+                        {{"Eggplant", 550}, {"Ground beef", 675}, {"Green pepper", 120}, {"Tomato", 180}, {"Milk", 120}, {"Eggs", 65}, {"Butter", 30}},
 
-                     {{"Water", 950}, {"Onion", 150}, {"Bread crumbs", 50}},
+                        {{"Water", 950}, {"Onion", 150}, {"Bread crumbs", 50}},
 
-                     "db/recipes/eggplantCasserole/instructions.txt",
+                        "db/recipes/eggplantCasserole/instructions.txt",
                      
-                     "Low calorie"};
+                        "Low calorie"};
 
     Recipes orangeBarleyChicken =  {"Orange Barley Chicken",
 
-                     {{"Chicken", 1800}, {"Butter", 14}, {"Orange juice", 300}, {"Parsnip", 300}, {"Pearl barley", 260}, {"Fresh mushroom", 225}, {"Chicken broth", 300}},
+                        {{"Chicken", 1800}, {"Butter", 14}, {"Orange juice", 300}, {"Parsnip", 300}, {"Pearl barley", 260}, {"Fresh mushroom", 225}, {"Chicken broth", 300}},
 
-                     {{"Wheat flour", 150}, {"Celery salt", 6}, {"Pepper", 3}, {"Olive oil", 12}, {"Onion", 150}, {"Bay leave", 0.5}},
+                        {{"Wheat flour", 150}, {"Celery salt", 6}, {"Pepper", 3}, {"Olive oil", 12}, {"Onion", 150}, {"Bay leave", 0.5}},
 
-                     "db/recipes/orangeBarleyChicken/instructions.txt",
+                        "db/recipes/orangeBarleyChicken/instructions.txt",
 
-                     "Low calorie"};
+                        "Low calorie"};
 
     Recipes jambalaya = {"Jambalaya",
 
