@@ -78,17 +78,13 @@ void getFridgeContents(ingredients *fridgeContent) {
         }
         fscanf(readFile, " %s", fridgeContent[i].ingredientType);
 
-       /*fridgeContent[i] = decodeIngredient(fridgeContentString);*/
+        whiteSpaceDeprotect(fridgeContent[i].name);
+        whiteSpaceDeprotect(fridgeContent[i].ingredientType);
+
         i++;
     }
     /* Closes file */
     fclose(readFile);
-}
-
-ingredients *decodeIngredient(char *ingredientInfo) {
-    ingredients *tempIngredient;
-    
-    return tempIngredient;
 }
 
 char *whiteSpaceDeprotect(char *string) {
