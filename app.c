@@ -874,13 +874,13 @@ void changeOpenedState(ingredients *fridgeContent, int ingredientNumber) {
     if(choice == 'y' || choice == 'Y') {
         /*If the user accepts, change the state of the ingredient and update the openDate
           if the ingredient was previously unopened*/
-        if (fridgeContent[ingredientNumber].open.opened == 0){
-            fridgeContent[ingredientNumber].open.opened = 1;
+        if (fridgeContent[ingredientNumber].open.opened == FALSE){
+            fridgeContent[ingredientNumber].open.opened = TRUE;
             fridgeContent[ingredientNumber].open.isopen.openDate = currentDate;
             updateExpDates(fridgeContent);
         }
-        else if (fridgeContent[ingredientNumber].open.opened == 1){
-            fridgeContent[ingredientNumber].open.opened = 0;
+        else if (fridgeContent[ingredientNumber].open.opened == TRUE){
+            fridgeContent[ingredientNumber].open.opened = FALSE;
         } 
     }
     /*Do nothing if the user inputs anything but 'y' or 'Y'*/
