@@ -105,16 +105,16 @@ void makeRecipes (ingredients *fridgeContents, Recipes *vegetarianRecipes, Recip
 
     Recipes chickenTikkaMasala = {"Chicken Tikka Masala",
     
-                                {{"Tomato puree", 425.24}, {"Tomato paste", 28.1}, {"Grated lemon zest", 4.2},
-                                {"Lemon juice", 14.4}, {"Hot pepper sauce", 4.7}, {"Chicken", 340.2},
-                                {"Greek yogurt", 42.52}, {"Unsalted butter", 4.71}},
+                        {{"Tomato puree", 425.24}, {"Tomato paste", 28.1}, {"Grated lemon zest", 4.2},
+                        {"Lemon juice", 14.4}, {"Hot pepper sauce", 4.7}, {"Chicken", 340.2},
+                        {"Greek yogurt", 42.52}, {"Unsalted butter", 4.71}},
 
-                                {{"Onion", 125}, {"Garlic cloves", 8.4}, {"Canola oil", 13.4}, {"Rice", 500},
-                                {"Curry powder", 2.42}, {"Salt", 6}, {"Pepper", 0.57}, {"Garam masala", 3.5}},
+                        {{"Onion", 125}, {"Garlic cloves", 8.4}, {"Canola oil", 13.4}, {"Rice", 500},
+                        {"Curry powder", 2.42}, {"Salt", 6}, {"Pepper", 0.57}, {"Garam masala", 3.5}},
 
-                                "db/recipes/chickenTikkaMasala/instructions.txt",
+                        "db/recipes/chickenTikkaMasala/instructions.txt",
 
-                                "High protein"};
+                        "High protein"};
 
 
 
