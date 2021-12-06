@@ -59,7 +59,8 @@ extern int fridgeSize;
 /* Prototypes */
 extern int getFridgeSize(void);
 extern void getFridgeContents(ingredients *);
-char *decodeIngredientName(char *);
+ingredients *decodeIngredient(char *);
+char *whiteSpaceDeprotect(char *);
 extern void updateExpDates (ingredients *);
 extern void mainMenu(ingredients *);
 extern void sortContent(ingredients *);

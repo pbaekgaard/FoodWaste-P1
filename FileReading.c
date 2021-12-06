@@ -63,7 +63,7 @@ void getFridgeContents(ingredients *fridgeContent) {
         exit(EXIT_FAILURE);
     }
 
-    /* Scans file into the structs name and integer into the structs weight until end of file */
+    /* Scans each line in the file in to a struct until end of file */
     while(!feof(readFile)){
         fscanf(readFile, " %s %lf %d %d %d %d", fridgeContent[i].name, &fridgeContent[i].weight,
                                                 &fridgeContent[i].expirationDate.year, &fridgeContent[i].expirationDate.month,
@@ -86,15 +86,19 @@ void getFridgeContents(ingredients *fridgeContent) {
     fclose(readFile);
 }
 
-char *decodeIngredientName(char *ingredientName) {
-    int stringLength = strlen(ingredientName), i;
+ingredients *decodeIngredient(char *ingredientInfo) {
+    
+}
+
+char *whiteSpaceDeprotect(char *string) {
+    int stringLength = strlen(string), i;
     
     for(i = 0; i < stringLength; i++) {
-        if(ingredientName[i] == '_') {
-            ingredientName[i] = ' ';
+        if(string[i] == '_') {
+            string[i] = ' ';
         }
     }
-    return ingredientName;
+    return string;
 }
 
 void printInstructions(Recipes recipe) {
