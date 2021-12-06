@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "app.h"
 
 int fridgeSize;
@@ -62,7 +63,7 @@ void getFridgeContents(ingredients *fridgeContent) {
         exit(EXIT_FAILURE);
     }
 
-    /* Scans file into the structs name and integer into the structs weight until end of file */
+    /* Scans each line in the file in to a struct until end of file */
     while(!feof(readFile)){
         fscanf(readFile, " %s %lf %d %d %d %d", fridgeContent[i].name, &fridgeContent[i].weight,
                                                 &fridgeContent[i].expirationDate.year, &fridgeContent[i].expirationDate.month,
@@ -76,10 +77,28 @@ void getFridgeContents(ingredients *fridgeContent) {
             fscanf(readFile, " %d", &fridgeContent[i].open.isopen.daysAfterOpen);
         }
         fscanf(readFile, " %s", fridgeContent[i].ingredientType);
+
+        /*Replaces underscore (_) from ingredient name with a space*/
+        strcpy(fridgeContent[i].name, decodeIngredient(fridgeContent[i].name));
         i++;
     }
     /* Closes file */
     fclose(readFile);
+}
+
+ingredients *decodeIngredient(char *ingredientInfo) {
+    
+}
+
+char *whiteSpaceDeprotect(char *string) {
+    int stringLength = strlen(string), i;
+    
+    for(i = 0; i < stringLength; i++) {
+        if(string[i] == '_') {
+            string[i] = ' ';
+        }
+    }
+    return string;
 }
 
 void printInstructions(Recipes recipe) {

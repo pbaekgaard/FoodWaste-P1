@@ -614,7 +614,7 @@ void printExpirationDate(ingredients *fridgeContent, int itemNumber) {
     /*Check if the expiration date is unknown*/
     if(!(fridgeContent[itemNumber].expirationDate.day == UNKNOWN || fridgeContent[itemNumber].expirationDate.month == UNKNOWN || fridgeContent[itemNumber].expirationDate.year == UNKNOWN)) {
         /*Print the date if the expiration date is known*/
-        printDate(fridgeContent, itemNumber);            
+        printf("%d/%d/%d", fridgeContent[itemNumber].expirationDate.year, fridgeContent[itemNumber].expirationDate.month, fridgeContent[itemNumber].expirationDate.day);
     }
     else printf("???\?/?\?/??");
 
@@ -929,10 +929,6 @@ int dateComparatorenator(date expirationDate, date openedDate) {
     else
         return -1;
 }
-/*Function for printing the expiration date of an ingredient*/
-void printDate(ingredients *fridgeContent, int itemNumber) {
-    printf("%d/%d/%d", fridgeContent[itemNumber].expirationDate.year, fridgeContent[itemNumber].expirationDate.month, fridgeContent[itemNumber].expirationDate.day);
-}
 
 void recipeMenu(ingredients *fridgeContent) {
     int recipeKind = 1;
@@ -1019,7 +1015,7 @@ void colorForRecipeType (Recipes *recipe, ingredients *fridgeContent, int number
 }
 
 /*Recipe Menu function*/
-void RecipeList(Recipes *recipe, ingredients *fridgeContent, int numberOfRecipes){
+void recipeList(Recipes *recipe, ingredients *fridgeContent, int numberOfRecipes){
     char choice[1];
     int recipeNumber = 1;
     clearScreen();

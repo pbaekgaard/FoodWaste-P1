@@ -2,6 +2,7 @@
 #ifndef APP_H
 #define APP_H
 
+#define BUFFERMAX 1000
 #define INSTRUCTIONLINELENGTH 256
 #define TRUE 1
 #define FALSE 0
@@ -58,6 +59,8 @@ extern int fridgeSize;
 /* Prototypes */
 extern int getFridgeSize(void);
 extern void getFridgeContents(ingredients *);
+ingredients *decodeIngredient(char *);
+char *whiteSpaceDeprotect(char *);
 extern void updateExpDates (ingredients *);
 extern void mainMenu(ingredients *);
 extern void sortContent(ingredients *);
@@ -92,10 +95,9 @@ extern void recipeMenu(ingredients*);
 extern void makeRecipes(ingredients*, Recipes*, Recipes*, Recipes*, Recipes*, Recipes*);
 extern int colourization(ingredients *, char *, double);
 extern void printRecipeTypes (Recipes*, Recipes*, Recipes*, Recipes*, Recipes*, ingredients *);
-extern void RecipeList(Recipes *, ingredients *, int);
+extern void recipeList(Recipes *, ingredients *, int);
 extern void printRecipeList(Recipes *, ingredients *, int);
 extern int dateComparatorenator(date, date);
-extern void printDate(ingredients *, int);
 extern void returnMenu(char *, ingredients *);
 extern int searchinator(ingredients *, int, char *);
 extern void clearScreen(void);
