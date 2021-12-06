@@ -95,7 +95,7 @@ extern void recipeMenu(ingredients*);
 extern void makeRecipes(ingredients*, Recipes*, Recipes*, Recipes*, Recipes*, Recipes*);
 extern int colourization(ingredients *, char *, double);
 extern void printRecipeTypes (Recipes*, Recipes*, Recipes*, Recipes*, Recipes*, ingredients *);
-extern void RecipeList(Recipes *, ingredients *, int);
+extern void recipeList(Recipes *, ingredients *, int);
 extern void printRecipeList(Recipes *, ingredients *, int);
 extern int dateComparatorenator(date, date);
 extern void returnMenu(char *, ingredients *);

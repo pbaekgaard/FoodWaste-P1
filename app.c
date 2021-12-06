@@ -1015,7 +1015,7 @@ void colorForRecipeType (Recipes *recipe, ingredients *fridgeContent, int number
 }
 
 /*Recipe Menu function*/
-void RecipeList(Recipes *recipe, ingredients *fridgeContent, int numberOfRecipes){
+void recipeList(Recipes *recipe, ingredients *fridgeContent, int numberOfRecipes){
     char choice[1];
     int recipeNumber = 1;
     clearScreen();
