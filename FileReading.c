@@ -78,8 +78,7 @@ void getFridgeContents(ingredients *fridgeContent) {
         }
         fscanf(readFile, " %s", fridgeContent[i].ingredientType);
 
-        /*Replaces underscore (_) from ingredient name with a space*/
-        strcpy(fridgeContent[i].name, decodeIngredient(fridgeContent[i].name));
+       /*fridgeContent[i] = decodeIngredient(fridgeContentString);*/
         i++;
     }
     /* Closes file */
@@ -87,7 +86,9 @@ void getFridgeContents(ingredients *fridgeContent) {
 }
 
 ingredients *decodeIngredient(char *ingredientInfo) {
+    ingredients *tempIngredient;
     
+    return tempIngredient;
 }
 
 char *whiteSpaceDeprotect(char *string) {
