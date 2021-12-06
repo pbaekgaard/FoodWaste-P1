@@ -1093,6 +1093,9 @@ void openRecipe(Recipes recipe, ingredients *fridgeContent){
         if(strcmp(recipe.notFridgeIngredients[i].name, "\0")){
             printf("    %s:%*.2fg\n\n", recipe.notFridgeIngredients[i].name, 35 - strlen(recipe.notFridgeIngredients[i].name),recipe.notFridgeIngredients[i].weight);
         }
+        else{
+            break;
+        }
     }
     
     /*Print the ingredients used for the recipe that are in the fridge*/
@@ -1106,6 +1109,9 @@ void openRecipe(Recipes recipe, ingredients *fridgeContent){
                 printf(GREEN);
             }
             printf("    %s:%*.2fg\n\n", recipe.fridgeIngredients[i].name, 35 - strlen(recipe.fridgeIngredients[i].name),recipe.fridgeIngredients[i].weight);
+        }
+        else{
+            break;
         }
     }
     /*Print the instructions for the recipe*/
