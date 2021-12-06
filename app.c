@@ -676,14 +676,14 @@ void addIngredient(ingredients *fridgeContent) {
       expiration date, opened state, opened date and how long it can last when opened*/
     clearScreen();
 
-    printf("What is the name of the ingredient? (Max 20 characters)\n");
+    printf("What is the name of the ingredient? (Max 20 characters & use underscore for space)\n");
     scanf(" %20s", fridgeContent[fridgeSize - 1].name);
     flushInput();
-    fridgeContent[fridgeSize - 1].name[0] = toupper(fridgeContent[fridgeSize - 1].name[0]);
+    fridgeContent[fridgeSize - 1].name[0] = whiteSpaceDeprotect(toupper(fridgeContent[fridgeSize - 1].name[0]));
 
     printf("What type of food is it?\n");
     scanf("%s", fridgeContent[fridgeSize - 1].ingredientType);
-    fridgeContent[fridgeSize - 1].ingredientType[0] = toupper(fridgeContent[fridgeSize - 1].ingredientType[0]);
+    fridgeContent[fridgeSize - 1].ingredientType[0] = whiteSpaceDeprotect(toupper(fridgeContent[fridgeSize - 1].ingredientType[0]));
     flushInput();
 
     printf("What is the weight of the ingredient in grams?\n");
