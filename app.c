@@ -961,19 +961,19 @@ void recipeMenu(ingredients *fridgeContent) {
     /*Switch statement for printing the different categories of recipes*/
     switch (recipeKind){
     case vegetarian:
-        RecipeList(vegetarianRecipes, fridgeContent, VEGETARIANNUMBER);
+        recipeList(vegetarianRecipes, fridgeContent, VEGETARIANNUMBER);
         break;
     case lowCarb:
-        RecipeList(lowCarbRecipes, fridgeContent, LOWCARBNUMBER);
+        recipeList(lowCarbRecipes, fridgeContent, LOWCARBNUMBER);
         break;
     case lowCalorie:
-        RecipeList(lowCalorieRecipes, fridgeContent, LOWCALORIENUMBER);
+        recipeList(lowCalorieRecipes, fridgeContent, LOWCALORIENUMBER);
         break;
     case highProtein:
-        RecipeList(highProteinRecipes, fridgeContent, HIGHPROTEINNUMBER);
+        recipeList(highProteinRecipes, fridgeContent, HIGHPROTEINNUMBER);
         break;
     default:
-        RecipeList(allRecipes, fridgeContent, NUMBEROFRECIPES);
+        recipeList(allRecipes, fridgeContent, NUMBEROFRECIPES);
         break;
     }
 }
