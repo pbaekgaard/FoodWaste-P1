@@ -993,7 +993,6 @@ void printRecipeTypes (Recipes* vegetarian, Recipes* lowCarb, Recipes* lowCalori
     colorForRecipeType (vegetarian, fridgeContent, VEGETARIANNUMBER);
     printf("5. Vegetarian\n");
 
-    
     printf(WHITE);
 }
 
@@ -1017,13 +1016,13 @@ void colorForRecipeType (Recipes *recipe, ingredients *fridgeContent, int number
 void recipeList(Recipes *recipe, ingredients *fridgeContent, int numberOfRecipes){
     char choice[1];
     int recipeNumber = 1;
-    clearScreen();
+    
     printRecipeList(recipe, fridgeContent, numberOfRecipes);
     printf("\nWhich recipe do you want to see? (press R to return to recipes):\n");
     do{
         /*INPUT VALIDATION*/
         if(recipeNumber <= 0 || recipeNumber > numberOfRecipes) {
-            clearScreen();
+            
             printRecipeList(recipe, fridgeContent, numberOfRecipes);
             printf("\nPlease enter a valid Recipe Number. Or type 'R' to return to recipes:\n");
         }
@@ -1041,6 +1040,7 @@ void recipeList(Recipes *recipe, ingredients *fridgeContent, int numberOfRecipes
 void printRecipeList(Recipes *recipe, ingredients *fridgeContent, int numberOfRecipes){
     int i;
 
+    clearScreen();
     printf("This is a list of the recipes in your cookbook\n");
     /*Print the list of recipes of the given type*/
     for(i = 1; i <= numberOfRecipes; i++){
