@@ -98,7 +98,6 @@ extern void printRecipeTypes (Recipes*, Recipes*, Recipes*, Recipes*, Recipes*, 
 extern void RecipeList(Recipes *, ingredients *, int);
 extern void printRecipeList(Recipes *, ingredients *, int);
 extern int dateComparatorenator(date, date);
-extern void printDate(ingredients *, int);
 extern void returnMenu(char *, ingredients *);
 extern int searchinator(ingredients *, int, char *);
 extern void clearScreen(void);
