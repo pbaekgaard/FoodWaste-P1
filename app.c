@@ -869,7 +869,7 @@ void changeOpenedState(ingredients *fridgeContent, int ingredientNumber) {
     char choice;
 
     /*WARN THE USER FOR POTENTIAL HARM TO THE DATE*/
-    printf("This might override the date. Are you sure? y/n: ");
+    printf("This might override the expiration date. Are you sure? y/n: ");
     scanf(" %c", &choice);
     if(choice == 'y' || choice == 'Y') {
         /*If the user accepts, change the state of the ingredient and update the openDate
