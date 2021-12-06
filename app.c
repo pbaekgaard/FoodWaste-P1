@@ -310,12 +310,12 @@ void skipToDate() {
     scanf("%d/%d/%d", &currentDate.year, &currentDate.month, &currentDate.day);
 
     while(currentDate.day > 31 ||
-          ((currentDate.month == 4 || currentDate.month == 6 || currentDate.month == 9 || currentDate.month == 11) && currentDate.day > 30) ||
-          (leapYear(currentDate.year) == 1 && currentDate.month == 2 && currentDate.day > 28) ||
-          (currentDate.month == 2 && currentDate.day > 29) || currentDate.month < 1 || currentDate.month > 12 || currentDate.day < 1){
+          (currentDate.month <= 0 || currentDate.day <= 0) || ((currentDate.month == 4 || currentDate.month == 6 || currentDate.month == 9 || currentDate.month == 11) && currentDate.day > 30) ||
+          (leapYear(currentDate.year) == 1 && currentDate.month == 2 && currentDate.day > 29) ||
+          (leapYear(currentDate.year) == 0 && currentDate.month == 2 && currentDate.day > 28) || currentDate.month < 1 || currentDate.month > 12){
         
         flushInput();
-        printf("Please type a valid date!\n(yyyy/mm/dd): ");
+        printf("Please type a valid date! (yyyy/mm/dd): ");
         scanf(" %d/%d/%d", &currentDate.year, &currentDate.month, &currentDate.day);
     }
 }
@@ -739,12 +739,12 @@ void newIngredientExpirationDate(ingredients *fridgeContent) {
 
     /*Validate the date*/
     while(tempDate.day > 31 ||
-          ((tempDate.month == 4 || tempDate.month == 6 || tempDate.month == 9 || tempDate.month == 11) && tempDate.day > 30) ||
-          (leapYear(tempDate.year) == 1 && tempDate.month == 2 && tempDate.day > 28) ||
-          (tempDate.month == 2 && tempDate.day > 29) || tempDate.month < 1 || tempDate.month > 12 || tempDate.day < 1){
+          (tempDate.month <= 0 || tempDate.day <= 0) || ((tempDate.month == 4 || tempDate.month == 6 || tempDate.month == 9 || tempDate.month == 11) && tempDate.day > 30) ||
+          (leapYear(tempDate.year) == 1 && tempDate.month == 2 && tempDate.day > 29) ||
+          (leapYear(tempDate.year) == 0 && tempDate.month == 2 && tempDate.day > 28) || tempDate.month < 1 || tempDate.month > 12){
         
         flushInput();
-        printf("Please type a valid date!\n(yyyy/mm/dd): ");
+        printf("Please type a valid date! (yyyy/mm/dd): ");
         scanf(" %d/%d/%d", &tempDate.year, &tempDate.month, &tempDate.day);
     }
     /*Assign the date to the ingredient in the fridgeContent array*/
@@ -761,12 +761,12 @@ void newIngredientOpenedDate(ingredients *fridgeContent) {
     scanf("%d/%d/%d", &tempDate.year, &tempDate.month, &tempDate.day);
 
     while(tempDate.day > 31 ||
-          ((tempDate.month == 4 || tempDate.month == 6 || tempDate.month == 9 || tempDate.month == 11) && tempDate.day > 30) ||
-          (leapYear(tempDate.year) == 1 && tempDate.month == 2 && tempDate.day > 28) ||
-          (tempDate.month == 2 && tempDate.day > 29) || tempDate.month < 1 || tempDate.month > 12 || tempDate.day < 1){
+          (tempDate.month <= 0 || tempDate.day <= 0) || ((tempDate.month == 4 || tempDate.month == 6 || tempDate.month == 9 || tempDate.month == 11) && tempDate.day > 30) ||
+          (leapYear(tempDate.year) == 1 && tempDate.month == 2 && tempDate.day > 29) ||
+          (leapYear(tempDate.year) == 0 && tempDate.month == 2 && tempDate.day > 28) || tempDate.month < 1 || tempDate.month > 12){
         
         flushInput();
-        printf("Please type a valid date!\n(yyyy/mm/dd): ");
+        printf("Please type a valid date! (yyyy/mm/dd): ");
         scanf(" %d/%d/%d", &tempDate.year, &tempDate.month, &tempDate.day);
     }
     fridgeContent[newIngredient].open.isopen.openDate = tempDate;
