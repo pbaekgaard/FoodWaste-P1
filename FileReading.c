@@ -78,6 +78,7 @@ void getFridgeContents(ingredients *fridgeContent) {
         }
         fscanf(readFile, " %s", fridgeContent[i].ingredientType);
 
+        /*Inserts whitespaces instead of underscores (_)*/
         whiteSpaceDeprotect(fridgeContent[i].name);
         whiteSpaceDeprotect(fridgeContent[i].ingredientType);
 
@@ -87,6 +88,7 @@ void getFridgeContents(ingredients *fridgeContent) {
     fclose(readFile);
 }
 
+/*Function to replace underscores (_) with a space*/
 char *whiteSpaceDeprotect(char *string) {
     int stringLength = strlen(string), i;
     
