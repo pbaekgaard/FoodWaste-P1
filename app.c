@@ -941,7 +941,6 @@ void recipeMenu(ingredients *fridgeContent) {
     
     makeRecipes(fridgeContent, vegetarianRecipes, lowCarbRecipes, lowCalorieRecipes, highProteinRecipes, allRecipes);
 
-    clearScreen();
     printRecipeTypes(vegetarianRecipes, lowCarbRecipes, lowCalorieRecipes, highProteinRecipes, allRecipes, fridgeContent);
     printf("\nWhich recipes do you want to see? (press R to return to the main menu):\n");
 
