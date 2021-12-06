@@ -891,12 +891,8 @@ void changeOpenedState(ingredients *fridgeContent, int ingredientNumber) {
 
 /*Function for deleting an existing ingredient*/
 void deleteIngredient(ingredients *fridgeContent, int ingredientNumber) {
-    /*Create a temporary ingredient with the values of the last element in the fridgeContent array*/
-    ingredients temp = fridgeContent[fridgeSize - 1];
-    /*Assign the chosen ingredient to the last position in the array*/
-    fridgeContent[fridgeSize - 1] = fridgeContent[ingredientNumber];
-    /*Assign the temporary ingredient to the position of the chosen ingredient*/
-    fridgeContent[ingredientNumber] = temp;
+    /*Assign the values of the last element in the fridgeContent array to the position of the chosen ingredient*/
+    fridgeContent[ingredientNumber] = fridgeContent[fridgeSize - 1];
     /*Reallocate the memory with one less ingredient*/
     fridgeContent = (ingredients *) realloc(fridgeContent, sizeof(ingredients) * --fridgeSize);
     /*Sort the fridgeContent array and return to the contents menu*/
