@@ -295,12 +295,12 @@ void tomorrow(date *date){
 
 /*Function to check if the present date is a leap year*/
 int leapYear(int year){
-  int result;
+    int result;
 
-  if(year % 4 == 0) result = 1;
-  else result = 0;
+    if(year % 4 == 0) result = TRUE;
+    else result = FALSE;
 
-  return result;
+    return result;
 }
 
 /*Function for setting the date to a specific day*/
