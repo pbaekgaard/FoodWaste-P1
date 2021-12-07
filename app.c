@@ -322,16 +322,19 @@ void skipToDate() {
 
 /*Function for Fridge Contents screen*/
 void contents(ingredients *fridgeContent) {
-    int ingredientNumber = 1, searchOption;
-    char choice[2];
+    int ingredientNumber = 1, error = 0;
+    char choice[10];
 
     clearScreen();
     /*Print the the content of the fridge*/
     printFridgeContents(fridgeContent);
 
-    printf("\nWhich ingredient do you want to change? (press 'S' to search, 'T' to search food by type, 'N' to add an ingredient, or 'R' to return):\n");
 
     do{
+        if (error == 0) {
+            printf("\nWhich ingredient do you want to change? (press 'S' to search, 'T' to search food by type, 'N' to add an ingredient, or 'R' to return):\n");
+        }
+        scanf(" %s", choice);
         /*Check if the fridge is empty*/
         if(fridgeSize == 0) {
             clearScreen();
@@ -343,8 +346,8 @@ void contents(ingredients *fridgeContent) {
             clearScreen();
             printFridgeContents(fridgeContent);
             printf("\nPlease enter a valid ingredient number! (press 'S' to search, 'T' to search food by type, 'N' to add an ingredient, or 'R' to return):\n");
+            error = 1;
         }
-        scanf(" %s", choice);
         ingredientNumber = atoi(choice);
         /*Return to main menu if user presses 'R'*/
         if(strcmp(choice, "r") == 0 || strcmp(choice, "R") == 0){
@@ -356,12 +359,16 @@ void contents(ingredients *fridgeContent) {
         }
         /*Search if the user presses 'S'*/
         else if(strcmp(choice, "s") == 0 || strcmp(choice, "S") == 0){
-            searchOption = 1;
-            search(fridgeContent, &ingredientNumber, searchOption);
+            clearScreen();
+            printFridgeContents(fridgeContent);
+            searchIngredient(fridgeContent);
+            error = 0;
         }
         else if(strcmp(choice, "t") == 0 || strcmp(choice, "T") == 0){
-            searchOption = 0;
-            search(fridgeContent, &ingredientNumber, searchOption);       
+            clearScreen();
+            printFridgeContents(fridgeContent);
+            searchTypes(fridgeContent);  
+            error = 0; 
         }
     } while (ingredientNumber <= 0 || ingredientNumber > fridgeSize);
     /*Edit the ingredient the user decides, if the user inputs a number*/
@@ -375,50 +382,6 @@ void printFridgeContents(ingredients *fridgeContent) {
     for(itemNumber = 0; itemNumber < fridgeSize; itemNumber++) {
         printIngredient(fridgeContent, itemNumber);
     }
-}
-
-
-/*Function for search menu*/
-void search(ingredients *fridgeContent, int *ingredientNumber, int searchOption) {
-    char choice[2];
-
-    /*Run the correct search function*/
-    if(searchOption == 1){
-        clearScreen();
-        printFridgeContents(fridgeContent);
-        searchIngredient(fridgeContent);
-    } else if(searchOption == 0){
-        clearScreen();
-        printFridgeContents(fridgeContent);
-        searchTypes(fridgeContent);
-    }
-    printf("\nWhich ingredient do you want to change? (press 'S' to search, 'T' to search food by type, 'N' to add an ingredient, or 'R' to return):\n");
-    do{
-        scanf(" %s", choice);
-        *ingredientNumber = atoi(choice);
-        /*Return to main menu if user presses 'R'*/
-        if(strcmp(choice, "r") == 0 || strcmp(choice, "R") == 0){
-            mainMenu(fridgeContent);
-        }
-        /*Add new ingredient if the user presses 'N'*/
-        else if(strcmp(choice, "n") == 0 || strcmp(choice, "N") == 0){
-            addIngredient(fridgeContent);
-        }
-        /*Search if the user presses 'S'*/
-        else if(strcmp(choice, "s") == 0 || strcmp(choice, "S") == 0){
-            searchOption = 1;
-            search(fridgeContent, ingredientNumber, searchOption);
-        }
-        else if(strcmp(choice, "t") == 0 || strcmp(choice, "T") == 0){
-            searchOption = 0;
-            search(fridgeContent, ingredientNumber, searchOption);       
-        }
-        else if(*ingredientNumber <= 0 || *ingredientNumber > fridgeSize) {
-            clearScreen();
-            printFridgeContents(fridgeContent);
-            printf("\nPlease enter a valid ingredient number! (press 'S' to search, 'T' to search food by type, 'N' to add an ingredient, or 'R' to return):\n");
-        }
-    } while(*ingredientNumber <= 0 || *ingredientNumber > fridgeSize);
 }
 
 /*Search function for searching the fridgeContent array*/
@@ -502,7 +465,7 @@ void printIngredient(ingredients *fridgeContent, int itemNumber) {
     
     /*Check if there are any data on the name of the ingredient*/    
     if(strcmp(fridgeContent[itemNumber].name, "-1") == 0) {
-        strcpy(fridgeContent[itemNumber].name, "?????????");
+        strcpy(fridgeContent[itemNumber].name, "??????");
     }
     /*Print the item number and name with a specific amount of spaces before the item number*/
     if (itemNumber + 1 < 10) {
@@ -530,8 +493,8 @@ void printIngredient(ingredients *fridgeContent, int itemNumber) {
 /*Function for setting the correct printing color for the text in regards to ingredient data*/
 void printColour(ingredients *fridgeContent, int itemNumber) {
     /*Set the color to PURPLE if the ingredient has missing information*/
-    if(fridgeContent[itemNumber].expirationDate.day == UNKNOWN || fridgeContent[itemNumber].expirationDate.month == UNKNOWN ||
-       fridgeContent[itemNumber].expirationDate.year == UNKNOWN || strcmp(fridgeContent[itemNumber].name, "-1") == 0 ||
+    if(strcmp(fridgeContent[itemNumber].ingredientType, "??????") == 0 || strcmp(fridgeContent[itemNumber].ingredientType, "-1") == 0 || fridgeContent[itemNumber].expirationDate.day == UNKNOWN || fridgeContent[itemNumber].expirationDate.month == UNKNOWN ||
+       fridgeContent[itemNumber].expirationDate.year == UNKNOWN || strcmp(fridgeContent[itemNumber].name, "-1") == 0 || strcmp(fridgeContent[itemNumber].name, "??????") == 0 ||
        fridgeContent[itemNumber].weight == UNKNOWN || fridgeContent[itemNumber].open.opened == UNKNOWN ||
        (fridgeContent[itemNumber].open.opened == FALSE && (fridgeContent[itemNumber].open.isopen.openDate.day == UNKNOWN ||
        fridgeContent[itemNumber].open.isopen.openDate.month == UNKNOWN || fridgeContent[itemNumber].open.isopen.openDate.year == UNKNOWN ||
@@ -555,10 +518,12 @@ void printColour(ingredients *fridgeContent, int itemNumber) {
 /*Prints the ingredient type*/
 void printIngType(ingredients *fridgeContent, int itemNumber) {
     int i;
-
     /*Prints the appropriate amount of spaces in regards to the length of the name*/
     for (i = 0; i < 25 - strlen(fridgeContent[itemNumber].name); i++){
         printf(" ");
+    }
+    if (strcmp(fridgeContent[itemNumber].ingredientType, "-1") == 0) {
+        strcpy(fridgeContent[itemNumber].ingredientType, "??????");
     }
     printf("%s", fridgeContent[itemNumber].ingredientType);
 }
@@ -662,7 +627,7 @@ void printOpenedDate(ingredients *fridgeContent, int itemNumber) {
 
 /*Function for adding an ingredient to the fridgeContent array*/
 void addIngredient(ingredients *fridgeContent) {
-    char opened;
+    char opened[2];
     /*Reallocate memory for an additional ingredient*/
     char weightTemp[10];
     fridgeContent = (ingredients *) realloc(fridgeContent, sizeof(ingredients) * ++fridgeSize);
@@ -676,52 +641,55 @@ void addIngredient(ingredients *fridgeContent) {
       expiration date, opened state, opened date and how long it can last when opened*/
     clearScreen();
 
-    printf("What is the name of the ingredient? (Max 20 characters & use underscore (_) in place of space)\n");
+    printf("What is the name of the ingredient? (Max 20 characters & use underscore (_) in place of space... type '-1' if unknown)\n");
     scanf(" %20s", fridgeContent[fridgeSize - 1].name);
     flushInput();
     fridgeContent[fridgeSize - 1].name[0] = toupper(fridgeContent[fridgeSize - 1].name[0]);
     whiteSpaceDeprotect(fridgeContent[fridgeSize - 1].name);
 
-    printf("What type of food is it? (Use underscore (_) in place of space\n");
+    printf("What type of food is it? (Use underscore (_) in place of space... type '-1' if unknown)\n");
     scanf("%s", fridgeContent[fridgeSize - 1].ingredientType);
     flushInput();
     fridgeContent[fridgeSize - 1].ingredientType[0] = toupper(fridgeContent[fridgeSize - 1].ingredientType[0]);
     whiteSpaceDeprotect(fridgeContent[fridgeSize - 1].ingredientType);
 
-    printf("What is the weight of the ingredient in grams?\n");
+    printf("What is the weight of the ingredient in grams? (type '-1' if unknown)\n");
 
     scanf("%s", weightTemp);
     fridgeContent[fridgeSize - 1].weight = atof(weightTemp);
-    while(!(fridgeContent[fridgeSize - 1].weight > 0 || fridgeContent[fridgeSize - 1].weight == -1)) {
+    while(!(fridgeContent[fridgeSize - 1].weight > 0 || fridgeContent[fridgeSize - 1].weight == UNKNOWN)) {
         printf("Please type a valid weight: ");
         scanf(" %lf", &fridgeContent[fridgeSize - 1].weight);
     }
 
     newIngredientExpirationDate(fridgeContent);
     
-    printf("Is the ingredient opened? (y/n)\n");
-    while(opened != 'y' && opened != 'Y' && opened != 'n' && opened != 'N') {
-        scanf(" %c", &opened);
+    printf("Is the ingredient opened? (y/n/-1)\n");
+    while(!(strcmp(opened, "y") == 0 || strcmp(opened, "Y") == 0 || strcmp(opened, "n") == 0 || strcmp(opened, "N") == 0 || strcmp(opened, "-1") == 0)) {
+        scanf(" %s", opened);
         flushInput();
     }
-    if(opened == 'y' || opened == 'Y') {
+    if(strcmp(opened, "y") == 0 || strcmp(opened, "Y") == 0) {
         fridgeContent[fridgeSize - 1].open.opened = 1;
     }
-    else if(opened == 'n' || opened == 'N') {
-        fridgeContent[fridgeSize - 1].open.opened = 0;
+    else if(strcmp(opened, "n") == 0 || strcmp(opened, "N") == 0) {
+        fridgeContent[fridgeSize - 1].open.opened = FALSE;
+    }
+    else if(strcmp(opened, "-1") == 0) {
+        fridgeContent[fridgeSize - 1].open.opened = UNKNOWN;
     }
 
-    if(fridgeContent[fridgeSize - 1].open.opened == 1) {
+    if(fridgeContent[fridgeSize - 1].open.opened == TRUE) {
         newIngredientOpenedDate(fridgeContent);
     }
     printf("How many days can the ingredient last after being opened?\n");
 
     do {
         scanf("%d", &fridgeContent[fridgeSize - 1].open.isopen.daysAfterOpen);
-        if (fridgeContent[fridgeSize -1].open.isopen.daysAfterOpen < 0) {
+        if (fridgeContent[fridgeSize - 1].open.isopen.daysAfterOpen < 0 && fridgeContent[fridgeSize - 1].open.isopen.daysAfterOpen != UNKNOWN) {
             printf("Please enter a valid number!\n");
         }
-    } while(fridgeContent[fridgeSize -1].open.isopen.daysAfterOpen < 0);
+    } while(fridgeContent[fridgeSize - 1].open.isopen.daysAfterOpen < 0 && fridgeContent[fridgeSize - 1].open.isopen.daysAfterOpen != UNKNOWN);
     
     /*Update the expiration date of the fridgeContent array and sort it
       then return to the content menu*/
@@ -740,10 +708,11 @@ void newIngredientExpirationDate(ingredients *fridgeContent) {
     scanf("%d/%d/%d", &tempDate.year, &tempDate.month, &tempDate.day);
 
     /*Validate the date*/
-    while(tempDate.day > 31 ||
-          (tempDate.month <= 0 || tempDate.day <= 0) || ((tempDate.month == 4 || tempDate.month == 6 || tempDate.month == 9 || tempDate.month == 11) && tempDate.day > 30) ||
+    while((tempDate.day > 31 ||
+          tempDate.month < UNKNOWN || tempDate.day < UNKNOWN || tempDate.month == 0 || tempDate.day == 0) || 
+          ((tempDate.month == 4 || tempDate.month == 6 || tempDate.month == 9 || tempDate.month == 11) && tempDate.day > 30) ||
           (leapYear(tempDate.year) == 1 && tempDate.month == 2 && tempDate.day > 29) ||
-          (leapYear(tempDate.year) == 0 && tempDate.month == 2 && tempDate.day > 28) || tempDate.month < 1 || tempDate.month > 12){
+          (leapYear(tempDate.year) == 0 && tempDate.month == 2 && tempDate.day > 28) || tempDate.month > 12){
         
         flushInput();
         printf("Please type a valid date! (yyyy/mm/dd): ");
@@ -762,10 +731,11 @@ void newIngredientOpenedDate(ingredients *fridgeContent) {
     printf("When was the ingredient opened? (yyyy/mm/dd)\n");
     scanf("%d/%d/%d", &tempDate.year, &tempDate.month, &tempDate.day);
 
-    while(tempDate.day > 31 ||
-          (tempDate.month <= 0 || tempDate.day <= 0) || ((tempDate.month == 4 || tempDate.month == 6 || tempDate.month == 9 || tempDate.month == 11) && tempDate.day > 30) ||
+    while((tempDate.day > 31 ||
+          tempDate.month < UNKNOWN || tempDate.day < UNKNOWN || tempDate.month == 0 || tempDate.day == 0) || 
+          ((tempDate.month == 4 || tempDate.month == 6 || tempDate.month == 9 || tempDate.month == 11) && tempDate.day > 30) ||
           (leapYear(tempDate.year) == 1 && tempDate.month == 2 && tempDate.day > 29) ||
-          (leapYear(tempDate.year) == 0 && tempDate.month == 2 && tempDate.day > 28) || tempDate.month < 1 || tempDate.month > 12){
+          (leapYear(tempDate.year) == 0 && tempDate.month == 2 && tempDate.day > 28) || tempDate.month > 12){
         
         flushInput();
         printf("Please type a valid date! (yyyy/mm/dd): ");
@@ -781,18 +751,35 @@ void editIngredient(ingredients *fridgeContent, int ingredientNumber) {
     char* openStatus;
     clearScreen();
     /*Check if the ingredient has been opened and assign the appropriate message for openStatus*/
-    if(fridgeContent[ingredientNumber].open.opened == 1) {
+    if(fridgeContent[ingredientNumber].open.opened == TRUE) {
         openStatus = "NOT IN THE STATE OF NOT IN THE STATE OF IN THE STATE OF OPENEDNESS";
     }
-    else if (fridgeContent[ingredientNumber].open.opened == 0){
+    else if (fridgeContent[ingredientNumber].open.opened == FALSE){
         openStatus = "IN THE STATE OF NOT IN THE STATE OF OPENEDNESS";
+    }
+    else if (fridgeContent[ingredientNumber].open.opened == UNKNOWN) {
+        openStatus = "IN THE STATE OF THE UNKNOWN STATE OF OPENEDNESS";
     }
     /*Print the text for the menu*/
     printf("EDITING %s\n\n", fridgeContent[ingredientNumber].name);
     printf("1. Name            : %s\n", fridgeContent[ingredientNumber].name);
-    printf("2. Weight          : %0.2f\n", fridgeContent[ingredientNumber].weight);
-    printf("3. Expiration Date : %d/%d/%d\n", fridgeContent[ingredientNumber].expirationDate.year, fridgeContent[ingredientNumber].expirationDate.month, fridgeContent[ingredientNumber].expirationDate.day);
-    printf("4. Opened Status   : %s\n", openStatus);
+    printf("2. Type            : %s\n", fridgeContent[ingredientNumber].ingredientType);
+    if (fridgeContent[ingredientNumber].weight != UNKNOWN) {
+        printf("3. Weight          : %0.2f\n", fridgeContent[ingredientNumber].weight);
+    }
+    else {
+        printf("3. Weight          : ??????\n");
+    }
+    if (fridgeContent[ingredientNumber].expirationDate.year != UNKNOWN ||
+        fridgeContent[ingredientNumber].expirationDate.month != UNKNOWN ||
+        fridgeContent[ingredientNumber].expirationDate.day != UNKNOWN) {
+        printf("4. Expiration Date : %d/%d/%d\n", fridgeContent[ingredientNumber].expirationDate.year, fridgeContent[ingredientNumber].expirationDate.month, fridgeContent[ingredientNumber].expirationDate.day);
+    }
+    else {
+        printf("4. Expiration Date : ???\?/?\?/??\n");
+    }
+    
+    printf("5. Opened Status   : %s\n", openStatus);
     printf("\n\n");
     printf("# - EDIT         R - RETURN\n");
     scanf(" %c", &choice);
@@ -802,13 +789,16 @@ void editIngredient(ingredients *fridgeContent, int ingredientNumber) {
         case '1': 
             changeName(fridgeContent, ingredientNumber);
             break;
-        case '2': 
-            changeWeight(fridgeContent, ingredientNumber);
+        case '2':
+            changeType(fridgeContent, ingredientNumber);
             break;
         case '3': 
-            changeDate(fridgeContent, ingredientNumber);
+            changeWeight(fridgeContent, ingredientNumber);
             break;
         case '4': 
+            changeDate(fridgeContent, ingredientNumber);
+            break;
+        case '5': 
             changeOpenedState(fridgeContent, ingredientNumber);
             break;
         case 'r': case 'R':
@@ -826,8 +816,19 @@ void changeName(ingredients *fridgeContent, int ingredientNumber) {
     printf("\nPlease type the new name: ");
     scanf(" %s", fridgeContent[ingredientNumber].name);
     flushInput();
+    if (strcmp(fridgeContent[ingredientNumber].name, "-1") == 0) {
+        strcpy(fridgeContent[ingredientNumber].name, "??????");
+    }
 }
 
+void changeType(ingredients *fridgeContent, int ingredientNumber){
+    printf("\nPlease type the new type: ");
+    scanf(" %s", fridgeContent[ingredientNumber].ingredientType);
+    flushInput();
+    if (strcmp(fridgeContent[ingredientNumber].ingredientType, "-1") == 0) {
+        strcpy(fridgeContent[ingredientNumber].ingredientType, "??????");
+    }
+}
 /*Function for changing the weight of an ingredient*/
 void changeWeight(ingredients *fridgeContent, int ingredientNumber) {
     double tempWeight;
@@ -835,7 +836,7 @@ void changeWeight(ingredients *fridgeContent, int ingredientNumber) {
     scanf(" %lf", &tempWeight);
     flushInput();
     /*INPUT VALIDATION*/
-    while(tempWeight < 0) {
+    while(tempWeight != UNKNOWN && tempWeight < 0) {
         printf("\nPlease type a valid weight: ");
         scanf(" %lf", &tempWeight);
     }
@@ -854,13 +855,14 @@ void changeDate(ingredients *fridgeContent, int ingredientNumber) {
     scanf(" %d/%d/%d", &tempDate.year, &tempDate.month, &tempDate.day);
     flushInput();
     /*INPUT VALIDATION*/
-    while(tempDate.day > 31 ||
-          (tempDate.month <= 0 || tempDate.day <= 0) || ((tempDate.month == 4 || tempDate.month == 6 || tempDate.month == 9 || tempDate.month == 11) && tempDate.day > 30) ||
+    while((tempDate.day > 31 ||
+          tempDate.month < UNKNOWN || tempDate.day < UNKNOWN || tempDate.month == 0 || tempDate.day == 0) || 
+          ((tempDate.month == 4 || tempDate.month == 6 || tempDate.month == 9 || tempDate.month == 11) && tempDate.day > 30) ||
           (leapYear(tempDate.year) == 1 && tempDate.month == 2 && tempDate.day > 29) ||
-          (leapYear(tempDate.year) == 0 && tempDate.month == 2 && tempDate.day > 28) || tempDate.month < 1 || tempDate.month > 12){
-        flushInput();
+          (leapYear(tempDate.year) == 0 && tempDate.month == 2 && tempDate.day > 28) || tempDate.month > 12){
         printf("Please type a valid date!\n(yyyy/mm/dd): ");
         scanf(" %d/%d/%d", &tempDate.year, &tempDate.month, &tempDate.day);
+        flushInput();
     }
     /*Set the tempDate as the expiration date*/
     fridgeContent[ingredientNumber].expirationDate = tempDate;
@@ -1086,7 +1088,7 @@ void openRecipe(Recipes recipe, ingredients *fridgeContent){
     printf("Ingredients that are not in the fridge is assumed that you own: \n");
     for(i = 0 ; i < MAXINGREDIENTS ; i++){
         if(strcmp(recipe.notFridgeIngredients[i].name, "\0")){
-            printf("    %s:%*.2fg\n\n", recipe.notFridgeIngredients[i].name, 35 - strlen(recipe.notFridgeIngredients[i].name),recipe.notFridgeIngredients[i].weight);
+            printf("    %s:%*.2fg\n\n", recipe.notFridgeIngredients[i].name, (int) (35 - strlen(recipe.notFridgeIngredients[i].name)),recipe.notFridgeIngredients[i].weight);
         }
         else{
             break;
@@ -1103,7 +1105,7 @@ void openRecipe(Recipes recipe, ingredients *fridgeContent){
             } else {
                 printf(GREEN);
             }
-            printf("    %s:%*.2fg\n\n", recipe.fridgeIngredients[i].name, 35 - strlen(recipe.fridgeIngredients[i].name),recipe.fridgeIngredients[i].weight);
+            printf("    %s:%*.2fg\n\n", recipe.fridgeIngredients[i].name, (int) (35 - strlen(recipe.fridgeIngredients[i].name)),recipe.fridgeIngredients[i].weight);
         }
         else{
             break;
