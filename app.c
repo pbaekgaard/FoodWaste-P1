@@ -752,13 +752,13 @@ void editIngredient(ingredients *fridgeContent, int ingredientNumber) {
     clearScreen();
     /*Check if the ingredient has been opened and assign the appropriate message for openStatus*/
     if(fridgeContent[ingredientNumber].open.opened == TRUE) {
-        openStatus = "NOT IN THE STATE OF NOT IN THE STATE OF IN THE STATE OF OPENEDNESS";
+        openStatus = "OPENED";
     }
     else if (fridgeContent[ingredientNumber].open.opened == FALSE){
-        openStatus = "IN THE STATE OF NOT IN THE STATE OF OPENEDNESS";
+        openStatus = "UNOPENED";
     }
     else if (fridgeContent[ingredientNumber].open.opened == UNKNOWN) {
-        openStatus = "IN THE STATE OF THE UNKNOWN STATE OF OPENEDNESS";
+        openStatus = "UNKNOWN";
     }
     /*Print the text for the menu*/
     printf("EDITING %s\n\n", fridgeContent[ingredientNumber].name);
