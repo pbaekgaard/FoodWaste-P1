@@ -387,7 +387,7 @@ void printFridgeContents(ingredients *fridgeContent) {
 /*Search function for searching the fridgeContent array*/
 void searchIngredient(ingredients *fridgeContent) {
     /*Declaration of strings: searchTerm and ingredientName*/
-    char searchTerm[20], ingredientName[20];
+    char searchTerm[30], ingredientName[30];
     int i, j, hasFound = FALSE;
 
     /*Prompt user for search term*/

@@ -6,9 +6,9 @@ void makeRecipes (ingredients *fridgeContents, Recipes *vegetarianRecipes, Recip
 /*Declaration of different recipes*/
     Recipes macNCheese =  {"MacNCheese",
 
-                        {{"Broccoli", 210}, {"Cauliflower", 130}, {"Carrots", 165}, {"Celery", 80}, {"Butter", 12}, {"Milk", 240}, {"Cheddar", 250}, {"Dijon mustard", 15}, {"Chicken broth", 100}}, 
+                        {{"Broccoli", 210}, {"Cauliflower", 130}, {"Carrots", 165}, {"Celery", 80}, {"Butter", 12}, {"Milk", 240}, {"Cheddar", 250}, {"Dijon mustard", 15}}, 
 
-                        {{"Onion", 150}, {"Wheat flour", 32}, {"Salt", 2}, {"Pepper", 1}, {"Paprika", 2}},
+                        {{"Macaroni", 250}{"Onion", 150}, {"Wheat flour", 32}, {"Salt", 2}, {"Pepper", 1}, {"Paprika", 2}},
 
                         "db/recipes/macNCheese/instructions.txt",
                      
