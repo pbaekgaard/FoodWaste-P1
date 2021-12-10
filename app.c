@@ -86,7 +86,7 @@ void mainMenu(ingredients *fridgeContent) {
         printf("2 - Recipes\n");
         printf("---------------------\n");
         printf("Q - Quit\n");
-        printf("F - ENTER FUTURE\n");
+        printf("S - Skip day\n");
         printf("G - Go to date\n");
         printf("---------------------\n\n");
 
@@ -102,7 +102,7 @@ void mainMenu(ingredients *fridgeContent) {
 
         /*Ends while loop when user enters valid input*/
         if(choice == '1' || choice == '2' || choice == 'Q' || choice == 'q' || 
-           choice == 'F' || choice == 'f' || choice == 'G' || choice == 'g') {
+           choice == 'S' || choice == 's' || choice == 'G' || choice == 'g') {
             run = FALSE;
 
         }
@@ -123,7 +123,7 @@ void mainMenu(ingredients *fridgeContent) {
             exit(EXIT_SUCCESS);
             break;
         /*Advance the date by one day and execute the mainMenu function again*/
-        case 'F': case 'f':
+        case 'S': case 's':
             tomorrow(&currentDate);
             mainMenu(fridgeContent);
             break;
