@@ -297,7 +297,9 @@ void tomorrow(date *date){
 int leapYear(int year){
     int result;
 
-    if(year % 4 == 0) result = TRUE;
+    if (y % 400 == 0) result = TRUE;
+    else if (y % 100 == 0) result = FALSE;
+    else if (y % 4 == 0) result = TRUE;
     else result = FALSE;
 
     return result;
