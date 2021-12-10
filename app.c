@@ -462,7 +462,7 @@ void searchTypes(ingredients *fridgeContent){
 
 /*Function for printing an ingredient*/
 void printIngredient(ingredients *fridgeContent, int itemNumber) {
-    /*Check which color the ingredient should be output as*/
+    /*Check which colour the ingredient should be output as*/
     printColour(fridgeContent, itemNumber);
     
     /*Check if there are any data on the name of the ingredient*/    
@@ -492,9 +492,9 @@ void printIngredient(ingredients *fridgeContent, int itemNumber) {
     printf(WHITE);
 }
 
-/*Function for setting the correct printing color for the text in regards to ingredient data*/
+/*Function for setting the correct printing colour for the text in regards to ingredient data*/
 void printColour(ingredients *fridgeContent, int itemNumber) {
-    /*Set the color to PURPLE if the ingredient has missing information*/
+    /*Set the colour to PURPLE if the ingredient has missing information*/
     if(strcmp(fridgeContent[itemNumber].ingredientType, "??????") == 0 || strcmp(fridgeContent[itemNumber].ingredientType, "-1") == 0 || fridgeContent[itemNumber].expirationDate.day == UNKNOWN || fridgeContent[itemNumber].expirationDate.month == UNKNOWN ||
        fridgeContent[itemNumber].expirationDate.year == UNKNOWN || strcmp(fridgeContent[itemNumber].name, "-1") == 0 || strcmp(fridgeContent[itemNumber].name, "??????") == 0 ||
        fridgeContent[itemNumber].weight == UNKNOWN || fridgeContent[itemNumber].open.opened == UNKNOWN ||
@@ -503,15 +503,15 @@ void printColour(ingredients *fridgeContent, int itemNumber) {
        fridgeContent[itemNumber].open.isopen.daysAfterOpen == UNKNOWN))) {
         printf(PURPLE);
     }
-    /*Set the color to RED if the ingredient has expired*/
+    /*Set the colour to RED if the ingredient has expired*/
     else if(dateComparatorenator(fridgeContent[itemNumber].expirationDate, currentDate) == -1) {
         printf(RED);
     }
-    /*Set the color to GREEN if the ingredient has not expired*/
+    /*Set the colour to GREEN if the ingredient has not expired*/
     else if(dateComparatorenator(fridgeContent[itemNumber].expirationDate, currentDate) == 1) {
         printf(GREEN);
     }
-    /*Set the color to YELLOW if the ingredient is close to its expiration date*/
+    /*Set the colour to YELLOW if the ingredient is close to its expiration date*/
     else {
         printf(YELLOW);
     }
@@ -983,25 +983,25 @@ void printRecipeTypes (Recipes* vegetarian, Recipes* lowCarb, Recipes* lowCalori
     printf("----------------------------\n");
     printf("1. All recipes\n");
     printf("----------------------------\n");
-    colorForRecipeType (lowCarb, fridgeContent, LOWCARBNUMBER);
+    colourForRecipeType (lowCarb, fridgeContent, LOWCARBNUMBER);
     printf("2. Low carb\n");
-    colorForRecipeType (lowCalorie, fridgeContent, LOWCALORIENUMBER);
+    colourForRecipeType (lowCalorie, fridgeContent, LOWCALORIENUMBER);
     printf("3. Low calorie\n");
-    colorForRecipeType (highProtein, fridgeContent, HIGHPROTEINNUMBER);
+    colourForRecipeType (highProtein, fridgeContent, HIGHPROTEINNUMBER);
     printf("4. High protein\n");
-    colorForRecipeType (vegetarian, fridgeContent, VEGETARIANNUMBER);
+    colourForRecipeType (vegetarian, fridgeContent, VEGETARIANNUMBER);
     printf("5. Vegetarian\n");
 
     printf(WHITE);
 }
 
-/*Function for coloring the different recipe types*/
-void colorForRecipeType (Recipes *recipe, ingredients *fridgeContent, int numberOfRecipes){
+/*Function for colouring the different recipe types*/
+void colourForRecipeType (Recipes *recipe, ingredients *fridgeContent, int numberOfRecipes){
     int i;
     for (i = 1; i <= numberOfRecipes; i++){
-        /*Set the color of the recipe type to green
+        /*Set the colour of the recipe type to green
           if it contains atleast one recipe that can be made*/
-        if (colorForRecipe(i, recipe, fridgeContent) == 1){
+        if (colourForRecipe(i, recipe, fridgeContent) == 1){
             printf(GREEN);
             break;
         }
@@ -1043,14 +1043,14 @@ void printRecipeList(Recipes *recipe, ingredients *fridgeContent, int numberOfRe
     printf("This is a list of the recipes in your cookbook\n");
     /*Print the list of recipes of the given type*/
     for(i = 1; i <= numberOfRecipes; i++){
-        colorForRecipe(i, recipe, fridgeContent);
+        colourForRecipe(i, recipe, fridgeContent);
         printf("%d. %s\n", i, recipe[i - 1].name);
     }
     printf(WHITE);
 }
 
-/*Function for coloring a single recipe*/
-int colorForRecipe (int i, Recipes *recipe, ingredients *fridgeContent){
+/*Function for colouring a single recipe*/
+int colourForRecipe (int i, Recipes *recipe, ingredients *fridgeContent){
     int j, k, numberOfIngredients = 0, isGreen = TRUE;
     /*Count number of ingredients in the recipe*/
     for (j = 0 ; j < MAXINGREDIENTS ; j++){
@@ -1061,7 +1061,7 @@ int colorForRecipe (int i, Recipes *recipe, ingredients *fridgeContent){
             numberOfIngredients++;
         } 
     }
-    /*Set the color for the recipe*/
+    /*Set the colour for the recipe*/
     for(k = 0 ; k < (numberOfIngredients) ; k++){
         if(colourization(fridgeContent, recipe[i-1].fridgeIngredients[k].name, recipe[i-1].fridgeIngredients[k].weight) == 0){
             printf(RED);
@@ -1131,7 +1131,7 @@ void openRecipe(Recipes recipe, ingredients *fridgeContent){
     } while(!(choice == 'R' || choice == 'r'));
 }
 
-/*Function for colorization of different ingredients in a recipe*/
+/*Function for colourization of different ingredients in a recipe*/
 int colourization(ingredients *fridgeContent, char *ingredientName, double neededWeight){
     int i;
     /*Go through the different ingredients of a recipe

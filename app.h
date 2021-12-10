@@ -103,7 +103,7 @@ extern int searchinator(ingredients *, int, char *);
 extern void clearScreen(void);
 extern void flushInput(void);
 extern void openRecipe(Recipes , ingredients *);
-extern int colorForRecipe (int, Recipes *, ingredients *);
-extern void colorForRecipeType (Recipes *, ingredients *, int);
+extern int colourForRecipe (int, Recipes *, ingredients *);
+extern void colourForRecipeType (Recipes *, ingredients *, int);
 extern void printInstructions(Recipes);
 #endif
