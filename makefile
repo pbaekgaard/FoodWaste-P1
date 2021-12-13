@@ -7,8 +7,12 @@ smartfrapp: app.c FileReading.c makeRecipes.c
 		-o smartfrapp.exe
 	if [ -e smartfrapp.exe ]; then \
 		@cls||clear; \
-		printf "SMARTFRAPP APPLICATION COMPILED\n"; \
+		printf "SMARTFRAPP APPLICATION COMPILED!\n"; \
 	fi
 
 clean:
-	rm smartfrapp
+	if [ -e smartfrapp.exe ]; then \
+		@cls||clear; \
+		rm smartfrapp.exe; \
+		printf "SMARTFRAPP REMOVED!\n"; \
+	fi
