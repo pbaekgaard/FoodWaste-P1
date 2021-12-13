@@ -302,7 +302,7 @@ void printFridgeContents(ingredients *fridgeContent) {
 
 /*Function for printing an ingredient*/
 void printIngredient(ingredients *fridgeContent, int itemNumber) {
-    /*Check which color the ingredient should be output as*/
+    /*Check which colour the ingredient should be output as*/
     printColour(fridgeContent, itemNumber);
     
     /*Check if there are any data on the name of the ingredient*/    
@@ -343,11 +343,11 @@ void printColour(ingredients *fridgeContent, int itemNumber) {
        fridgeContent[itemNumber].open.isopen.daysAfterOpen == UNKNOWN))) {
         printf(PURPLE);
     }
-    /*Set the color to RED if the ingredient has expired*/
+    /*Set the colour to RED if the ingredient has expired*/
     else if(dateComparator(fridgeContent[itemNumber].expirationDate, currentDate) == -1) {
         printf(RED);
     }
-    /*Set the color to GREEN if the ingredient has not expired*/
+    /*Set the colour to GREEN if the ingredient has not expired*/
     else if(dateComparator(fridgeContent[itemNumber].expirationDate, currentDate) == 1) {
         printf(GREEN);
     }
@@ -826,8 +826,8 @@ void colourForRecipeType (Recipes *recipe, ingredients *fridgeContent, int numbe
     }
 }
 
-/*Function for coloring a single recipe*/
-int colorForRecipe (int i, Recipes *recipe, ingredients *fridgeContent){
+/*Function for colouring a single recipe*/
+int colourForRecipe (int i, Recipes *recipe, ingredients *fridgeContent){
     int j, k, numberOfIngredients = 0, isGreen = TRUE;
     /*Count number of ingredients in the recipe*/
     for (j = 0 ; j < MAXINGREDIENTS ; j++){
@@ -838,7 +838,7 @@ int colorForRecipe (int i, Recipes *recipe, ingredients *fridgeContent){
             numberOfIngredients++;
         } 
     }
-    /*Set the color for the recipe*/
+    /*Set the colour for the recipe*/
     for(k = 0 ; k < (numberOfIngredients) ; k++){
         if(colourization(fridgeContent, recipe[i-1].fridgeIngredients[k].name, recipe[i-1].fridgeIngredients[k].weight) == 0){
             printf(RED);
@@ -850,7 +850,7 @@ int colorForRecipe (int i, Recipes *recipe, ingredients *fridgeContent){
     return isGreen;
 }
 
-/*Function for colorization of different ingredients in a recipe*/
+/*Function for colourization of different ingredients in a recipe*/
 int colourization(ingredients *fridgeContent, char *ingredientName, double neededWeight){
     int i;
     /*Go through the different ingredients of a recipe
