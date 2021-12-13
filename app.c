@@ -48,7 +48,9 @@ void updateExpDates (ingredients *fridgeContent){
     /*For loop that runs through every element of the fridgeContent*/ 
     for ( i = 0; i < fridgeSize; i++){ 
         /*Checks if expiration date is known*/
-        if((fridgeContent[i].expirationDate.day != UNKNOWN && fridgeContent[i].expirationDate.month != UNKNOWN && fridgeContent[i].expirationDate.year != UNKNOWN)) {
+        if((fridgeContent[i].expirationDate.day != UNKNOWN &&
+            fridgeContent[i].expirationDate.month != UNKNOWN &&
+            fridgeContent[i].expirationDate.year != UNKNOWN)) {
             /*Checks if product is open*/
             if(fridgeContent[i].open.opened == TRUE){
                 tempOpenExp = fridgeContent[i].open.isopen.openDate;
@@ -57,7 +59,7 @@ void updateExpDates (ingredients *fridgeContent){
                     tomorrow(&tempOpenExp); 
                 }
                 /*If the original exp date is larger than the updated exp date after opening. Updates the exp date*/
-                if(dateComparatorenator(fridgeContent[i].expirationDate, tempOpenExp) == 1 || dateComparatorenator(fridgeContent[i].expirationDate, tempOpenExp) == 0){
+                if(!(dateComparator(fridgeContent[i].expirationDate, tempOpenExp) == -1)){
                     fridgeContent[i].expirationDate.year = tempOpenExp.year;
                     fridgeContent[i].expirationDate.month = tempOpenExp.month;
                     fridgeContent[i].expirationDate.day = tempOpenExp.day;
@@ -68,7 +70,7 @@ void updateExpDates (ingredients *fridgeContent){
 }
 
 /*Function for comparing dates*/
-int dateComparatorenator(date expirationDate, date openedDate) {
+int dateComparator(date expirationDate, date openedDate) {
     int i;
     /*Assign the soonToExpireDate to be the openedDate*/
     date soonToExpireDate = openedDate;
@@ -194,7 +196,7 @@ void printNotifications(ingredients *fridgeContent){
     int i = 0;
     /*PRINT SOON TO EXPIRE TITLE*/
     for(i = 0; i < fridgeSize; i++) {
-        if(dateComparatorenator(fridgeContent[i].expirationDate, currentDate) == 0) {
+        if(dateComparator(fridgeContent[i].expirationDate, currentDate) == 0) {
             printf("###########################\n");            
             printf("         EXPIRING         \n");
             printf("---------------------------\n");
@@ -205,7 +207,7 @@ void printNotifications(ingredients *fridgeContent){
     /*For loop which goes through the fridgeContent array
       and prints out the ingredients that are close to their expiration date*/
     for (i = 0; i < fridgeSize; i++) {
-        if(dateComparatorenator(fridgeContent[i].expirationDate, currentDate) == 0) {
+        if(dateComparator(fridgeContent[i].expirationDate, currentDate) == 0) {
             printf(YELLOW);
             printf("%s IS EXPIRING\n", fridgeContent[i].name);
             printf(WHITE);
@@ -216,7 +218,7 @@ void printNotifications(ingredients *fridgeContent){
     /*PRINT EXPIRED TITLE*/
     for(i = 0; i < fridgeSize; i++) {
         if(!(fridgeContent[i].expirationDate.day == UNKNOWN || fridgeContent[i].expirationDate.month == UNKNOWN || fridgeContent[i].expirationDate.year == UNKNOWN) 
-            && dateComparatorenator(fridgeContent[i].expirationDate, currentDate) == -1) {
+            && dateComparator(fridgeContent[i].expirationDate, currentDate) == -1) {
             printf("         EXPIRED\n");
             printf("---------------------------\n");
             break;
@@ -226,7 +228,7 @@ void printNotifications(ingredients *fridgeContent){
       and prints out the ingredients that have expired*/    
     for (i = 0; i < fridgeSize; i++) {
         if(!(fridgeContent[i].expirationDate.day == UNKNOWN || fridgeContent[i].expirationDate.month == UNKNOWN || fridgeContent[i].expirationDate.year == UNKNOWN) 
-            && dateComparatorenator(fridgeContent[i].expirationDate, currentDate) == -1) {
+            && dateComparator(fridgeContent[i].expirationDate, currentDate) == -1) {
             printf(RED);
             printf("%s HAS EXPIRED\n", fridgeContent[i].name);
             printf(WHITE);
@@ -342,11 +344,11 @@ void printColour(ingredients *fridgeContent, int itemNumber) {
         printf(PURPLE);
     }
     /*Set the color to RED if the ingredient has expired*/
-    else if(dateComparatorenator(fridgeContent[itemNumber].expirationDate, currentDate) == -1) {
+    else if(dateComparator(fridgeContent[itemNumber].expirationDate, currentDate) == -1) {
         printf(RED);
     }
     /*Set the color to GREEN if the ingredient has not expired*/
-    else if(dateComparatorenator(fridgeContent[itemNumber].expirationDate, currentDate) == 1) {
+    else if(dateComparator(fridgeContent[itemNumber].expirationDate, currentDate) == 1) {
         printf(GREEN);
     }
     /*Set the color to YELLOW if the ingredient is close to its expiration date*/
@@ -858,7 +860,7 @@ int colourization(ingredients *fridgeContent, char *ingredientName, double neede
             if(fridgeContent[i].weight < neededWeight){
                 return 0;
             }
-            if(dateComparatorenator(fridgeContent[i].expirationDate, currentDate) == -1) {
+            if(dateComparator(fridgeContent[i].expirationDate, currentDate) == -1) {
                 return 0;
             }
             return 1;

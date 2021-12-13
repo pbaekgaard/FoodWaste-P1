@@ -61,7 +61,7 @@ extern int getFridgeSize(void);
 extern void getFridgeContents(ingredients *);
 extern char *whiteSpaceDeprotect(char *);
 extern void updateExpDates (ingredients *);
-extern int dateComparatorenator(date, date);
+extern int dateComparator(date, date);
 extern void sortContent(ingredients *);
 extern int contentCompare(const void *, const void *);
 extern void mainMenu(ingredients *);
