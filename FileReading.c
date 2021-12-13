@@ -63,8 +63,8 @@ void getFridgeContents(ingredients *fridgeContent) {
     }
 
     /* Scans each line in the file in to a struct until end of file */
-    while(!feof(readFile)){
-        fscanf(readFile, " %s %lf %d %d %d %d", fridgeContent[i].name, &fridgeContent[i].weight,
+    while(!feof(readFile)){    
+         fscanf(readFile, " %s %lf %d %d %d %d", fridgeContent[i].name, &fridgeContent[i].weight,
                                                 &fridgeContent[i].expirationDate.year, &fridgeContent[i].expirationDate.month,
                                                 &fridgeContent[i].expirationDate.day, &fridgeContent[i].open.opened);
         if(fridgeContent[i].open.opened == TRUE){

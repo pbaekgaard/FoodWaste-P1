@@ -6,9 +6,9 @@ void makeRecipes (ingredients *fridgeContents, Recipes *vegetarianRecipes, Recip
 /*Declaration of different recipes*/
     Recipes macNCheese =  {"MacNCheese",
 
-                        {{"Broccoli", 210}, {"Cauliflower", 130}, {"Carrots", 165}, {"Celery", 80}, {"Butter", 12}, {"Milk", 240}, {"Cheddar", 250}, {"Dijon mustard", 15}, {"Chicken broth", 100}}, 
+                        {{"Broccoli", 210}, {"Cauliflower", 130}, {"Carrots", 165}, {"Celery", 80}, {"Butter", 12}, {"Milk", 240}, {"Cheddar", 250}, {"Dijon mustard", 15}}, 
 
-                        {{"Onion", 150}, {"Wheat flour", 32}, {"Salt", 2}, {"Pepper", 1}, {"Paprika", 2}},
+                        {{"Macaroni", 250}, {"Onion", 150}, {"Wheat flour", 32}, {"Salt", 2}, {"Pepper", 1}, {"Paprika", 2}},
 
                         "db/recipes/macNCheese/instructions.txt",
                      
@@ -28,7 +28,7 @@ void makeRecipes (ingredients *fridgeContents, Recipes *vegetarianRecipes, Recip
 
     Recipes zucchiniMushroomBake =  {"Zucchini Mushroom Bake",
 
-                        {{"Squash", 450}, {"Fresh Mushroom", 150}, {"Cheddar", 120}},
+                        {{"Squash", 450}, {"Fresh mushroom", 150}, {"Cheddar", 120}},
 
                         {{"Onion", 20}, {"Dried basil", 3}, {"Salt", 2}},
 
@@ -49,7 +49,7 @@ void makeRecipes (ingredients *fridgeContents, Recipes *vegetarianRecipes, Recip
 
     Recipes butterChickenMeatballs =  {"Butter Chicken Meatballs",
 
-                        {{"Ground chicken", 675}, {"Eggs", 60}, {"Butter chicken sauce", 400}},
+                        {{"Chicken", 675}, {"Eggs", 60}, {"Butter chicken sauce", 400}},
 
                         {{"Bread crumbs", 60}, {"Garam masala", 6}, {"Tandoori masala", 3}, {"Salt", 3}, {"Cayenne pepper", 2}, {"Cilantro", 5}},
 
@@ -60,10 +60,10 @@ void makeRecipes (ingredients *fridgeContents, Recipes *vegetarianRecipes, Recip
 
     Recipes coconutCurryChicken =  {"Coconut Curry Chicken",
 
-                        {{"Potatos", 300}, {"Chicken breast", 200}, {"Cooked rice", 500}},
+                        {{"Chicken", 200}, {"Cooked rice", 500}},
 
                         {{"Onion", 115}, {"Canola oil", 12}, {"Coconut milk", 240}, {"Curry powder", 24}, 
-                        {"Garlic cloves", 5}, {"Chicken bouillon granules", 6}, {"Salt", 2}, {"Pepper", 2}},
+                        {"Garlic cloves", 5}, {"Chicken bouillon granules", 6}, {"Salt", 2}, {"Pepper", 2}, {"Potatos", 300}},
 
                         "db/recipes/coconutCurryChicken/instructions.txt",
                      
@@ -91,7 +91,7 @@ void makeRecipes (ingredients *fridgeContents, Recipes *vegetarianRecipes, Recip
 
     Recipes jambalaya = {"Jambalaya",
 
-                        {{"Diced tomatoes", 793.8}, {"Chicken broth", 240}, {"Green pepper", 164},
+                        {{"Tomato", 793.8}, {"Chicken broth", 240}, {"Green pepper", 164},
                         {"Celery ribs", 110}, {"White wine", 117.2}, {"Chicken", 907.2},
                         {"Chicken sausage", 340.2}, {"Medium shrimp", 907.2}},
 
@@ -107,7 +107,7 @@ void makeRecipes (ingredients *fridgeContents, Recipes *vegetarianRecipes, Recip
     
                         {{"Tomato puree", 425.24}, {"Tomato paste", 28.1}, {"Grated lemon zest", 4.2},
                         {"Lemon juice", 14.4}, {"Hot pepper sauce", 4.7}, {"Chicken", 340.2},
-                        {"Greek yogurt", 42.52}, {"Unsalted butter", 4.71}},
+                        {"Greek yogurt", 42.52}, {"Butter", 4.71}},
 
                         {{"Onion", 125}, {"Garlic cloves", 8.4}, {"Canola oil", 13.4}, {"Rice", 500},
                         {"Curry powder", 2.42}, {"Salt", 6}, {"Pepper", 0.57}, {"Garam masala", 3.5}},
