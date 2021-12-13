@@ -564,9 +564,9 @@ int isDateValid (date tempDate) {
           ((tempDate.month == 4 || tempDate.month == 6 || tempDate.month == 9 || tempDate.month == 11) && tempDate.day > 30) ||
           (leapYear(tempDate.year) == 1 && tempDate.month == 2 && tempDate.day > 29) ||
           (leapYear(tempDate.year) == 0 && tempDate.month == 2 && tempDate.day > 28) || tempDate.month > 12) {
-        return TRUE;
+        return FALSE;
     }
-    else return FALSE;
+    else return TRUE;
 }
 
 /*Function for setting the expiration date of a new ingredient*/

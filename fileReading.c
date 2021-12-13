@@ -64,17 +64,27 @@ void getFridgeContents(ingredients *fridgeContent) {
 
     /* Scans each line in the file in to a struct until end of file */
     while(!feof(readFile)){    
-         fscanf(readFile, " %s %lf %d %d %d %d", fridgeContent[i].name, &fridgeContent[i].weight,
+        fscanf(readFile, " %s %lf %d %d %d %d", fridgeContent[i].name, &fridgeContent[i].weight,
                                                 &fridgeContent[i].expirationDate.year, &fridgeContent[i].expirationDate.month,
                                                 &fridgeContent[i].expirationDate.day, &fridgeContent[i].open.opened);
+        if (isDateValid(fridgeContent[i].expirationDate) == FALSE) {
+            fridgeContent[i].expirationDate.year = UNKNOWN;
+            fridgeContent[i].expirationDate.month = UNKNOWN;
+            fridgeContent[i].expirationDate.day = UNKNOWN;
+        }
         if(fridgeContent[i].open.opened == TRUE){
             fscanf(readFile, " %d %d %d %d", &fridgeContent[i].open.isopen.openDate.year,
                                              &fridgeContent[i].open.isopen.openDate.month, &fridgeContent[i].open.isopen.openDate.day,
                                              &fridgeContent[i].open.isopen.daysAfterOpen);
-        }       
+        }    
         else{
             fscanf(readFile, " %d", &fridgeContent[i].open.isopen.daysAfterOpen);
         }
+        if (fridgeContent[i].open.opened == TRUE && isDateValid(fridgeContent[i].open.isopen.openDate) == FALSE) {
+            fridgeContent[i].open.isopen.openDate.year = UNKNOWN;
+            fridgeContent[i].open.isopen.openDate.month = UNKNOWN;
+            fridgeContent[i].open.isopen.openDate.day = UNKNOWN;
+        }   
         fscanf(readFile, " %s", fridgeContent[i].ingredientType);
 
         /*Inserts whitespaces instead of underscores (_)*/
