@@ -48,7 +48,9 @@ void updateExpDates (ingredients *fridgeContent){
     /*For loop that runs through every element of the fridgeContent*/ 
     for ( i = 0; i < fridgeSize; i++){ 
         /*Checks if expiration date is known*/
-        if((fridgeContent[i].expirationDate.day != UNKNOWN && fridgeContent[i].expirationDate.month != UNKNOWN && fridgeContent[i].expirationDate.year != UNKNOWN)) {
+        if((fridgeContent[i].expirationDate.day != UNKNOWN &&
+            fridgeContent[i].expirationDate.month != UNKNOWN &&
+            fridgeContent[i].expirationDate.year != UNKNOWN)) {
             /*Checks if product is open*/
             if(fridgeContent[i].open.opened == TRUE){
                 tempOpenExp = fridgeContent[i].open.isopen.openDate;
@@ -57,7 +59,7 @@ void updateExpDates (ingredients *fridgeContent){
                     tomorrow(&tempOpenExp); 
                 }
                 /*If the original exp date is larger than the updated exp date after opening. Updates the exp date*/
-                if(dateComparatorenator(fridgeContent[i].expirationDate, tempOpenExp) == 1 || dateComparatorenator(fridgeContent[i].expirationDate, tempOpenExp) == 0){
+                if(!(dateComparator(fridgeContent[i].expirationDate, tempOpenExp) == -1)){
                     fridgeContent[i].expirationDate.year = tempOpenExp.year;
                     fridgeContent[i].expirationDate.month = tempOpenExp.month;
                     fridgeContent[i].expirationDate.day = tempOpenExp.day;
@@ -65,6 +67,60 @@ void updateExpDates (ingredients *fridgeContent){
             }
         }    
     } 
+}
+
+/*Function for comparing dates*/
+int dateComparator(date expirationDate, date openedDate) {
+    int i;
+    /*Assign the soonToExpireDate to be the openedDate*/
+    date soonToExpireDate = openedDate;
+
+    /*Advance the soonToExpiredate by 2 days*/
+    for(i = 1; i <= 2; i++) {
+        tomorrow(&soonToExpireDate);
+    }
+    /*Check which date is greater than the other and return the respective value*/
+    if((expirationDate.year > openedDate.year) ||
+       (expirationDate.year == openedDate.year && expirationDate.month > openedDate.month) ||
+       (expirationDate.year == openedDate.year && expirationDate.month == openedDate.month && expirationDate.day >= openedDate.day)) {
+        if((expirationDate.year > soonToExpireDate.year) ||
+           (expirationDate.year == soonToExpireDate.year && expirationDate.month > soonToExpireDate.month) ||
+           (expirationDate.year == soonToExpireDate.year && expirationDate.month == soonToExpireDate.month && expirationDate.day > soonToExpireDate.day)) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
+    }  
+    else
+        return -1;
+}
+
+/*Sorts the items the in fridge using qsort from stdlib.h*/
+void sortContent(ingredients *fridgeContent) {
+    qsort(fridgeContent, fridgeSize, sizeof(fridgeContent[0]), contentCompare);
+}
+
+/*Compare function used in qsort. Compares expiration dates*/
+int contentCompare(const void *content1, const void *content2) {
+    date dateContent1 = ((ingredients *)content1)->expirationDate;
+    date dateContent2 = ((ingredients *)content2)->expirationDate;
+
+    /*Returns 1 if dateContent1 expires after dateContent2*/
+    if((dateContent1.year > dateContent2.year) ||
+       (dateContent1.year == dateContent2.year && dateContent1.month > dateContent2.month) ||
+       (dateContent1.year == dateContent2.year && dateContent1.month == dateContent2.month &&
+       dateContent1.day > dateContent2.day)) {
+        return 1;
+    }
+    /*Returns 0 if dateContent1 and dateContent 2 expire on the same day*/
+    else if(dateContent1.year == dateContent2.year && dateContent1.month == dateContent2.month &&
+            dateContent1.day == dateContent2.day) {
+        return 0;
+    }
+    /*Returns -1 if dateContent1 expires before dateContent2*/
+    else
+        return -1;
 }
 
 /*Main Menu function to print a user-friendly menu for the user*/
@@ -135,39 +191,12 @@ void mainMenu(ingredients *fridgeContent) {
     }
 }
 
-/*Sorts the items the in fridge using qsort from stdlib.h*/
-void sortContent(ingredients *fridgeContent) {
-    qsort(fridgeContent, fridgeSize, sizeof(fridgeContent[0]), contentCompare);
-}
-
-/*Compare function used in qsort. Compares expiration dates*/
-int contentCompare(const void *content1, const void *content2) {
-    date dateContent1 = ((ingredients *)content1)->expirationDate;
-    date dateContent2 = ((ingredients *)content2)->expirationDate;
-
-    /*Returns 1 if dateContent1 expires after dateContent2*/
-    if((dateContent1.year > dateContent2.year) ||
-       (dateContent1.year == dateContent2.year && dateContent1.month > dateContent2.month) ||
-       (dateContent1.year == dateContent2.year && dateContent1.month == dateContent2.month &&
-       dateContent1.day > dateContent2.day)) {
-        return 1;
-    }
-    /*Returns 0 if dateContent1 and dateContent 2 expire on the same day*/
-    else if(dateContent1.year == dateContent2.year && dateContent1.month == dateContent2.month &&
-            dateContent1.day == dateContent2.day) {
-        return 0;
-    }
-    /*Returns -1 if dateContent1 expires before dateContent2*/
-    else
-        return -1;
-}
-
 /*Notification function for the main menu, to print out "Soon to expire" and Expired ingredients*/
 void printNotifications(ingredients *fridgeContent){
     int i = 0;
     /*PRINT SOON TO EXPIRE TITLE*/
     for(i = 0; i < fridgeSize; i++) {
-        if(dateComparatorenator(fridgeContent[i].expirationDate, currentDate) == 0) {
+        if(dateComparator(fridgeContent[i].expirationDate, currentDate) == 0) {
             printf("###########################\n");            
             printf("         EXPIRING         \n");
             printf("---------------------------\n");
@@ -178,7 +207,7 @@ void printNotifications(ingredients *fridgeContent){
     /*For loop which goes through the fridgeContent array
       and prints out the ingredients that are close to their expiration date*/
     for (i = 0; i < fridgeSize; i++) {
-        if(dateComparatorenator(fridgeContent[i].expirationDate, currentDate) == 0) {
+        if(dateComparator(fridgeContent[i].expirationDate, currentDate) == 0) {
             printf(YELLOW);
             printf("%s IS EXPIRING\n", fridgeContent[i].name);
             printf(WHITE);
@@ -189,7 +218,7 @@ void printNotifications(ingredients *fridgeContent){
     /*PRINT EXPIRED TITLE*/
     for(i = 0; i < fridgeSize; i++) {
         if(!(fridgeContent[i].expirationDate.day == UNKNOWN || fridgeContent[i].expirationDate.month == UNKNOWN || fridgeContent[i].expirationDate.year == UNKNOWN) 
-            && dateComparatorenator(fridgeContent[i].expirationDate, currentDate) == -1) {
+            && dateComparator(fridgeContent[i].expirationDate, currentDate) == -1) {
             printf("         EXPIRED\n");
             printf("---------------------------\n");
             break;
@@ -199,126 +228,11 @@ void printNotifications(ingredients *fridgeContent){
       and prints out the ingredients that have expired*/    
     for (i = 0; i < fridgeSize; i++) {
         if(!(fridgeContent[i].expirationDate.day == UNKNOWN || fridgeContent[i].expirationDate.month == UNKNOWN || fridgeContent[i].expirationDate.year == UNKNOWN) 
-            && dateComparatorenator(fridgeContent[i].expirationDate, currentDate) == -1) {
+            && dateComparator(fridgeContent[i].expirationDate, currentDate) == -1) {
             printf(RED);
             printf("%s HAS EXPIRED\n", fridgeContent[i].name);
             printf(WHITE);
         }
-    }
-}
-
-/*Function to get the present date*/
-date makeDayToday(){
-    /*Declaration of a temporary date variable*/
-    date tempDate;
-    /*Declaration and initialization of today, of type time_t and which value of time(NULL)
-    which is the number of seconds since 1970/01/01 till now*/
-    time_t today = time(NULL);
-
-    /*Declaration and initialization of a struct tm called tm, 
-    which takes the value of today and converts them to localtime
-    and insert them to the tm struct*/
-    struct tm tm = *localtime(&today);
-
-    /*Assigns the year, month and day to the tempDate struct
-    and adds 1900 to years and 1 month to match 2021 and the correct month*/
-    tempDate.year = (tm.tm_year + 1900);
-    tempDate.month = (tm.tm_mon + 1);
-    tempDate.day = (tm.tm_mday);
-
-    /*Return the date*/
-    return tempDate;
-}
-
-
-/*Function to get the date of tomorrow*/
-void tomorrow(date *date){
-    /*Switch statement for month*/
-    switch(date->month){
-        /*Checks if the present month is 1, 3, 5, 7, 8, 10 or 12*/
-
-        case 1: case 3: case 5: case 7: case 8: case 10: case 12:
-            /*If the present day is less than 31,
-              the day can be counted up by one*/
-            if(date->day < 31){
-                (date->day)++;
-              /*If the present day is 31 and the month is 12
-                Set the day and month to 1 and count the year up by 1*/
-            } else if(date->day == 31 && date->month == 12){
-                date->day = 1;
-                date->month = 1;
-                (date->year)++;
-                /*Else set the day to one and count the month up by 1*/
-            } else{
-                date->day = 1;
-                (date->month)++;
-            }
-            break;
-        /*Check if the month is 4, 6, 9 or 11*/
-        case 4: case 6: case 9: case 11:
-            /*If the day is less than 30, count the day up by 1*/
-            if(date->day < 30){
-                (date->day)++;
-              /*Else, set the day to 1 and count the month up by 1*/
-            } else{
-                date->day = 1;
-                (date->month)++;
-            }
-            break;
-        /*Check if the month is 2*/
-        case 2:
-            /*Check if it is leap year*/
-            if(leapYear(date->year)){
-                /*If the day is less tha 29, count the day up by 1*/
-                if(date->day < 29){
-                    (date->day)++;
-                  /*Else set the day to 1 and count month up by 1*/
-                } else{
-                    date->day = 1;
-                    (date->month)++;
-                }
-            }
-            /*If it is not leap year*/
-            else{
-                /*If the day is less than 28, count day up by 1*/
-                if(date->day < 28){
-                    (date->day)++;
-                  /*Else set the day to one, and count month up by 1*/
-                } else{
-                    date->day = 1;
-                    (date->month)++;
-                }
-            }
-            break;
-    }
-}
-
-/*Function to check if the present date is a leap year*/
-int leapYear(int year){
-    int result;
-
-    if (y % 400 == 0) result = TRUE;
-    else if (y % 100 == 0) result = FALSE;
-    else if (y % 4 == 0) result = TRUE;
-    else result = FALSE;
-
-    return result;
-}
-
-/*Function for setting the date to a specific day*/
-void skipToDate() {
-    currentDate.day = 0;
-    printf("What date do you want to skip to? (yyyy/mm/dd)\n");
-    scanf("%d/%d/%d", &currentDate.year, &currentDate.month, &currentDate.day);
-
-    while(currentDate.day > 31 ||
-          (currentDate.month <= 0 || currentDate.day <= 0) || ((currentDate.month == 4 || currentDate.month == 6 || currentDate.month == 9 || currentDate.month == 11) && currentDate.day > 30) ||
-          (leapYear(currentDate.year) == 1 && currentDate.month == 2 && currentDate.day > 29) ||
-          (leapYear(currentDate.year) == 0 && currentDate.month == 2 && currentDate.day > 28) || currentDate.month < 1 || currentDate.month > 12){
-        
-        flushInput();
-        printf("Please type a valid date! (yyyy/mm/dd): ");
-        scanf(" %d/%d/%d", &currentDate.year, &currentDate.month, &currentDate.day);
     }
 }
 
@@ -386,83 +300,9 @@ void printFridgeContents(ingredients *fridgeContent) {
     }
 }
 
-/*Search function for searching the fridgeContent array*/
-void searchIngredient(ingredients *fridgeContent) {
-    /*Declaration of strings: searchTerm and ingredientName*/
-    char searchTerm[30], ingredientName[30];
-    int i, j, hasFound = FALSE;
-
-    /*Prompt user for search term*/
-    printf("What would you like to search for?\n");
-    scanf(" %s", searchTerm);
-    printf("\n");
-
-    /*Convert the searched term to all lowercase*/
-    for(j = 0; j < strlen(searchTerm); j++) {
-        searchTerm[j] = tolower(searchTerm[j]);
-    }
-
-    /*Goes through the fridgeContent array and checks for matches*/
-    for(i = 0; i < fridgeSize; i++) {
-        /*Copy the current ingredient's name into the ingredientName variable*/  
-        strcpy(ingredientName, fridgeContent[i].name);
-
-        /*Convert the ingredient name to all lowercase*/
-        for(j = 0; j < strlen(ingredientName); j++) {
-            ingredientName[j] = tolower(ingredientName[j]);
-        }
-
-        /*Check if the searchTerm and ingredientName have similar names*/
-        if(strstr(ingredientName, searchTerm) != NULL) {
-            printIngredient(fridgeContent, i);
-            hasFound = TRUE;
-        }
-    }
-    /*If no matches was found, inform the user*/
-    if(hasFound == FALSE){
-        clearScreen();
-        printFridgeContents(fridgeContent);
-            printf("No matches was found for %s.\n", searchTerm);
-    }
-}
-
-void searchTypes(ingredients *fridgeContent){
-    int i, j, hasFound = FALSE;
-    char searchType[20], ingredientType[20];
-
-    printf("What food type would you like to search for?\n");
-    scanf(" %s", searchType);
-    printf("\n");
-
-    for(i = 0 ; i < strlen(searchType) ; i++){
-        searchType[i] = tolower(searchType[i]);
-    }
-
-    for(j = 0 ; j < fridgeSize ; j++){  
-
-        strcpy(ingredientType, fridgeContent[j].ingredientType);
-
-        /*Convert the ingredient name to all lowercase*/
-        for(i = 0; i < strlen(ingredientType); i++) {
-            ingredientType[i] = tolower(ingredientType[i]);
-        }
-
-        if(strcmp(searchType, ingredientType) == 0) {
-            printIngredient(fridgeContent, j);
-            hasFound = TRUE;
-        }
-    }
-
-    if(hasFound == FALSE){
-        clearScreen();
-        printFridgeContents(fridgeContent);
-        printf("No matches was found for %s.\n", searchType);
-    }
-}
-
 /*Function for printing an ingredient*/
 void printIngredient(ingredients *fridgeContent, int itemNumber) {
-    /*Check which colour the ingredient should be output as*/
+    /*Check which color the ingredient should be output as*/
     printColour(fridgeContent, itemNumber);
     
     /*Check if there are any data on the name of the ingredient*/    
@@ -503,12 +343,12 @@ void printColour(ingredients *fridgeContent, int itemNumber) {
        fridgeContent[itemNumber].open.isopen.daysAfterOpen == UNKNOWN))) {
         printf(PURPLE);
     }
-    /*Set the colour to RED if the ingredient has expired*/
-    else if(dateComparatorenator(fridgeContent[itemNumber].expirationDate, currentDate) == -1) {
+    /*Set the color to RED if the ingredient has expired*/
+    else if(dateComparator(fridgeContent[itemNumber].expirationDate, currentDate) == -1) {
         printf(RED);
     }
-    /*Set the colour to GREEN if the ingredient has not expired*/
-    else if(dateComparatorenator(fridgeContent[itemNumber].expirationDate, currentDate) == 1) {
+    /*Set the color to GREEN if the ingredient has not expired*/
+    else if(dateComparator(fridgeContent[itemNumber].expirationDate, currentDate) == 1) {
         printf(GREEN);
     }
     /*Set the colour to YELLOW if the ingredient is close to its expiration date*/
@@ -700,6 +540,28 @@ void addIngredient(ingredients *fridgeContent) {
     contents(fridgeContent);
 }
 
+/*Function for setting the opened date of a new ingredient*/
+void newIngredientOpenedDate(ingredients *fridgeContent) {
+    int newIngredient = fridgeSize - 1;
+    date tempDate;
+    tempDate.day = 0;
+
+    printf("When was the ingredient opened? (yyyy/mm/dd)\n");
+    scanf("%d/%d/%d", &tempDate.year, &tempDate.month, &tempDate.day);
+
+    while((tempDate.day > 31 ||
+          tempDate.month < UNKNOWN || tempDate.day < UNKNOWN || tempDate.month == 0 || tempDate.day == 0) || 
+          ((tempDate.month == 4 || tempDate.month == 6 || tempDate.month == 9 || tempDate.month == 11) && tempDate.day > 30) ||
+          (leapYear(tempDate.year) == 1 && tempDate.month == 2 && tempDate.day > 29) ||
+          (leapYear(tempDate.year) == 0 && tempDate.month == 2 && tempDate.day > 28) || tempDate.month > 12){
+        
+        flushInput();
+        printf("Please type a valid date! (yyyy/mm/dd): ");
+        scanf(" %d/%d/%d", &tempDate.year, &tempDate.month, &tempDate.day);
+    }
+    fridgeContent[newIngredient].open.isopen.openDate = tempDate;
+}
+
 /*Function for setting the expiration date of a new ingredient*/
 void newIngredientExpirationDate(ingredients *fridgeContent) {
     int newIngredient = fridgeSize - 1;
@@ -722,28 +584,6 @@ void newIngredientExpirationDate(ingredients *fridgeContent) {
     }
     /*Assign the date to the ingredient in the fridgeContent array*/
     fridgeContent[newIngredient].expirationDate = tempDate;
-}
-
-/*Function for setting the opened date of a new ingredient*/
-void newIngredientOpenedDate(ingredients *fridgeContent) {
-    int newIngredient = fridgeSize - 1;
-    date tempDate;
-    tempDate.day = 0;
-
-    printf("When was the ingredient opened? (yyyy/mm/dd)\n");
-    scanf("%d/%d/%d", &tempDate.year, &tempDate.month, &tempDate.day);
-
-    while((tempDate.day > 31 ||
-          tempDate.month < UNKNOWN || tempDate.day < UNKNOWN || tempDate.month == 0 || tempDate.day == 0) || 
-          ((tempDate.month == 4 || tempDate.month == 6 || tempDate.month == 9 || tempDate.month == 11) && tempDate.day > 30) ||
-          (leapYear(tempDate.year) == 1 && tempDate.month == 2 && tempDate.day > 29) ||
-          (leapYear(tempDate.year) == 0 && tempDate.month == 2 && tempDate.day > 28) || tempDate.month > 12){
-        
-        flushInput();
-        printf("Please type a valid date! (yyyy/mm/dd): ");
-        scanf(" %d/%d/%d", &tempDate.year, &tempDate.month, &tempDate.day);
-    }
-    fridgeContent[newIngredient].open.isopen.openDate = tempDate;
 }
 
 /*Function for editing an existing ingredient*/
@@ -831,6 +671,7 @@ void changeType(ingredients *fridgeContent, int ingredientNumber){
         strcpy(fridgeContent[ingredientNumber].ingredientType, "??????");
     }
 }
+
 /*Function for changing the weight of an ingredient*/
 void changeWeight(ingredients *fridgeContent, int ingredientNumber) {
     double tempWeight;
@@ -847,6 +688,17 @@ void changeWeight(ingredients *fridgeContent, int ingredientNumber) {
     if(fridgeContent[ingredientNumber].weight == 0) {
         deleteIngredient(fridgeContent, ingredientNumber);
     }
+}
+
+/*Function for deleting an existing ingredient*/
+void deleteIngredient(ingredients *fridgeContent, int ingredientNumber) {
+    /*Assign the values of the last element in the fridgeContent array to the position of the chosen ingredient*/
+    fridgeContent[ingredientNumber] = fridgeContent[fridgeSize - 1];
+    /*Reallocate the memory with one less ingredient*/
+    fridgeContent = (ingredients *) realloc(fridgeContent, sizeof(ingredients) * --fridgeSize);
+    /*Sort the fridgeContent array and return to the contents menu*/
+    sortContent(fridgeContent);
+    contents(fridgeContent);
 }
 
 /*Function for changing the date of an existing ingredient*/
@@ -890,43 +742,6 @@ void changeOpenedState(ingredients *fridgeContent, int ingredientNumber) {
         } 
     }
     /*Do nothing if the user inputs anything but 'y' or 'Y'*/
-}
-
-/*Function for deleting an existing ingredient*/
-void deleteIngredient(ingredients *fridgeContent, int ingredientNumber) {
-    /*Assign the values of the last element in the fridgeContent array to the position of the chosen ingredient*/
-    fridgeContent[ingredientNumber] = fridgeContent[fridgeSize - 1];
-    /*Reallocate the memory with one less ingredient*/
-    fridgeContent = (ingredients *) realloc(fridgeContent, sizeof(ingredients) * --fridgeSize);
-    /*Sort the fridgeContent array and return to the contents menu*/
-    sortContent(fridgeContent);
-    contents(fridgeContent);
-}
-/*Function for comparing dates*/
-int dateComparatorenator(date expirationDate, date openedDate) {
-    int i;
-    /*Assign the soonToExpireDate to be the openedDate*/
-    date soonToExpireDate = openedDate;
-
-    /*Advance the soonToExpiredate by 2 days*/
-    for(i = 1; i <= 2; i++) {
-        tomorrow(&soonToExpireDate);
-    }
-    /*Check which date is greater than the other and return the respective value*/
-    if((expirationDate.year > openedDate.year) ||
-       (expirationDate.year == openedDate.year && expirationDate.month > openedDate.month) ||
-       (expirationDate.year == openedDate.year && expirationDate.month == openedDate.month && expirationDate.day >= openedDate.day)) {
-        if((expirationDate.year > soonToExpireDate.year) ||
-           (expirationDate.year == soonToExpireDate.year && expirationDate.month > soonToExpireDate.month) ||
-           (expirationDate.year == soonToExpireDate.year && expirationDate.month == soonToExpireDate.month && expirationDate.day > soonToExpireDate.day)) {
-            return 1;
-        }
-        else {
-            return 0;
-        }
-    }  
-    else
-        return -1;
 }
 
 void recipeMenu(ingredients *fridgeContent) {
@@ -1011,6 +826,49 @@ void colourForRecipeType (Recipes *recipe, ingredients *fridgeContent, int numbe
     }
 }
 
+/*Function for coloring a single recipe*/
+int colorForRecipe (int i, Recipes *recipe, ingredients *fridgeContent){
+    int j, k, numberOfIngredients = 0, isGreen = TRUE;
+    /*Count number of ingredients in the recipe*/
+    for (j = 0 ; j < MAXINGREDIENTS ; j++){
+        if(strcmp(recipe[i - 1].fridgeIngredients[j].name, "\0") == 0){
+            break;
+        }
+        else{
+            numberOfIngredients++;
+        } 
+    }
+    /*Set the color for the recipe*/
+    for(k = 0 ; k < (numberOfIngredients) ; k++){
+        if(colourization(fridgeContent, recipe[i-1].fridgeIngredients[k].name, recipe[i-1].fridgeIngredients[k].weight) == 0){
+            printf(RED);
+            isGreen = FALSE;
+            break;
+        }
+        printf(GREEN);  
+    }
+    return isGreen;
+}
+
+/*Function for colorization of different ingredients in a recipe*/
+int colourization(ingredients *fridgeContent, char *ingredientName, double neededWeight){
+    int i;
+    /*Go through the different ingredients of a recipe
+      and see if there is enough in the fridge*/
+    for(i = 0; i < fridgeSize; i++){
+        if(strcmp(ingredientName, fridgeContent[i].name) == 0) {
+            if(fridgeContent[i].weight < neededWeight){
+                return 0;
+            }
+            if(dateComparator(fridgeContent[i].expirationDate, currentDate) == -1) {
+                return 0;
+            }
+            return 1;
+        }
+    }   
+    return 0;
+}
+
 /*Recipe Menu function*/
 void recipeList(Recipes *recipe, ingredients *fridgeContent, int numberOfRecipes){
     char choice[1];
@@ -1047,30 +905,6 @@ void printRecipeList(Recipes *recipe, ingredients *fridgeContent, int numberOfRe
         printf("%d. %s\n", i, recipe[i - 1].name);
     }
     printf(WHITE);
-}
-
-/*Function for colouring a single recipe*/
-int colourForRecipe (int i, Recipes *recipe, ingredients *fridgeContent){
-    int j, k, numberOfIngredients = 0, isGreen = TRUE;
-    /*Count number of ingredients in the recipe*/
-    for (j = 0 ; j < MAXINGREDIENTS ; j++){
-        if(strcmp(recipe[i - 1].fridgeIngredients[j].name, "\0") == 0){
-            break;
-        }
-        else{
-            numberOfIngredients++;
-        } 
-    }
-    /*Set the colour for the recipe*/
-    for(k = 0 ; k < (numberOfIngredients) ; k++){
-        if(colourization(fridgeContent, recipe[i-1].fridgeIngredients[k].name, recipe[i-1].fridgeIngredients[k].weight) == 0){
-            printf(RED);
-            isGreen = FALSE;
-            break;
-        }
-        printf(GREEN);  
-    }
-    return isGreen;
 }
 
 /*Function for opening a recipe*/
@@ -1131,23 +965,167 @@ void openRecipe(Recipes recipe, ingredients *fridgeContent){
     } while(!(choice == 'R' || choice == 'r'));
 }
 
-/*Function for colourization of different ingredients in a recipe*/
-int colourization(ingredients *fridgeContent, char *ingredientName, double neededWeight){
-    int i;
-    /*Go through the different ingredients of a recipe
-      and see if there is enough in the fridge*/
-    for(i = 0; i < fridgeSize; i++){
-        if(strcmp(ingredientName, fridgeContent[i].name) == 0) {
-            if(fridgeContent[i].weight < neededWeight){
-                return 0;
-            }
-            if(dateComparatorenator(fridgeContent[i].expirationDate, currentDate) == -1) {
-                return 0;
-            }
-            return 1;
+/*Search function for searching the fridgeContent array*/
+void searchIngredient(ingredients *fridgeContent) {
+    /*Declaration of strings: searchTerm and ingredientName*/
+    char searchTerm[20], ingredientName[20];
+    int i, j, hasFound = FALSE;
+
+    /*Prompt user for search term*/
+    printf("What would you like to search for?\n");
+    scanf(" %s", searchTerm);
+    printf("\n");
+
+    /*Convert the searched term to all lowercase*/
+    for(j = 0; j < strlen(searchTerm); j++) {
+        searchTerm[j] = tolower(searchTerm[j]);
+    }
+
+    /*Goes through the fridgeContent array and checks for matches*/
+    for(i = 0; i < fridgeSize; i++) {
+        /*Copy the current ingredient's name into the ingredientName variable*/  
+        strcpy(ingredientName, fridgeContent[i].name);
+
+        /*Convert the ingredient name to all lowercase*/
+        for(j = 0; j < strlen(ingredientName); j++) {
+            ingredientName[j] = tolower(ingredientName[j]);
         }
-    }   
-    return 0;
+
+        /*Check if the searchTerm and ingredientName have similar names*/
+        if(strstr(ingredientName, searchTerm) != NULL) {
+            printIngredient(fridgeContent, i);
+            hasFound = TRUE;
+        }
+    }
+    /*If no matches was found, inform the user*/
+    if(hasFound == FALSE){
+        clearScreen();
+        printFridgeContents(fridgeContent);
+            printf("No matches was found for %s.\n", searchTerm);
+    }
+}
+
+void searchTypes(ingredients *fridgeContent){
+    int i, j, hasFound = FALSE;
+    char searchType[20], ingredientType[20];
+
+    printf("What food type would you like to search for?\n");
+    scanf(" %s", searchType);
+    printf("\n");
+
+    for(i = 0 ; i < strlen(searchType) ; i++){
+        searchType[i] = tolower(searchType[i]);
+    }
+
+    for(j = 0 ; j < fridgeSize ; j++){  
+
+        strcpy(ingredientType, fridgeContent[j].ingredientType);
+
+        /*Convert the ingredient name to all lowercase*/
+        for(i = 0; i < strlen(ingredientType); i++) {
+            ingredientType[i] = tolower(ingredientType[i]);
+        }
+
+        if(strcmp(searchType, ingredientType) == 0) {
+            printIngredient(fridgeContent, j);
+            hasFound = TRUE;
+        }
+    }
+
+    if(hasFound == FALSE){
+        clearScreen();
+        printFridgeContents(fridgeContent);
+        printf("No matches was found for %s.\n", searchType);
+    }
+}
+
+/*Function to get the date of tomorrow*/
+void tomorrow(date *date){
+    /*Switch statement for month*/
+    switch(date->month){
+        /*Checks if the present month is 1, 3, 5, 7, 8, 10 or 12*/
+
+        case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+            /*If the present day is less than 31,
+              the day can be counted up by one*/
+            if(date->day < 31){
+                (date->day)++;
+              /*If the present day is 31 and the month is 12
+                Set the day and month to 1 and count the year up by 1*/
+            } else if(date->day == 31 && date->month == 12){
+                date->day = 1;
+                date->month = 1;
+                (date->year)++;
+                /*Else set the day to one and count the month up by 1*/
+            } else{
+                date->day = 1;
+                (date->month)++;
+            }
+            break;
+        /*Check if the month is 4, 6, 9 or 11*/
+        case 4: case 6: case 9: case 11:
+            /*If the day is less than 30, count the day up by 1*/
+            if(date->day < 30){
+                (date->day)++;
+              /*Else, set the day to 1 and count the month up by 1*/
+            } else{
+                date->day = 1;
+                (date->month)++;
+            }
+            break;
+        /*Check if the month is 2*/
+        case 2:
+            /*Check if it is leap year*/
+            if(leapYear(date->year)){
+                /*If the day is less tha 29, count the day up by 1*/
+                if(date->day < 29){
+                    (date->day)++;
+                  /*Else set the day to 1 and count month up by 1*/
+                } else{
+                    date->day = 1;
+                    (date->month)++;
+                }
+            }
+            /*If it is not leap year*/
+            else{
+                /*If the day is less than 28, count day up by 1*/
+                if(date->day < 28){
+                    (date->day)++;
+                  /*Else set the day to one, and count month up by 1*/
+                } else{
+                    date->day = 1;
+                    (date->month)++;
+                }
+            }
+            break;
+    }
+}
+
+/*Function to check if the present date is a leap year*/
+int leapYear(int year){
+    int result;
+
+    if(year % 4 == 0) result = TRUE;
+    else result = FALSE;
+
+    return result;
+}
+
+/*Function for setting the date to a specific day*/
+void skipToDate() {
+    currentDate.day = 0;
+    printf("What date do you want to skip to? (yyyy/mm/dd)\n");
+    scanf("%d/%d/%d", &currentDate.year, &currentDate.month, &currentDate.day);
+
+    while(currentDate.day > 31 ||
+          (currentDate.month <= 0 || currentDate.day <= 0) || ((currentDate.month == 4 || currentDate.month == 6 || currentDate.month == 9 || currentDate.month == 11) && currentDate.day > 30) ||
+          (leapYear(currentDate.year) == 1 && currentDate.month == 2 && currentDate.day > 29) ||
+          (leapYear(currentDate.year) == 0 && currentDate.month == 2 && currentDate.day > 28) || currentDate.month < 1 || currentDate.month > 12){
+        
+        flushInput();
+        printf("Please type a valid date! (yyyy/mm/dd): ");
+        scanf(" %d/%d/%d", &currentDate.year, &currentDate.month, &currentDate.day);
+    }
 }
 
 /*Function for clearing the terminal / screen*/
@@ -1166,4 +1144,27 @@ void flushInput(void) {
       assign them to flush as long as they are not a new line.
       Then the while loop breaks and the flush has finalized*/
     while((flush = getchar()) != '\n');
+}
+
+/*Function to get the present date*/
+date makeDayToday(){
+    /*Declaration of a temporary date variable*/
+    date tempDate;
+    /*Declaration and initialization of today, of type time_t and which value of time(NULL)
+    which is the number of seconds since 1970/01/01 till now*/
+    time_t today = time(NULL);
+
+    /*Declaration and initialization of a struct tm called tm, 
+    which takes the value of today and converts them to localtime
+    and insert them to the tm struct*/
+    struct tm tm = *localtime(&today);
+
+    /*Assigns the year, month and day to the tempDate struct
+    and adds 1900 to years and 1 month to match 2021 and the correct month*/
+    tempDate.year = (tm.tm_year + 1900);
+    tempDate.month = (tm.tm_mon + 1);
+    tempDate.day = (tm.tm_mday);
+
+    /*Return the date*/
+    return tempDate;
 }

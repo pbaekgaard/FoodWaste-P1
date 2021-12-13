@@ -45,7 +45,6 @@ int getFridgeSize(void) {
     return fridgeSize;
 }
 
-
 void getFridgeContents(ingredients *fridgeContent) {
     int i = 0;
     /* Pointer to a FILE */
