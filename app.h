@@ -76,6 +76,7 @@ extern void printExpirationDate(ingredients *, int);
 extern void printOpenedDate(ingredients *, int);
 extern void addIngredient(ingredients *);
 extern void newIngredientOpenedDate(ingredients *);
+extern int isDateValid (date);
 extern void newIngredientExpirationDate(ingredients *);
 extern void editIngredient(ingredients *, int);
 extern void changeName(ingredients *, int);
