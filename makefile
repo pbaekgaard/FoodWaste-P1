@@ -6,13 +6,13 @@ smartfrapp: app.c FileReading.c makeRecipes.c
 	gcc -Wall -Werror -ansi -pedantic app.c FileReading.c makeRecipes.c \
 		-o smartfrapp.exe
 	if [ -e smartfrapp.exe ]; then \
-		@cls||clear; \
+		@cls||clear||cls; \
 		printf "SMARTFRAPP APPLICATION COMPILED!\n"; \
 	fi
 
 clean:
 	if [ -e smartfrapp.exe ]; then \
-		@cls||clear; \
+		@cls||clear||cls; \
 		rm smartfrapp.exe; \
 		printf "SMARTFRAPP REMOVED!\n"; \
 	fi
