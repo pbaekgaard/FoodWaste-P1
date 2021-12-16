@@ -343,8 +343,8 @@ void printColour(ingredients *fridgeContent, int itemNumber) {
        fridgeContent[itemNumber].expirationDate.year == UNKNOWN || strcmp(fridgeContent[itemNumber].name, "-1") == 0 || strcmp(fridgeContent[itemNumber].name, "??????") == 0 ||
        fridgeContent[itemNumber].weight == UNKNOWN || fridgeContent[itemNumber].open.opened == UNKNOWN ||
        (fridgeContent[itemNumber].open.opened == FALSE && (fridgeContent[itemNumber].open.isopen.openDate.day == UNKNOWN ||
-       fridgeContent[itemNumber].open.isopen.openDate.month == UNKNOWN || fridgeContent[itemNumber].open.isopen.openDate.year == UNKNOWN ||
-       fridgeContent[itemNumber].open.isopen.daysAfterOpen == UNKNOWN))) {
+       fridgeContent[itemNumber].open.isopen.openDate.month == UNKNOWN || fridgeContent[itemNumber].open.isopen.openDate.year == UNKNOWN)) ||
+       fridgeContent[itemNumber].open.isopen.daysAfterOpen == UNKNOWN) {
         printf(PURPLE);
     }
     /*Set the colour to RED if the ingredient has expired*/
