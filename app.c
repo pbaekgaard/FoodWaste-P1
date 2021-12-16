@@ -247,24 +247,19 @@ void contents(ingredients *fridgeContent) {
 
 
     do{
-        if (error == 0) {
-            printf("\nWhich ingredient do you want to change? (press 'S' to search, 'T' to search food by type, 'N' to add an ingredient, or 'R' to return):\n");
-        }
-        scanf(" %s", choice);
         /*Check if the fridge is empty*/
         if(fridgeSize == 0) {
             clearScreen();
             printf("Your fridge is empty\n");
             printf("Press 'R' to return or 'N' to add an ingredient:\n");
         }
-        /*Makes sure the user inputs a valid number*/
-        else if(ingredientNumber <= 0 || ingredientNumber > fridgeSize) {
-            clearScreen();
-            printFridgeContents(fridgeContent);
-            printf("\nPlease enter a valid ingredient number! (press 'S' to search, 'T' to search food by type, 'N' to add an ingredient, or 'R' to return):\n");
-            error = 1;
+        else if (error == 0) {
+            printf("\nWhich ingredient do you want to change? (press 'S' to search, 'T' to search food by type, 'N' to add an ingredient, or 'R' to return):\n");
         }
+
+        scanf(" %s", choice);
         ingredientNumber = atoi(choice);
+
         /*Return to main menu if user presses 'R'*/
         if(strcmp(choice, "r") == 0 || strcmp(choice, "R") == 0){
             mainMenu(fridgeContent);
@@ -286,6 +281,14 @@ void contents(ingredients *fridgeContent) {
             searchTypes(fridgeContent);  
             error = 0; 
         }
+        /*Makes sure the user inputs a valid number*/
+        else if(ingredientNumber <= 0 || ingredientNumber > fridgeSize) {
+            clearScreen();
+            printFridgeContents(fridgeContent);
+            printf("\nPlease enter a valid ingredient number! (press 'S' to search, 'T' to search food by type, 'N' to add an ingredient, or 'R' to return):\n");
+            error = 1;
+        }
+      
     } while (ingredientNumber <= 0 || ingredientNumber > fridgeSize);
     /*Edit the ingredient the user decides, if the user inputs a number*/
     editIngredient(fridgeContent, ingredientNumber - 1);
@@ -959,7 +962,7 @@ void searchIngredient(ingredients *fridgeContent) {
 
     /*Prompt user for search term*/
     printf("What would you like to search for?\n");
-    scanf(" %[^\n]s", searchTerm);
+    scanf(" %[^\n]", searchTerm);
     printf("\n");
 
     /*Convert the searched term to all lowercase*/
@@ -987,7 +990,7 @@ void searchIngredient(ingredients *fridgeContent) {
     if(hasFound == FALSE){
         clearScreen();
         printFridgeContents(fridgeContent);
-            printf("No matches was found for %s.\n", searchTerm);
+        printf("No matches was found for %s.\n", searchTerm);
     }
 }
 
