@@ -524,7 +524,7 @@ void addIngredient(ingredients *fridgeContent) {
     if(fridgeContent[fridgeSize - 1].open.opened == TRUE) {
         newIngredientOpenedDate(fridgeContent);
     }
-    printf("How many days can the ingredient last after being opened?\n");
+    printf("How many days can the ingredient last after being opened? (type '-1' if unknown)\n");
 
     do {
         scanf("%d", &fridgeContent[fridgeSize - 1].open.isopen.daysAfterOpen);
@@ -546,12 +546,12 @@ void newIngredientOpenedDate(ingredients *fridgeContent) {
     date tempDate;
     tempDate.day = 0;
 
-    printf("When was the ingredient opened? (yyyy/mm/dd)\n");
+    printf("When was the ingredient opened? [yyyy/mm/dd] (type -1 if unknown)\n");
     scanf("%d/%d/%d", &tempDate.year, &tempDate.month, &tempDate.day);
 
-    while(isDateValid(tempDate) == TRUE){
+    while(isDateValid(tempDate) == FALSE){
         flushInput();
-        printf("Please type a valid date! (yyyy/mm/dd): ");
+        printf("Please type a valid date! [yyyy/mm/dd] (type -1 if unknown): ");
         scanf(" %d/%d/%d", &tempDate.year, &tempDate.month, &tempDate.day);
     }
     fridgeContent[newIngredient].open.isopen.openDate = tempDate;
@@ -575,13 +575,13 @@ void newIngredientExpirationDate(ingredients *fridgeContent) {
     date tempDate; 
     tempDate.day = 0;
     /*Prompt the user for the expiration date of the new ingredient*/
-    printf("What is the expiration date of the ingredient? (yyyy/mm/dd)\n");
+    printf("What is the expiration date of the ingredient? [yyyy/mm/dd] (type -1 if unknown)\n");
     scanf("%d/%d/%d", &tempDate.year, &tempDate.month, &tempDate.day);
 
     /*Validate the date*/
-    while(isDateValid(tempDate) == TRUE){
+    while(isDateValid(tempDate) == FALSE){
         flushInput();
-        printf("Please type a valid date! (yyyy/mm/dd): ");
+        printf("Please type a valid date! [yyyy/mm/dd] (type -1 if unknown): ");
         scanf(" %d/%d/%d", &tempDate.year, &tempDate.month, &tempDate.day);
     }
     /*Assign the date to the ingredient in the fridgeContent array*/
@@ -657,7 +657,7 @@ void editIngredient(ingredients *fridgeContent, int ingredientNumber) {
 
 /*Function for changing the name of an ingredient*/
 void changeName(ingredients *fridgeContent, int ingredientNumber) {
-    printf("\nPlease type the new name: ");
+    printf("\nPlease type the new name (type -1 if unknown): ");
     scanf(" %s", fridgeContent[ingredientNumber].name);
     flushInput();
     if (strcmp(fridgeContent[ingredientNumber].name, "-1") == 0) {
@@ -666,7 +666,7 @@ void changeName(ingredients *fridgeContent, int ingredientNumber) {
 }
 
 void changeType(ingredients *fridgeContent, int ingredientNumber){
-    printf("\nPlease type the new type: ");
+    printf("\nPlease type the new type (type -1 if unknown): ");
     scanf(" %s", fridgeContent[ingredientNumber].ingredientType);
     flushInput();
     if (strcmp(fridgeContent[ingredientNumber].ingredientType, "-1") == 0) {
@@ -677,12 +677,12 @@ void changeType(ingredients *fridgeContent, int ingredientNumber){
 /*Function for changing the weight of an ingredient*/
 void changeWeight(ingredients *fridgeContent, int ingredientNumber) {
     double tempWeight;
-    printf("\nPlease type the new weight: ");
+    printf("\nPlease type the new weight (type -1 if unknown): ");
     scanf(" %lf", &tempWeight);
     flushInput();
     /*INPUT VALIDATION*/
     while(tempWeight != UNKNOWN && tempWeight < 0) {
-        printf("\nPlease type a valid weight: ");
+        printf("\nPlease type a valid weight (type -1 if unknown): ");
         scanf(" %lf", &tempWeight);
     }
     fridgeContent[ingredientNumber].weight = tempWeight;
@@ -707,12 +707,12 @@ void deleteIngredient(ingredients *fridgeContent, int ingredientNumber) {
 void changeDate(ingredients *fridgeContent, int ingredientNumber) {
     date tempDate;
     tempDate.day = 0;
-    printf("\nPlease type the new date (yyyy/mm/dd): ");
+    printf("\nPlease type the new date [yyyy/mm/dd] (type -1 if unknown): ");
     scanf(" %d/%d/%d", &tempDate.year, &tempDate.month, &tempDate.day);
     flushInput();
     /*INPUT VALIDATION*/
-    while(isDateValid(tempDate) == TRUE){
-        printf("Please type a valid date!\n(yyyy/mm/dd): ");
+    while(isDateValid(tempDate) == FALSE){
+        printf("Please type a valid date! [yyyy/mm/dd] (type -1 if unknown): ");
         scanf(" %d/%d/%d", &tempDate.year, &tempDate.month, &tempDate.day);
         flushInput();
     }
