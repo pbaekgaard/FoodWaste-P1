@@ -461,7 +461,7 @@ void printOpenedDate(ingredients *fridgeContent, int itemNumber) {
 void addIngredient(ingredients *fridgeContent) {
     char opened[2];
     char weightTemp[10];
-    int valid_scan;
+    int validScan;
     /*Reallocate memory for an additional ingredient*/
     fridgeContent = (ingredients *) realloc(fridgeContent, sizeof(ingredients) * ++fridgeSize);
     /*If reallocation has failed, print error message and exit with EXIT_FAILURE*/
@@ -517,12 +517,12 @@ void addIngredient(ingredients *fridgeContent) {
     printf("How many days can the ingredient last after being opened? (type '-1' if unknown)\n");
 
     do {
-        valid_scan = scanf("%d", &fridgeContent[fridgeSize - 1].open.isopen.daysAfterOpen);
+        validScan = scanf("%d", &fridgeContent[fridgeSize - 1].open.isopen.daysAfterOpen);
         flushInput();
-        if (valid_scan == 0 || (fridgeContent[fridgeSize - 1].open.isopen.daysAfterOpen < 0 && fridgeContent[fridgeSize - 1].open.isopen.daysAfterOpen != UNKNOWN)) {
+        if (validScan == 0 || (fridgeContent[fridgeSize - 1].open.isopen.daysAfterOpen < 0 && fridgeContent[fridgeSize - 1].open.isopen.daysAfterOpen != UNKNOWN)) {
             printf("Please enter a valid number: ");
         }
-    } while(valid_scan == 0 || (fridgeContent[fridgeSize - 1].open.isopen.daysAfterOpen < 0 && fridgeContent[fridgeSize - 1].open.isopen.daysAfterOpen != UNKNOWN));
+    } while(validScan == 0 || (fridgeContent[fridgeSize - 1].open.isopen.daysAfterOpen < 0 && fridgeContent[fridgeSize - 1].open.isopen.daysAfterOpen != UNKNOWN));
     
     /*Update the expiration date of the fridgeContent array and sort it
       then return to the content menu*/
@@ -735,7 +735,7 @@ void changeOpenedState(ingredients *fridgeContent, int ingredientNumber) {
 
 void recipeMenu(ingredients *fridgeContent) {
     int recipeKind = 1;
-    char choice[1];
+    char choice;
     Recipes vegetarianRecipes[VEGETARIANNUMBER]; 
     Recipes lowCarbRecipes[LOWCARBNUMBER]; 
     Recipes lowCalorieRecipes[LOWCALORIENUMBER]; 
@@ -753,10 +753,11 @@ void recipeMenu(ingredients *fridgeContent) {
             printRecipeTypes(vegetarianRecipes, lowCarbRecipes, lowCalorieRecipes, highProteinRecipes, allRecipes, fridgeContent);
             printf("\nPlease enter a valid Recipe Number. Or type 'R' to Return:\n");
         }
-        scanf(" %s", choice);
-        recipeKind = atoi(choice);
+        scanf(" %c", &choice);
+        flushInput();
+        recipeKind = choice - '0';
         /*Return to main menu if user presses 'R'*/
-        if(strcmp(choice, "r") == 0 || strcmp(choice, "R") == 0){
+        if(choice == 'r' || choice == 'R'){
             mainMenu(fridgeContent);
         }
     } while (recipeKind <= 0 || recipeKind > NUMBEROFRECIPES);
@@ -860,7 +861,7 @@ int colourization(ingredients *fridgeContent, char *ingredientName, double neede
 
 /*Recipe Menu function*/
 void recipeList(Recipes *recipe, ingredients *fridgeContent, int numberOfRecipes){
-    char choice[1];
+    char choice;
     int recipeNumber = 1;
 
     printRecipeList(recipe, fridgeContent, numberOfRecipes);
@@ -872,10 +873,11 @@ void recipeList(Recipes *recipe, ingredients *fridgeContent, int numberOfRecipes
             printRecipeList(recipe, fridgeContent, numberOfRecipes);
             printf("\nPlease enter a valid Recipe Number. Or type 'R' to return to recipes:\n");
         }
-        scanf(" %s", choice);
-        recipeNumber = atoi(choice);
+        scanf(" %c", &choice);
+        flushInput();
+        recipeNumber = choice - '0';
         /*Return to recipe menu if user presses 'R'*/
-        if(strcmp(choice, "r") == 0 || strcmp(choice, "R") == 0){
+        if(choice == 'r' || choice == 'R'){
             recipeMenu(fridgeContent);
         }
     } while (recipeNumber <= 0 || recipeNumber > numberOfRecipes);
