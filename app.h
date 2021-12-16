@@ -94,6 +94,7 @@ extern int colourization(ingredients *, char *, double);
 extern void recipeList(Recipes *, ingredients *, int);
 extern void printRecipeList(Recipes *, ingredients *, int);
 extern void openRecipe(Recipes , ingredients *);
+extern void centerPrint(int, int, int);
 extern void printInstructions(Recipes);
 extern void searchIngredient(ingredients *);
 extern void searchTypes(ingredients *);

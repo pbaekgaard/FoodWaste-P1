@@ -900,20 +900,16 @@ void printRecipeList(Recipes *recipe, ingredients *fridgeContent, int numberOfRe
 
 /*Function for opening a recipe*/
 void openRecipe(Recipes recipe, ingredients *fridgeContent){
-    int i, nameLength = strlen(recipe.name), width = 39, typeLength = strlen(recipe.recipeType);
+    int i;
     char choice;
 
     
 
     clearScreen();
     printf("  -------------------------------------\n");
-    for(i = 0; i <= (width - typeLength - 10q) / 2; i++) {
-        printf(" ");
-    }
+    centerPrint(39, strlen(recipe.recipeType), 10);
     printf("Category: %s\n", recipe.recipeType);
-    for(i = 0; i <= (width - nameLength) / 2; i++) {
-        printf(" ");
-    }
+    centerPrint(39, strlen(recipe.name), 0);
     printf("%s\n", recipe.name);
     printf("  -------------------------------------\n");
     printf("              INGREDIENTS\n");
@@ -963,6 +959,14 @@ void openRecipe(Recipes recipe, ingredients *fridgeContent){
             recipeMenu(fridgeContent);    
         }
     } while(!(choice == 'R' || choice == 'r'));
+}
+
+void centerPrint(int width, int length, int constantCharacter) {
+    int i;
+
+    for(i = 0; i <= (width - length - constantCharacter) / 2; i++) {
+        printf(" ");
+    }
 }
 
 /*Search function for searching the fridgeContent array*/
