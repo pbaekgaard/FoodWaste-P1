@@ -137,7 +137,7 @@ void mainMenu(ingredients *fridgeContent) {
         clearScreen();
         /*Prints the menu text for the terminal*/
         printf("Welcome to SmartFrAPP\n---------------------\n");
-        printf("     %d/%d/%d\n\n", currentDate.year, currentDate.month, currentDate.day);
+        printf("     %d/%2.2d/%2.2d\n\n", currentDate.year, currentDate.month, currentDate.day);
         printf("1 - Fridge Contents\n");
         printf("2 - Recipes\n");
         printf("---------------------\n");
@@ -425,19 +425,9 @@ void printExpirationDate(ingredients *fridgeContent, int itemNumber) {
     /*Check if the expiration date is unknown*/
     if(!(fridgeContent[itemNumber].expirationDate.day == UNKNOWN || fridgeContent[itemNumber].expirationDate.month == UNKNOWN || fridgeContent[itemNumber].expirationDate.year == UNKNOWN)) {
         /*Print the date if the expiration date is known*/
-        printf("%d/%d/%d", fridgeContent[itemNumber].expirationDate.year, fridgeContent[itemNumber].expirationDate.month, fridgeContent[itemNumber].expirationDate.day);
+        printf("%d/%2.2d/%2.2d", fridgeContent[itemNumber].expirationDate.year, fridgeContent[itemNumber].expirationDate.month, fridgeContent[itemNumber].expirationDate.day);
     }
     else printf("???\?/?\?/??");
-
-    /*If the expiration date is known, print the appropriate amount of spaces in the regards to the month and day*/
-    if(!(fridgeContent[itemNumber].expirationDate.day == UNKNOWN || fridgeContent[itemNumber].expirationDate.month == UNKNOWN || fridgeContent[itemNumber].expirationDate.year == UNKNOWN)) {
-        if(fridgeContent[itemNumber].expirationDate.month < 10) {
-           printf(" ");
-        } 
-        if(fridgeContent[itemNumber].expirationDate.day < 10) {
-           printf(" ");
-        }         
-    }
 }
 
 /*Function for printing the opened date of an ingredient*/
@@ -451,14 +441,7 @@ void printOpenedDate(ingredients *fridgeContent, int itemNumber) {
         }
         else {
             if(!(fridgeContent[itemNumber].open.isopen.openDate.day == UNKNOWN || fridgeContent[itemNumber].open.isopen.openDate.month == UNKNOWN || fridgeContent[itemNumber].open.isopen.openDate.year == UNKNOWN)) {
-                printf("   Opened on: %d/%d/%d   ", fridgeContent[itemNumber].open.isopen.openDate.year, fridgeContent[itemNumber].open.isopen.openDate.month, fridgeContent[itemNumber].open.isopen.openDate.day);
-                
-                if(fridgeContent[itemNumber].open.isopen.openDate.month < 10) {
-                    printf(" ");
-                } 
-                if(fridgeContent[itemNumber].open.isopen.openDate.day < 10) {
-                    printf(" ");
-                }
+                printf("   Opened on: %d/%2.2d/%2.2d   ", fridgeContent[itemNumber].open.isopen.openDate.year, fridgeContent[itemNumber].open.isopen.openDate.month, fridgeContent[itemNumber].open.isopen.openDate.day);
             }
             /*If the date is unknown, print question marks*/
             else
@@ -620,7 +603,7 @@ void editIngredient(ingredients *fridgeContent, int ingredientNumber) {
     if (fridgeContent[ingredientNumber].expirationDate.year != UNKNOWN ||
         fridgeContent[ingredientNumber].expirationDate.month != UNKNOWN ||
         fridgeContent[ingredientNumber].expirationDate.day != UNKNOWN) {
-        printf("4. Expiration Date : %d/%d/%d\n", fridgeContent[ingredientNumber].expirationDate.year, fridgeContent[ingredientNumber].expirationDate.month, fridgeContent[ingredientNumber].expirationDate.day);
+        printf("4. Expiration Date : %d/%2.2d/%2.2d\n", fridgeContent[ingredientNumber].expirationDate.year, fridgeContent[ingredientNumber].expirationDate.month, fridgeContent[ingredientNumber].expirationDate.day);
     }
     else {
         printf("4. Expiration Date : ???\?/?\?/??\n");
