@@ -900,12 +900,21 @@ void printRecipeList(Recipes *recipe, ingredients *fridgeContent, int numberOfRe
 
 /*Function for opening a recipe*/
 void openRecipe(Recipes recipe, ingredients *fridgeContent){
-    int i;
+    int i, nameLength = strlen(recipe.name), width = 39, typeLength = strlen(recipe.recipeType);
     char choice;
+
+    
+
     clearScreen();
     printf("  -------------------------------------\n");
-    printf("          Category: %s\n", recipe.recipeType);
-    printf("                %s\n", recipe.name);
+    for(i = 0; i <= (width - typeLength - 10) / 2; i++) {
+        printf(" ");
+    }
+    printf("Category: %s\n", recipe.recipeType);
+    for(i = 0; i <= (width - nameLength) / 2; i++) {
+        printf(" ");
+    }
+    printf("%s\n", recipe.name);
     printf("  -------------------------------------\n");
     printf("              INGREDIENTS\n");
     printf("  -------------------------------------\n");
