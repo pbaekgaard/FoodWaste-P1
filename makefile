@@ -1,5 +1,5 @@
 #MAKE file for smartfrapp
-.FORCE: smartfrapp clean
+.PHONY: smartfrapp clean
 smartfrapp: app.c fileReading.c makeRecipes.c
 	if [ -e smartfrapp.exe ]; then \
 		rm smartfrapp.exe; \
