@@ -8,6 +8,7 @@ smartfrapp: app.c fileReading.c makeRecipes.c
 	if [ -e smartfrapp.exe ]; then \
 		@cls||clear||cls; \
 		printf "SMARTFRAPP APPLICATION COMPILED!\n"; \
+		smartfrapp.exe || ./smartfrapp.exe; \
 	fi
 
 clean:
