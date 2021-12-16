@@ -907,7 +907,7 @@ void openRecipe(Recipes recipe, ingredients *fridgeContent){
 
     clearScreen();
     printf("  -------------------------------------\n");
-    for(i = 0; i <= (width - typeLength - 10) / 2; i++) {
+    for(i = 0; i <= (width - typeLength - 10q) / 2; i++) {
         printf(" ");
     }
     printf("Category: %s\n", recipe.recipeType);
