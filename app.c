@@ -441,7 +441,7 @@ void printOpenedDate(ingredients *fridgeContent, int itemNumber) {
         }
         else {
             if(!(fridgeContent[itemNumber].open.isopen.openDate.day == UNKNOWN || fridgeContent[itemNumber].open.isopen.openDate.month == UNKNOWN || fridgeContent[itemNumber].open.isopen.openDate.year == UNKNOWN)) {
-                printf("   Opened on: %4.4d/%2.2d/%2.2d   ", fridgeContent[itemNumber].open.isopen.openDate.year, fridgeContent[itemNumber].open.isopen.openDate.month, fridgeContent[itemNumber].open.isopen.openDate.day);
+                printf("   Opened on: %4d/%2.2d/%2.2d   ", fridgeContent[itemNumber].open.isopen.openDate.year, fridgeContent[itemNumber].open.isopen.openDate.month, fridgeContent[itemNumber].open.isopen.openDate.day);
             }
             /*If the date is unknown, print question marks*/
             else
