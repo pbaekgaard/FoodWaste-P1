@@ -1,9 +1,6 @@
 #MAKE file for smartfrapp
 .PHONY: smartfrapp clean
 smartfrapp: app.c fileReading.c makeRecipes.c
-	if [ -e smartfrapp.exe ]; then \
-		rm smartfrapp.exe; \
-	fi
 	gcc -Wall -Werror -ansi -pedantic app.c fileReading.c makeRecipes.c \
 		-o smartfrapp.exe
 	if [ -e smartfrapp.exe ]; then \
