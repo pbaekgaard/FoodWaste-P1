@@ -457,8 +457,9 @@ void printOpenedDate(ingredients *fridgeContent, int itemNumber) {
 /*Function for adding an ingredient to the fridgeContent array*/
 void addIngredient(ingredients *fridgeContent) {
     char opened[2];
-    /*Reallocate memory for an additional ingredient*/
     char weightTemp[10];
+    int valid_scan;
+    /*Reallocate memory for an additional ingredient*/
     fridgeContent = (ingredients *) realloc(fridgeContent, sizeof(ingredients) * ++fridgeSize);
     /*If reallocation has failed, print error message and exit with EXIT_FAILURE*/
     if(fridgeContent == NULL) {
@@ -513,11 +514,12 @@ void addIngredient(ingredients *fridgeContent) {
     printf("How many days can the ingredient last after being opened? (type '-1' if unknown)\n");
 
     do {
-        scanf("%d", &fridgeContent[fridgeSize - 1].open.isopen.daysAfterOpen);
-        if (fridgeContent[fridgeSize - 1].open.isopen.daysAfterOpen < 0 && fridgeContent[fridgeSize - 1].open.isopen.daysAfterOpen != UNKNOWN) {
-            printf("Please enter a valid number!\n");
+        valid_scan = scanf("%d", &fridgeContent[fridgeSize - 1].open.isopen.daysAfterOpen);
+        flushInput();
+        if (valid_scan == 0 || (fridgeContent[fridgeSize - 1].open.isopen.daysAfterOpen < 0 && fridgeContent[fridgeSize - 1].open.isopen.daysAfterOpen != UNKNOWN)) {
+            printf("Please enter a valid number: ");
         }
-    } while(fridgeContent[fridgeSize - 1].open.isopen.daysAfterOpen < 0 && fridgeContent[fridgeSize - 1].open.isopen.daysAfterOpen != UNKNOWN);
+    } while(valid_scan == 0 || (fridgeContent[fridgeSize - 1].open.isopen.daysAfterOpen < 0 && fridgeContent[fridgeSize - 1].open.isopen.daysAfterOpen != UNKNOWN));
     
     /*Update the expiration date of the fridgeContent array and sort it
       then return to the content menu*/
