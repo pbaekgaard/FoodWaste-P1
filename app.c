@@ -905,7 +905,7 @@ void openRecipe(Recipes recipe, ingredients *fridgeContent){
     clearScreen();
     printf("  -------------------------------------\n");
     printf("          Category: %s\n", recipe.recipeType);
-    printf("    %s recipe for 4 people\n", recipe.name);
+    printf("                %s\n", recipe.name);
     printf("  -------------------------------------\n");
     printf("              INGREDIENTS\n");
     printf("  -------------------------------------\n");
