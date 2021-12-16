@@ -501,12 +501,13 @@ void addIngredient(ingredients *fridgeContent) {
 
     printf("What is the weight of the ingredient in grams? (type '-1' if unknown)\n");
 
-    scanf("%s", weightTemp);
-    fridgeContent[fridgeSize - 1].weight = atof(weightTemp);
-    while(!(fridgeContent[fridgeSize - 1].weight > 0 || fridgeContent[fridgeSize - 1].weight == UNKNOWN)) {
+    scanf(" %s", weightTemp);
+    while(!(atof(weightTemp) > 0 || atof(weightTemp) == UNKNOWN)) {
         printf("Please type a valid weight: ");
-        scanf(" %lf", &fridgeContent[fridgeSize - 1].weight);
+        scanf(" %s", weightTemp);
+
     }
+    fridgeContent[fridgeSize - 1].weight = atof(weightTemp);
 
     newIngredientExpirationDate(fridgeContent);
     
