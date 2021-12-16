@@ -487,17 +487,15 @@ void addIngredient(ingredients *fridgeContent) {
       expiration date, opened state, opened date and how long it can last when opened*/
     clearScreen();
 
-    printf("What is the name of the ingredient? (Max 20 characters & use underscore (_) in place of space... type '-1' if unknown)\n");
-    scanf(" %20s", fridgeContent[fridgeSize - 1].name);
+    printf("What is the name of the ingredient? (Max 20 characters & type '-1' if unknown)\n");
+    scanf(" %20[^\n]", fridgeContent[fridgeSize - 1].name);
     flushInput();
     fridgeContent[fridgeSize - 1].name[0] = toupper(fridgeContent[fridgeSize - 1].name[0]);
-    whiteSpaceDeprotect(fridgeContent[fridgeSize - 1].name);
 
     printf("What type of food is it? (Use underscore (_) in place of space... type '-1' if unknown)\n");
-    scanf("%s", fridgeContent[fridgeSize - 1].ingredientType);
+    scanf(" %[^\n]", fridgeContent[fridgeSize - 1].ingredientType);
     flushInput();
     fridgeContent[fridgeSize - 1].ingredientType[0] = toupper(fridgeContent[fridgeSize - 1].ingredientType[0]);
-    whiteSpaceDeprotect(fridgeContent[fridgeSize - 1].ingredientType);
 
     printf("What is the weight of the ingredient in grams? (type '-1' if unknown)\n");
 
@@ -663,7 +661,7 @@ void editIngredient(ingredients *fridgeContent, int ingredientNumber) {
 /*Function for changing the name of an ingredient*/
 void changeName(ingredients *fridgeContent, int ingredientNumber) {
     printf("\nPlease type the new name (type -1 if unknown): ");
-    scanf(" %s", fridgeContent[ingredientNumber].name);
+    scanf(" %[^\n]", fridgeContent[ingredientNumber].name);
     flushInput();
     if (strcmp(fridgeContent[ingredientNumber].name, "-1") == 0) {
         strcpy(fridgeContent[ingredientNumber].name, "??????");
@@ -672,7 +670,7 @@ void changeName(ingredients *fridgeContent, int ingredientNumber) {
 
 void changeType(ingredients *fridgeContent, int ingredientNumber){
     printf("\nPlease type the new type (type -1 if unknown): ");
-    scanf(" %s", fridgeContent[ingredientNumber].ingredientType);
+    scanf(" %[^\n]", fridgeContent[ingredientNumber].ingredientType);
     flushInput();
     if (strcmp(fridgeContent[ingredientNumber].ingredientType, "-1") == 0) {
         strcpy(fridgeContent[ingredientNumber].ingredientType, "??????");
@@ -976,7 +974,7 @@ void searchIngredient(ingredients *fridgeContent) {
 
     /*Prompt user for search term*/
     printf("What would you like to search for?\n");
-    scanf(" %s", searchTerm);
+    scanf(" %[^\n]s", searchTerm);
     printf("\n");
 
     /*Convert the searched term to all lowercase*/
