@@ -209,7 +209,7 @@ void printNotifications(ingredients *fridgeContent){
     for (i = 0; i < fridgeSize; i++) {
         if(dateComparator(fridgeContent[i].expirationDate, currentDate) == 0) {
             printf(YELLOW);
-            printf("%s IS EXPIRING\n", fridgeContent[i].name);
+            printf("%s\n", fridgeContent[i].name);
             printf(WHITE);
         } 
     }
@@ -230,7 +230,7 @@ void printNotifications(ingredients *fridgeContent){
         if(!(fridgeContent[i].expirationDate.day == UNKNOWN || fridgeContent[i].expirationDate.month == UNKNOWN || fridgeContent[i].expirationDate.year == UNKNOWN) 
             && dateComparator(fridgeContent[i].expirationDate, currentDate) == -1) {
             printf(RED);
-            printf("%s HAS EXPIRED\n", fridgeContent[i].name);
+            printf("%s\n", fridgeContent[i].name);
             printf(WHITE);
         }
     }
@@ -294,10 +294,14 @@ void contents(ingredients *fridgeContent) {
 /*Function for printing out each ingredient in the fridgeContent array*/
 void printFridgeContents(ingredients *fridgeContent) {
     int itemNumber;
-    printf("Your fridge contains\n");
+    printf("%84s\n", "Your fridge contains");
+    printf("#################################################################################################################################################\n");
+    printf("%4s%6s%25s%16s%19s%26s%36s\n", "NO.", "NAME", "TYPE", "WEIGHT", "EXPIRATION DATE", "OPENED DATE", "SHELF TIME AFTER OPENED");
+    printf("-------------------------------------------------------------------------------------------------------------------------------------------------\n");
     for(itemNumber = 0; itemNumber < fridgeSize; itemNumber++) {
         printIngredient(fridgeContent, itemNumber);
     }
+    printf("#################################################################################################################################################\n");
 }
 
 /*Function for printing an ingredient*/
@@ -497,12 +501,13 @@ void addIngredient(ingredients *fridgeContent) {
 
     printf("What is the weight of the ingredient in grams? (type '-1' if unknown)\n");
 
-    scanf("%s", weightTemp);
-    fridgeContent[fridgeSize - 1].weight = atof(weightTemp);
-    while(!(fridgeContent[fridgeSize - 1].weight > 0 || fridgeContent[fridgeSize - 1].weight == UNKNOWN)) {
+    scanf(" %s", weightTemp);
+    while(!(atof(weightTemp) > 0 || atof(weightTemp) == UNKNOWN)) {
         printf("Please type a valid weight: ");
-        scanf(" %lf", &fridgeContent[fridgeSize - 1].weight);
+        scanf(" %s", weightTemp);
+
     }
+    fridgeContent[fridgeSize - 1].weight = atof(weightTemp);
 
     newIngredientExpirationDate(fridgeContent);
     
