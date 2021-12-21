@@ -861,7 +861,7 @@ int colourization(ingredients *fridgeContent, char *ingredientName, double neede
 
 /*Recipe Menu function*/
 void recipeList(Recipes *recipe, ingredients *fridgeContent, int numberOfRecipes){
-    char choice;
+    char choice[1];
     int recipeNumber = 1;
 
     printRecipeList(recipe, fridgeContent, numberOfRecipes);
@@ -873,11 +873,10 @@ void recipeList(Recipes *recipe, ingredients *fridgeContent, int numberOfRecipes
             printRecipeList(recipe, fridgeContent, numberOfRecipes);
             printf("\nPlease enter a valid Recipe Number. Or type 'R' to return to recipes:\n");
         }
-        scanf(" %c", &choice);
-        flushInput();
-        recipeNumber = choice - '0';
+        scanf(" %s", choice);
+        recipeNumber = atoi(choice);
         /*Return to recipe menu if user presses 'R'*/
-        if(choice == 'r' || choice == 'R'){
+        if(strcmp(choice, "r") == 0 || strcmp(choice, "R") == 0){
             recipeMenu(fridgeContent);
         }
     } while (recipeNumber <= 0 || recipeNumber > numberOfRecipes);
