@@ -6,13 +6,20 @@ This application was created as a University Project for 1. Semester at Aalborg 
 The Application seeks to combat foodwaste.
 
 Two ways of running the program:
-1.
-    a. To compile the program write:
+
+#### Compile and Run
+
+   a. To compile the program write:
+   
         gcc app.c makeRecipes.c fileReading.c
-    b. To run the program write:
+        
+   b. To run the program write:
+   
         a.exe || ./a.out
-2.
-    a. To compile and run the program simultaneously write:
+#### MAKE
+
+   a. To compile and run the program simultaneously write:
+   
         make
 
 ## Authors
