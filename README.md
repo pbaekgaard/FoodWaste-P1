@@ -27,6 +27,6 @@ Two ways of running the program:
 - [@Binary-Nobert](https://www.github.com/Binary-Norbert)
 - [@Jojokp2000](https://www.github.com/Jojokp2000)
 - [@pbaekgaard](https://www.github.com/pbaekgaard)
-- [@Rasseren1](https://www.github.com/Rasseren1)
+- [@Xaniah](https://www.github.com/Xaniah)
 - [@Aasmundur](https://www.github.com/Aasmundur)
 
